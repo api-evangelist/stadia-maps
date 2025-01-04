@@ -28,11 +28,12 @@ Confidently create beautiful maps for all your users with our tools. Choose your
 
 #### Tags:
 
- - API
+ - Lookups, Geospatial, Routing, Roads, Routes, Match, Attributes, Autocomplete, Search, Reverse, Place
 
 #### Properties
 
 - [Documentation]( https://stadiamaps.com/)
+- [OpenAPI](properties/stadia-maps-openapi.yml)
 
 ## Maintainers
 
