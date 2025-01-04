@@ -4,10 +4,13 @@ servers:
   - url: https://api-eu.stadiamaps.com
 info:
   description: >-
-    The Stadia Maps Geospatial APIs provide you with the data you need to build
-    awesome applications.
+    Confidently create beautiful maps for all your users with our tools. Choose
+    your style from our library or build your own. With a rich palette of
+    choices to fit any context and support for dozens of languages and scripts,
+    you can deliver a quality experience for your customers no matter what part
+    of the globe they call home. 
   version: 7.1.0
-  title: Stadia Maps Geospatial APIs
+  title: Stadia Maps
   contact:
     name: Stadia Maps Support
     url: https://www.stadiamaps.com
@@ -16,7 +19,7 @@ paths:
   /tz/lookup/v1:
     get:
       tags:
-        - Geospatial
+        - Lookups
       operationId: tz-lookup
       summary: Get the current time zone information for any point on earth.
       description: >-
@@ -135,7 +138,7 @@ paths:
   /nearest_roads/v1:
     post:
       tags:
-        - Routing
+        - Roads
       operationId: nearest-roads
       summary: Find the nearest roads to the set of input locations.
       description: >-
@@ -219,7 +222,7 @@ paths:
   /optimized_route/v1:
     post:
       tags:
-        - Routing
+        - Routes
       operationId: optimized-route
       summary: Calculate an optimized route between a known start and end point.
       description: >-
@@ -253,7 +256,7 @@ paths:
   /map_match/v1:
     post:
       tags:
-        - Routing
+        - Match
       operationId: map-match
       summary: Match a recorded route to the road network.
       description: >-
@@ -284,7 +287,7 @@ paths:
   /trace_attributes/v1:
     post:
       tags:
-        - Routing
+        - Attributes
       operationId: trace-attributes
       summary: Trace the attributes of roads visited on a route.
       description: >-
@@ -313,7 +316,7 @@ paths:
   /geocoding/v1/autocomplete:
     get:
       tags:
-        - Geocoding
+        - Autocomplete
       operationId: autocomplete
       summary: Search and geocode quickly based on partial input.
       description: >-
@@ -351,7 +354,7 @@ paths:
   /geocoding/v1/search:
     get:
       tags:
-        - Geocoding
+        - Search
       operationId: search
       summary: >-
         Search for location and other info using a place name or address
@@ -392,7 +395,7 @@ paths:
   /geocoding/v1/search/structured:
     get:
       tags:
-        - Geocoding
+        - Search
       operationId: search-structured
       summary: Find locations matching components (structured forward geocoding).
       description: >-
@@ -439,7 +442,7 @@ paths:
   /geocoding/v1/search/bulk:
     post:
       tags:
-        - Geocoding
+        - Search
       operationId: search-bulk
       summary: >-
         Quickly run a batch of geocoding queries against the search or
@@ -474,7 +477,7 @@ paths:
   /geocoding/v1/reverse:
     get:
       tags:
-        - Geocoding
+        - Reverse
       operationId: reverse
       summary: >-
         Find places and addresses near geographic coordinates (reverse
@@ -506,7 +509,7 @@ paths:
   /geocoding/v1/place:
     get:
       tags:
-        - Geocoding
+        - Place
       operationId: place
       summary: Retrieve details of a place using its GID.
       description: >-
