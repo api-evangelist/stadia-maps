@@ -10,6 +10,8 @@ apis:
     properties:
       - url: ' https://stadiamaps.com/'
         type: Documentation
+      - type: OpenAPI
+        url: properties/stadia-maps-openapi.yml
     description: >-
       Confidently create beautiful maps for all your users with our tools.
       Choose your style from our library or build your own. With a rich palette
