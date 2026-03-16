@@ -36,7 +36,7 @@ type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-12-16'
-modified: '2025-01-03'
+modified: '2026-03-16'
 position: Consuming
 description: >-
   Stadia Maps is a cutting-edge mapping platform that provides users with
@@ -49,5 +49,5 @@ description: >-
   exploration more efficient and enjoyable than ever before.
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
 specificationVersion: '0.19'
