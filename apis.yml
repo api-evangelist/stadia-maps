@@ -5,17 +5,17 @@ apis:
   - aid: stadia-maps:stadia-maps
     name: Stadia Maps
     tags:
-      - Lookups
-      - Geospatial
-      - Routing
-      - Roads
-      - Routes
-      - Match
       - Attributes
       - Autocomplete
-      - Search
-      - Reverse
+      - Geospatial
+      - Lookups
+      - Match
       - Place
+      - Reverse
+      - Roads
+      - Routes
+      - Routing
+      - Search
     humanURL: ' https://stadiamaps.com/'
     properties:
       - url: ' https://stadiamaps.com/'
@@ -30,8 +30,8 @@ apis:
       they call home.
 name: Stadia Maps
 tags:
-  - Maps
   - Mapping
+  - Maps
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
