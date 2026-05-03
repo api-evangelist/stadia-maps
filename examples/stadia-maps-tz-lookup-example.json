@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.stadiamaps.com/tz/lookup/v1?lat=48.8566&lng=2.3522&api_key=YOUR_API_KEY",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "tz_id": "Europe/Paris",
+      "base_utc_offset": 3600,
+      "dst_offset": 3600,
+      "total_offset": 7200
+    }
+  }
+}

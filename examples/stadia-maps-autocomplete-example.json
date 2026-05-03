@@ -1,0 +1,63 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.stadiamaps.com/geocoding/v1/autocomplete?text=1600+Penn&focus.point.lat=38.897&focus.point.lon=-77.037&api_key=YOUR_API_KEY",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "geocoding": {
+        "version": "0.2",
+        "attribution": "https://stadiamaps.com/attribution",
+        "query": {
+          "text": "1600 Penn",
+          "size": 10,
+          "private": false,
+          "focus.point.lat": 38.897,
+          "focus.point.lon": -77.037,
+          "lang": {
+            "name": "English",
+            "iso6391": "en",
+            "iso6393": "eng"
+          }
+        }
+      },
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-77.036583, 38.897663]
+          },
+          "properties": {
+            "id": "openaddresses:us/dc:dc-address:00009f7c93edee67",
+            "gid": "openaddresses:address:us/dc:dc-address:00009f7c93edee67",
+            "layer": "address",
+            "source": "openaddresses",
+            "source_id": "us/dc:dc-address:00009f7c93edee67",
+            "name": "1600 Pennsylvania Ave NW",
+            "housenumber": "1600",
+            "street": "Pennsylvania Ave NW",
+            "postalcode": "20500",
+            "confidence": 0.9,
+            "match_type": "interpolated",
+            "accuracy": "point",
+            "country": "United States",
+            "country_gid": "whosonfirst:country:85633793",
+            "country_a": "USA",
+            "region": "District of Columbia",
+            "region_gid": "whosonfirst:region:85688741",
+            "region_a": "DC",
+            "county": "District of Columbia",
+            "county_gid": "whosonfirst:county:102082793",
+            "locality": "Washington",
+            "locality_gid": "whosonfirst:locality:101929023",
+            "label": "1600 Pennsylvania Ave NW, Washington, DC, USA"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,76 @@
+extends: spectral:oas
+rules:
+  stadia-maps-operation-ids-kebab-case:
+    description: Operation IDs must use kebab-case
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+
+  stadia-maps-tags-required:
+    description: All operations must have at least one tag
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+
+  stadia-maps-summaries-title-case:
+    description: Operation summaries should use sentence case starting with a capital letter
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z]"
+
+  stadia-maps-security-required:
+    description: All operations must declare security (API key required)
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: security
+      function: truthy
+
+  stadia-maps-api-key-scheme:
+    description: API must use ApiKeyAuth security scheme
+    severity: error
+    given: "$.components.securitySchemes"
+    then:
+      field: ApiKeyAuth
+      function: truthy
+
+  stadia-maps-versioned-paths:
+    description: All paths should include a version segment (e.g., /v1)
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: ".*/v[0-9]+.*"
+
+  stadia-maps-json-responses:
+    description: 200 responses should return application/json content type
+    severity: warn
+    given: "$.paths[*][*].responses['200'].content"
+    then:
+      field: application/json
+      function: truthy
+
+  stadia-maps-post-request-bodies:
+    description: POST operations should define a request body
+    severity: warn
+    given: "$.paths[*][post]"
+    then:
+      field: requestBody
+      function: truthy
+
+  stadia-maps-descriptions-present:
+    description: All operations should have a description
+    severity: info
+    given: "$.paths[*][*]"
+    then:
+      field: description
+      function: truthy

@@ -1,0 +1,82 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.stadiamaps.com/route/v1?api_key=YOUR_API_KEY",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "locations": [
+        { "lat": 40.714201, "lon": -74.006230, "type": "break" },
+        { "lat": 40.750500, "lon": -73.993400, "type": "break" }
+      ],
+      "costing": "auto",
+      "directions_options": {
+        "units": "kilometers",
+        "language": "en"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "trip": {
+        "status": 0,
+        "status_message": "Found route between points",
+        "units": "kilometers",
+        "language": "en",
+        "locations": [
+          { "type": "break", "lat": 40.714201, "lon": -74.006230, "name": "" },
+          { "type": "break", "lat": 40.750500, "lon": -73.993400, "name": "" }
+        ],
+        "legs": [
+          {
+            "summary": {
+              "time": 892,
+              "length": 5.43
+            },
+            "maneuvers": [
+              {
+                "type": 1,
+                "instruction": "Drive northeast on Broadway.",
+                "verbal_pre_transition_instruction": "Drive northeast on Broadway for 2 kilometers.",
+                "street_names": ["Broadway"],
+                "time": 312,
+                "length": 2.1,
+                "begin_shape_index": 0,
+                "end_shape_index": 45
+              },
+              {
+                "type": 10,
+                "instruction": "Turn left onto 34th Street.",
+                "verbal_pre_transition_instruction": "Turn left onto 34th Street.",
+                "street_names": ["34th Street"],
+                "time": 180,
+                "length": 1.2,
+                "begin_shape_index": 45,
+                "end_shape_index": 78
+              },
+              {
+                "type": 4,
+                "instruction": "You have arrived at your destination.",
+                "verbal_pre_transition_instruction": "You have arrived at your destination.",
+                "time": 0,
+                "length": 0,
+                "begin_shape_index": 120,
+                "end_shape_index": 120
+              }
+            ]
+          }
+        ],
+        "summary": {
+          "time": 892,
+          "length": 5.43,
+          "min_lat": 40.714201,
+          "min_lon": -74.006230,
+          "max_lat": 40.750500,
+          "max_lon": -73.993400
+        }
+      }
+    }
+  }
+}

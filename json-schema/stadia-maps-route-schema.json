@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stadia-maps/refs/heads/main/json-schema/stadia-maps-route-schema.json",
+  "title": "Stadia Maps Route",
+  "description": "A route response from the Stadia Maps Valhalla routing engine, containing legs, maneuvers, and summary statistics.",
+  "type": "object",
+  "properties": {
+    "trip": {
+      "type": "object",
+      "description": "The complete trip details",
+      "properties": {
+        "status": { "type": "integer", "description": "Routing status code (0 = success)" },
+        "status_message": { "type": "string", "description": "Human-readable status message" },
+        "units": { "type": "string", "enum": ["kilometers", "miles"], "description": "Distance units" },
+        "language": { "type": "string", "description": "Language for narrative instructions" },
+        "locations": {
+          "type": "array",
+          "description": "Input locations with snapped coordinates",
+          "items": { "$ref": "#/$defs/Location" }
+        },
+        "legs": {
+          "type": "array",
+          "description": "Individual route legs between waypoints",
+          "items": { "$ref": "#/$defs/Leg" }
+        },
+        "summary": {
+          "type": "object",
+          "description": "Overall trip summary",
+          "properties": {
+            "time": { "type": "number", "description": "Total time in seconds" },
+            "length": { "type": "number", "description": "Total distance in specified units" },
+            "min_lat": { "type": "number" },
+            "min_lon": { "type": "number" },
+            "max_lat": { "type": "number" },
+            "max_lon": { "type": "number" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Location": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["break", "through", "via"] },
+        "lat": { "type": "number", "description": "Latitude" },
+        "lon": { "type": "number", "description": "Longitude" },
+        "name": { "type": "string", "description": "Optional name for the location" },
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "postal_code": { "type": "string" },
+        "country": { "type": "string" }
+      }
+    },
+    "Leg": {
+      "type": "object",
+      "description": "A single leg of the route",
+      "properties": {
+        "summary": {
+          "type": "object",
+          "properties": {
+            "time": { "type": "number", "description": "Leg time in seconds" },
+            "length": { "type": "number", "description": "Leg distance in units" }
+          }
+        },
+        "maneuvers": {
+          "type": "array",
+          "description": "Turn-by-turn instructions",
+          "items": { "$ref": "#/$defs/Maneuver" }
+        },
+        "shape": { "type": "string", "description": "Encoded polyline of the leg geometry" }
+      }
+    },
+    "Maneuver": {
+      "type": "object",
+      "description": "A single turn-by-turn maneuver instruction",
+      "properties": {
+        "type": { "type": "integer", "description": "Maneuver type code" },
+        "instruction": { "type": "string", "description": "Human-readable instruction" },
+        "verbal_pre_transition_instruction": { "type": "string" },
+        "verbal_post_transition_instruction": { "type": "string" },
+        "street_names": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Street names for this maneuver"
+        },
+        "time": { "type": "number", "description": "Duration of this maneuver in seconds" },
+        "length": { "type": "number", "description": "Distance of this maneuver" },
+        "begin_shape_index": { "type": "integer" },
+        "end_shape_index": { "type": "integer" },
+        "rough": { "type": "boolean", "description": "Whether the road surface is rough" },
+        "travel_mode": { "type": "string" },
+        "travel_type": { "type": "string" }
+      }
+    }
+  }
+}

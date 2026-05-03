@@ -1,0 +1,425 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Stadia Maps Geospatial Services"
+  description: >-
+    Unified geospatial capability combining Stadia Maps routing, geocoding, search,
+    elevation, time zone, and navigation APIs. Enables developers to build complete
+    location-aware applications covering address search, turn-by-turn directions,
+    isochrone analysis, map matching, and proximity queries from a single platform.
+  tags:
+    - Mapping
+    - Routing
+    - Geocoding
+    - Geospatial
+    - Navigation
+    - Elevation
+    - Location
+    - Search
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      STADIA_MAPS_API_KEY: STADIA_MAPS_API_KEY
+
+capability:
+  consumes:
+    - import: stadia-maps-geospatial
+      location: ./shared/geospatial-api.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: geospatial-services-api
+      description: "Unified REST API for geospatial services with Stadia Maps."
+      resources:
+        - path: /v1/geocoding/autocomplete
+          name: autocomplete
+          description: "Search-as-you-type place autocomplete"
+          operations:
+            - method: GET
+              name: autocomplete
+              description: "Return place suggestions for partial address or name input"
+              call: "stadia-maps-geospatial.autocomplete"
+              with:
+                text: "rest.text"
+                focus.point.lat: "rest.focus_lat"
+                focus.point.lon: "rest.focus_lon"
+                size: "rest.size"
+                lang: "rest.lang"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/geocoding/search
+          name: search
+          description: "Forward geocoding"
+          operations:
+            - method: GET
+              name: search
+              description: "Geocode a place name or address to geographic coordinates"
+              call: "stadia-maps-geospatial.search"
+              with:
+                text: "rest.text"
+                focus.point.lat: "rest.focus_lat"
+                focus.point.lon: "rest.focus_lon"
+                size: "rest.size"
+                lang: "rest.lang"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/geocoding/structured
+          name: search-structured
+          description: "Structured forward geocoding by address components"
+          operations:
+            - method: GET
+              name: search-structured
+              description: "Find locations from structured address components"
+              call: "stadia-maps-geospatial.search-structured"
+              with:
+                address: "rest.address"
+                locality: "rest.locality"
+                region: "rest.region"
+                postalcode: "rest.postalcode"
+                country: "rest.country"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/geocoding/reverse
+          name: reverse
+          description: "Reverse geocoding from coordinates"
+          operations:
+            - method: GET
+              name: reverse
+              description: "Find addresses and places near geographic coordinates"
+              call: "stadia-maps-geospatial.reverse"
+              with:
+                point.lat: "rest.lat"
+                point.lon: "rest.lon"
+                size: "rest.size"
+                lang: "rest.lang"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/geocoding/bulk
+          name: search-bulk
+          description: "Batch geocoding"
+          operations:
+            - method: POST
+              name: search-bulk
+              description: "Run a batch of geocoding queries in one request"
+              call: "stadia-maps-geospatial.search-bulk"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/geocoding/place
+          name: place
+          description: "Place details by GID"
+          operations:
+            - method: GET
+              name: place
+              description: "Look up place details by GID identifier"
+              call: "stadia-maps-geospatial.place"
+              with:
+                ids: "rest.ids"
+                lang: "rest.lang"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/routing/route
+          name: route
+          description: "Turn-by-turn routing"
+          operations:
+            - method: POST
+              name: route
+              description: "Compute turn-by-turn directions between locations"
+              call: "stadia-maps-geospatial.route"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/routing/optimized
+          name: optimized-route
+          description: "Optimized multi-stop routing"
+          operations:
+            - method: POST
+              name: optimized-route
+              description: "Calculate the optimal visiting order for multiple stops"
+              call: "stadia-maps-geospatial.optimized-route"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/routing/isochrone
+          name: isochrone
+          description: "Reachable area analysis"
+          operations:
+            - method: POST
+              name: isochrone
+              description: "Calculate areas reachable within a time or distance constraint"
+              call: "stadia-maps-geospatial.isochrone"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/routing/matrix
+          name: time-distance-matrix
+          description: "Time and distance matrix"
+          operations:
+            - method: POST
+              name: time-distance-matrix
+              description: "Compute travel times and distances between multiple origins and destinations"
+              call: "stadia-maps-geospatial.time-distance-matrix"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/roads/nearest
+          name: nearest-roads
+          description: "Nearest roads lookup"
+          operations:
+            - method: POST
+              name: nearest-roads
+              description: "Find roads nearest to a set of input locations"
+              call: "stadia-maps-geospatial.nearest-roads"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/roads/match
+          name: map-match
+          description: "GPS trace map matching"
+          operations:
+            - method: POST
+              name: map-match
+              description: "Match a recorded GPS trace to the road network"
+              call: "stadia-maps-geospatial.map-match"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/roads/attributes
+          name: trace-attributes
+          description: "Road attribute tracing"
+          operations:
+            - method: POST
+              name: trace-attributes
+              description: "Extract road attributes along a traced route"
+              call: "stadia-maps-geospatial.trace-attributes"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/elevation
+          name: elevation
+          description: "Elevation data"
+          operations:
+            - method: POST
+              name: elevation
+              description: "Get elevation profile along a polyline or at specific points"
+              call: "stadia-maps-geospatial.elevation"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/tz/lookup
+          name: tz-lookup
+          description: "Time zone lookup"
+          operations:
+            - method: GET
+              name: tz-lookup
+              description: "Get time zone information for any geographic coordinate"
+              call: "stadia-maps-geospatial.tz-lookup"
+              with:
+                lat: "rest.lat"
+                lng: "rest.lng"
+                timestamp: "rest.timestamp"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: geospatial-services-mcp
+      transport: http
+      description: "MCP server for AI-assisted geospatial operations with Stadia Maps."
+      tools:
+        - name: autocomplete-place
+          description: "Autocomplete a partial address or place name into candidate locations — ideal for building address-entry UIs"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.autocomplete"
+          with:
+            text: "tools.text"
+            focus.point.lat: "tools.focus_lat"
+            focus.point.lon: "tools.focus_lon"
+            size: "tools.size"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: geocode-address
+          description: "Convert a free-text address or place name to latitude/longitude coordinates"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.search"
+          with:
+            text: "tools.text"
+            focus.point.lat: "tools.focus_lat"
+            focus.point.lon: "tools.focus_lon"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: geocode-structured
+          description: "Geocode using structured address components (street, city, state, postal code, country)"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.search-structured"
+          with:
+            address: "tools.address"
+            locality: "tools.locality"
+            region: "tools.region"
+            postalcode: "tools.postalcode"
+            country: "tools.country"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: reverse-geocode
+          description: "Find street address, city, country, and place names from latitude/longitude coordinates"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.reverse"
+          with:
+            point.lat: "tools.lat"
+            point.lon: "tools.lon"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: batch-geocode
+          description: "Geocode a batch of addresses or place names in a single request"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.search-bulk"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: lookup-place
+          description: "Retrieve detailed information about a place using its Pelias GID identifier"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.place"
+          with:
+            ids: "tools.ids"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-directions
+          description: "Get turn-by-turn driving, walking, cycling, or transit directions between waypoints"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.route"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: optimize-route
+          description: "Find the optimal visiting order for multiple stops with fixed start and end"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.optimized-route"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: calculate-isochrone
+          description: "Calculate all areas reachable within a given travel time or distance from a starting point"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.isochrone"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: travel-time-matrix
+          description: "Compute a matrix of travel times and distances between multiple origin and destination pairs"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.time-distance-matrix"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: find-nearest-roads
+          description: "Find the nearest road segments to a set of GPS coordinates"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.nearest-roads"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: map-match-trace
+          description: "Snap a raw GPS trace to the road network and convert to navigation instructions"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.map-match"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: trace-road-attributes
+          description: "Extract road attributes (speed limits, surface type, access restrictions) along a traced route"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.trace-attributes"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-elevation
+          description: "Get elevation in meters at one or more GPS points or along a polyline"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.elevation"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-timezone
+          description: "Get the IANA time zone name and UTC offset for any geographic coordinate"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.tz-lookup"
+          with:
+            lat: "tools.lat"
+            lng: "tools.lng"
+          outputParameters:
+            - type: object
+              mapping: "$."

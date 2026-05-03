@@ -1,0 +1,64 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "geosparql": "http://www.opengis.net/ont/geosparql#",
+    "stadia": "https://stadiamaps.com/vocab/",
+
+    "Location": "schema:Place",
+    "Route": "schema:Trip",
+    "Maneuver": "stadia:Maneuver",
+    "Isochrone": "stadia:Isochrone",
+
+    "name": "schema:name",
+    "label": "schema:description",
+    "street": "schema:streetAddress",
+    "housenumber": "stadia:houseNumber",
+    "postalcode": "schema:postalCode",
+    "locality": "schema:addressLocality",
+    "county": "schema:addressRegion",
+    "region": "schema:addressRegion",
+    "country": "schema:addressCountry",
+    "country_a": "stadia:countryCode",
+    "neighbourhood": "schema:containedInPlace",
+
+    "confidence": "stadia:geocodeConfidence",
+    "accuracy": "stadia:coordinateAccuracy",
+    "layer": "stadia:placeLayer",
+    "source": "schema:publisher",
+    "gid": "@id",
+
+    "geometry": {
+      "@id": "schema:geo",
+      "@type": "schema:GeoCoordinates"
+    },
+    "coordinates": "geo:location",
+    "lat": "schema:latitude",
+    "lon": "schema:longitude",
+    "lng": "schema:longitude",
+
+    "time": {
+      "@id": "schema:duration",
+      "@type": "xsd:decimal"
+    },
+    "length": {
+      "@id": "schema:distance",
+      "@type": "xsd:decimal"
+    },
+    "units": "stadia:distanceUnits",
+    "language": "schema:inLanguage",
+
+    "instruction": "stadia:maneuverInstruction",
+    "street_names": "schema:streetAddress",
+
+    "timezone": "stadia:timeZone",
+    "zone_name": "stadia:ianaTimeZone",
+    "utc_offset_sec": "stadia:utcOffsetSeconds",
+    "dst_offset_sec": "stadia:dstOffsetSeconds",
+
+    "elevation": "stadia:elevationMeters",
+    "shape": "geosparql:asWKT"
+  }
+}

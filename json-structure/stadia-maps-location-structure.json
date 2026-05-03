@@ -1,0 +1,54 @@
+{
+  "name": "Stadia Maps Location Structure",
+  "description": "Structural documentation for a geocoded location result from Stadia Maps Pelias geocoder",
+  "properties": {
+    "type": { "type": "string", "description": "Always 'FeatureCollection' (GeoJSON)" },
+    "features": {
+      "type": "array",
+      "description": "Array of place results as GeoJSON Features",
+      "items": {
+        "type": { "type": "string", "description": "'Feature'" },
+        "geometry": {
+          "type": "object",
+          "description": "GeoJSON Point geometry",
+          "properties": {
+            "type": { "type": "string", "description": "'Point'" },
+            "coordinates": { "type": "array", "description": "[longitude, latitude]" }
+          }
+        },
+        "properties": {
+          "type": "object",
+          "description": "Place metadata",
+          "properties": {
+            "gid": { "type": "string", "description": "Global unique place identifier" },
+            "layer": { "type": "string", "description": "Place type: venue, address, locality, region, country, etc." },
+            "source": { "type": "string", "description": "Data source: openstreetmap, openaddresses, geonames, whosonfirst" },
+            "name": { "type": "string", "description": "Primary place name" },
+            "housenumber": { "type": "string", "description": "Street number" },
+            "street": { "type": "string", "description": "Street name" },
+            "postalcode": { "type": "string", "description": "Postal code" },
+            "confidence": { "type": "number", "description": "Match confidence 0-1" },
+            "accuracy": { "type": "string", "description": "Coordinate accuracy: point, centroid, or rooftop" },
+            "country": { "type": "string", "description": "Country name" },
+            "country_a": { "type": "string", "description": "ISO alpha-3 country code" },
+            "region": { "type": "string", "description": "State or province" },
+            "region_a": { "type": "string", "description": "Region abbreviation" },
+            "county": { "type": "string", "description": "County name" },
+            "locality": { "type": "string", "description": "City or town" },
+            "neighbourhood": { "type": "string", "description": "Neighbourhood" },
+            "label": { "type": "string", "description": "Full formatted display label" }
+          }
+        }
+      }
+    },
+    "geocoding": {
+      "type": "object",
+      "description": "Query metadata and attribution",
+      "properties": {
+        "version": { "type": "string", "description": "Geocoder version" },
+        "attribution": { "type": "string", "description": "Attribution URL" },
+        "query": { "type": "object", "description": "Echoed query parameters" }
+      }
+    }
+  }
+}

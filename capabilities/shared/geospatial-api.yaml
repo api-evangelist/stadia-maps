@@ -1,0 +1,481 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Stadia Maps Geospatial API"
+  description: "Routing, geocoding, elevation, time zone, and geospatial analysis APIs from Stadia Maps."
+  tags:
+    - Mapping
+    - Routing
+    - Geocoding
+    - Geospatial
+    - Navigation
+    - Elevation
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      STADIA_MAPS_API_KEY: STADIA_MAPS_API_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: stadia-maps-geospatial
+      baseUri: https://api.stadiamaps.com
+      description: "Stadia Maps Geospatial API for routing, geocoding, and location services"
+      authentication:
+        type: apikey
+        key: api_key
+        value: "{{STADIA_MAPS_API_KEY}}"
+        placement: query
+      resources:
+        - name: tz-lookup
+          path: /tz/lookup/v1
+          description: "Time zone lookup for any point on earth"
+          operations:
+            - name: tz-lookup
+              method: GET
+              description: "Get the current time zone information for any point on earth"
+              inputParameters:
+                - name: lat
+                  in: query
+                  type: number
+                  required: true
+                  description: "Latitude of the point"
+                - name: lng
+                  in: query
+                  type: number
+                  required: true
+                  description: "Longitude of the point"
+                - name: timestamp
+                  in: query
+                  type: integer
+                  required: false
+                  description: "UNIX timestamp for historical/future lookups"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: elevation
+          path: /elevation/v1
+          description: "Elevation data along a polyline or at a point"
+          operations:
+            - name: elevation
+              method: POST
+              description: "Get the elevation profile along a polyline or at a point"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: route
+          path: /route/v1
+          description: "Turn-by-turn routing between locations"
+          operations:
+            - name: route
+              method: POST
+              description: "Get turn by turn routing instructions between two or more locations"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: nearest-roads
+          path: /nearest_roads/v1
+          description: "Find nearest roads to input locations"
+          operations:
+            - name: nearest-roads
+              method: POST
+              description: "Find the nearest roads to the set of input locations"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: time-distance-matrix
+          path: /matrix/v1
+          description: "Time/distance matrix between multiple locations"
+          operations:
+            - name: time-distance-matrix
+              method: POST
+              description: "Calculate a time distance matrix for use in an optimizer"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: isochrone
+          path: /isochrone/v1
+          description: "Areas of equal travel time from a location"
+          operations:
+            - name: isochrone
+              method: POST
+              description: "Calculate areas of equal travel time from a location"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: optimized-route
+          path: /optimized_route/v1
+          description: "Optimized multi-stop routing"
+          operations:
+            - name: optimized-route
+              method: POST
+              description: "Calculate an optimized route between a known start and end point"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: map-match
+          path: /map_match/v1
+          description: "Match a recorded GPS trace to the road network"
+          operations:
+            - name: map-match
+              method: POST
+              description: "Match a recorded route to the road network"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: trace-attributes
+          path: /trace_attributes/v1
+          description: "Road attributes along a traced route"
+          operations:
+            - name: trace-attributes
+              method: POST
+              description: "Trace the attributes of roads visited on a route"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: autocomplete
+          path: /geocoding/v1/autocomplete
+          description: "Search-as-you-type place autocomplete"
+          operations:
+            - name: autocomplete
+              method: GET
+              description: "Search and geocode quickly based on partial input"
+              inputParameters:
+                - name: text
+                  in: query
+                  type: string
+                  required: true
+                  description: "Search text for autocomplete"
+                - name: focus.point.lat
+                  in: query
+                  type: number
+                  required: false
+                  description: "Focus latitude for proximity ranking"
+                - name: focus.point.lon
+                  in: query
+                  type: number
+                  required: false
+                  description: "Focus longitude for proximity ranking"
+                - name: size
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of results to return"
+                - name: lang
+                  in: query
+                  type: string
+                  required: false
+                  description: "Language for results (BCP 47)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: search
+          path: /geocoding/v1/search
+          description: "Forward geocoding by place name or address"
+          operations:
+            - name: search
+              method: GET
+              description: "Search for location and other info using a place name or address"
+              inputParameters:
+                - name: text
+                  in: query
+                  type: string
+                  required: true
+                  description: "Search text"
+                - name: focus.point.lat
+                  in: query
+                  type: number
+                  required: false
+                  description: "Focus latitude"
+                - name: focus.point.lon
+                  in: query
+                  type: number
+                  required: false
+                  description: "Focus longitude"
+                - name: size
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of results"
+                - name: lang
+                  in: query
+                  type: string
+                  required: false
+                  description: "Language for results (BCP 47)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: search-structured
+          path: /geocoding/v1/search/structured
+          description: "Structured forward geocoding by address components"
+          operations:
+            - name: search-structured
+              method: GET
+              description: "Find locations matching components (structured forward geocoding)"
+              inputParameters:
+                - name: address
+                  in: query
+                  type: string
+                  required: false
+                  description: "Street address"
+                - name: locality
+                  in: query
+                  type: string
+                  required: false
+                  description: "City or town"
+                - name: region
+                  in: query
+                  type: string
+                  required: false
+                  description: "State or province"
+                - name: postalcode
+                  in: query
+                  type: string
+                  required: false
+                  description: "Postal code"
+                - name: country
+                  in: query
+                  type: string
+                  required: false
+                  description: "Country code"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: search-bulk
+          path: /geocoding/v1/search/bulk
+          description: "Batch geocoding queries"
+          operations:
+            - name: search-bulk
+              method: POST
+              description: "Quickly run a batch of geocoding queries"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: reverse
+          path: /geocoding/v1/reverse
+          description: "Reverse geocoding from coordinates"
+          operations:
+            - name: reverse
+              method: GET
+              description: "Find places and addresses near geographic coordinates"
+              inputParameters:
+                - name: point.lat
+                  in: query
+                  type: number
+                  required: true
+                  description: "Latitude of the point"
+                - name: point.lon
+                  in: query
+                  type: number
+                  required: true
+                  description: "Longitude of the point"
+                - name: size
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of results"
+                - name: lang
+                  in: query
+                  type: string
+                  required: false
+                  description: "Language for results"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: place
+          path: /geocoding/v1/place
+          description: "Place details by GID"
+          operations:
+            - name: place
+              method: GET
+              description: "Retrieve details of a place using its GID"
+              inputParameters:
+                - name: ids
+                  in: query
+                  type: string
+                  required: true
+                  description: "Comma-separated list of GIDs to look up"
+                - name: lang
+                  in: query
+                  type: string
+                  required: false
+                  description: "Language for results"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: stadia-maps-rest
+      resources:
+        - path: /v1/tz/lookup
+          name: tz-lookup
+          description: "Time zone lookup"
+          operations:
+            - method: GET
+              name: tz-lookup
+              description: "Get time zone for geographic coordinates"
+              call: "stadia-maps-geospatial.tz-lookup"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/geocoding/autocomplete
+          name: autocomplete
+          description: "Autocomplete search"
+          operations:
+            - method: GET
+              name: autocomplete
+              description: "Autocomplete search-as-you-type"
+              call: "stadia-maps-geospatial.autocomplete"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/geocoding/search
+          name: search
+          description: "Forward geocoding"
+          operations:
+            - method: GET
+              name: search
+              description: "Forward geocode a place name or address"
+              call: "stadia-maps-geospatial.search"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/geocoding/reverse
+          name: reverse
+          description: "Reverse geocoding"
+          operations:
+            - method: GET
+              name: reverse
+              description: "Reverse geocode coordinates to address"
+              call: "stadia-maps-geospatial.reverse"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/routing/route
+          name: route
+          description: "Turn-by-turn routing"
+          operations:
+            - method: POST
+              name: route
+              description: "Compute turn-by-turn directions"
+              call: "stadia-maps-geospatial.route"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: stadia-maps-mcp
+      transport: http
+      tools:
+        - name: tz-lookup
+          description: "Get time zone info for any geographic coordinate"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.tz-lookup"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: autocomplete
+          description: "Autocomplete place search for interactive location pickers"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.autocomplete"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: search
+          description: "Forward geocode a place name or address to coordinates"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.search"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: reverse
+          description: "Reverse geocode coordinates to street address and place details"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stadia-maps-geospatial.reverse"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: route
+          description: "Get turn-by-turn driving, walking, or cycling directions"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "stadia-maps-geospatial.route"
+          outputParameters:
+            - type: object
+              mapping: "$."

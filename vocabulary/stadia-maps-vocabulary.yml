@@ -1,0 +1,148 @@
+name: Stadia Maps Vocabulary
+description: >-
+  Vocabulary and taxonomy for the Stadia Maps location platform covering routing,
+  geocoding, geospatial analysis, mapping, and developer API concepts.
+created: '2026-05-02'
+modified: '2026-05-02'
+terms:
+  - term: Geocoding
+    definition: >-
+      The process of converting a human-readable address or place name into
+      geographic coordinates (latitude/longitude). Stadia Maps uses the Pelias
+      geocoding engine backed by OpenStreetMap, OpenAddresses, GeoNames, and
+      Who's On First datasets.
+    tags: [Geocoding, Core Concept]
+
+  - term: Reverse Geocoding
+    definition: >-
+      The process of converting geographic coordinates (latitude/longitude) back
+      into a human-readable address, place name, or administrative area. Used in
+      applications that need to show an address for a GPS location.
+    tags: [Geocoding, Core Concept]
+
+  - term: Autocomplete
+    definition: >-
+      A search-as-you-type feature that suggests place names and addresses while
+      the user is still typing. Stadia Maps autocomplete returns ranked GeoJSON
+      feature results based on partial text input and optional focus point.
+    tags: [Geocoding, Search, UX]
+
+  - term: GID
+    definition: >-
+      Global Identifier. A unique stable string identifier for a place in the
+      Pelias geocoding system, composed of source, layer, and source-specific ID
+      (e.g., whosonfirst:locality:101929023). Used with the place endpoint for
+      direct lookups.
+    tags: [Geocoding, Identifier]
+
+  - term: Layer
+    definition: >-
+      The type or granularity of a geocoded place result. Layers include venue,
+      address, street, neighbourhood, locality, borough, localadmin, county,
+      macrocounty, region, macroregion, country, and postalcode.
+    tags: [Geocoding, Classification]
+
+  - term: Routing
+    definition: >-
+      The calculation of a path between two or more geographic locations, including
+      turn-by-turn instructions, distance, and estimated travel time. Stadia Maps
+      uses the Valhalla open-source routing engine supporting multiple travel modes.
+    tags: [Routing, Core Concept]
+
+  - term: Costing Model
+    definition: >-
+      The travel mode and optimization parameters used for routing. Valhalla costing
+      models include auto, truck, bicycle, pedestrian, motor_scooter, motorcycle,
+      multimodal, and taxi.
+    tags: [Routing, Configuration]
+
+  - term: Maneuver
+    definition: >-
+      A single turn-by-turn navigation instruction within a route leg, including
+      instruction text, street names, duration, distance, and shape index range
+      identifying the geometry segment.
+    tags: [Routing, Navigation]
+
+  - term: Isochrone
+    definition: >-
+      A polygon representing all areas reachable from a starting point within a
+      given travel time or distance. Used for service area analysis, delivery zone
+      planning, and accessibility studies. Stadia Maps returns GeoJSON polygons.
+    tags: [Geospatial Analysis, Routing]
+
+  - term: Time-Distance Matrix
+    definition: >-
+      A data structure showing travel times and distances between every combination
+      of a set of origin and destination locations. Used in logistics optimization,
+      last-mile delivery planning, and fleet management.
+    tags: [Routing, Optimization]
+
+  - term: Map Matching
+    definition: >-
+      The process of aligning a raw GPS trace (sequence of timestamped coordinates)
+      to the underlying road network, producing a clean routed path with turn-by-turn
+      instructions. Useful for cleaning noisy GPS data and post-processing trips.
+    tags: [Routing, GPS]
+
+  - term: Trace Attributes
+    definition: >-
+      Road-level metadata extracted along a traced GPS path, including speed limits,
+      surface type, access restrictions, bridge/tunnel flags, and intersection details.
+      Used for navigation, research, and compliance applications.
+    tags: [Routing, Road Data]
+
+  - term: Elevation
+    definition: >-
+      The altitude (height above sea level) at a geographic point, measured in meters.
+      Stadia Maps provides elevation profiles along polylines and point-based lookups
+      using digital elevation model data.
+    tags: [Geospatial, Elevation]
+
+  - term: Encoded Polyline
+    definition: >-
+      A compact string encoding of a sequence of latitude/longitude coordinates using
+      the Google Polyline encoding algorithm. Used to represent route geometry and
+      GPS traces in API requests and responses.
+    tags: [Encoding, Routing]
+
+  - term: API Key
+    definition: >-
+      A secret token used to authenticate requests to the Stadia Maps API. Passed
+      as the api_key query parameter or as a Bearer token in the Authorization header.
+      Managed through the Stadia Maps client dashboard.
+    tags: [Authentication, API]
+
+  - term: GDPR Endpoint
+    definition: >-
+      An EU-region API endpoint (api-eu.stadiamaps.com) provided for GDPR compliance.
+      Routes requests exclusively through EU infrastructure, ensuring personal data
+      does not leave the European Economic Area.
+    tags: [Privacy, Compliance, GDPR]
+
+  - term: Valhalla
+    definition: >-
+      An open-source routing engine used by Stadia Maps for all routing APIs. Valhalla
+      supports multi-modal routing, isochrones, time-distance matrices, map matching,
+      and trace attributes. Developed by Mapbox and now community-maintained.
+    tags: [Routing, Open Source, Engine]
+
+  - term: Pelias
+    definition: >-
+      An open-source geocoding engine used by Stadia Maps for all geocoding, search,
+      and autocomplete APIs. Pelias indexes multiple authoritative datasets and returns
+      results as GeoJSON FeatureCollections.
+    tags: [Geocoding, Open Source, Engine]
+
+  - term: GeoJSON
+    definition: >-
+      An open standard format for encoding geographic data structures using JSON.
+      Stadia Maps returns geocoding and isochrone results as GeoJSON FeatureCollections,
+      compatible with MapLibre GL JS, Leaflet, and other mapping libraries.
+    tags: [Format, Standard, Geospatial]
+
+  - term: Property
+    definition: >-
+      In the Stadia Maps Account Management API, a Property represents an application
+      (web app, mobile app, or server) that consumes the Stadia Maps API. Each property
+      can have associated API keys and authorized domains.
+    tags: [Account Management, API]
