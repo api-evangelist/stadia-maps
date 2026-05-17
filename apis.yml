@@ -30,7 +30,7 @@ common:
   - url: https://docs.stadiamaps.com/
     type: Documentation
   - url: https://docs.stadiamaps.com/api-reference/
-    type: API Reference
+    type: APIReference
   - url: https://stadiamaps.com/pricing/
     type: Pricing
   - url: https://stadiamaps.com/contact/
@@ -38,7 +38,7 @@ common:
   - url: https://docs.stadiamaps.com/authentication/
     type: Authentication
   - url: https://github.com/stadiamaps
-    type: GitHub Organization
+    type: GitHubOrganization
   - url: https://www.npmjs.com/package/@stadiamaps/api
     type: SDK
   - url: https://pypi.org/project/stadiamaps-api/
