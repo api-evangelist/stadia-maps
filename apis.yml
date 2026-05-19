@@ -25,6 +25,8 @@ created: '2024-12-16'
 modified: '2026-05-19'
 position: Consuming
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/stadia-maps
   - url: https://stadiamaps.com/
     type: Portal
   - url: https://docs.stadiamaps.com/
