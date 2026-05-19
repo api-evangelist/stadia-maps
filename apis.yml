@@ -22,7 +22,7 @@ type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-12-16'
-modified: '2026-05-02'
+modified: '2026-05-19'
 position: Consuming
 common:
   - url: https://stadiamaps.com/
@@ -43,6 +43,9 @@ common:
     type: SDK
   - url: https://pypi.org/project/stadiamaps-api/
     type: SDK
+  - name: MCP Server
+    url: https://github.com/stadiamaps/stadiamaps-mcp-server-ts
+    type: MCPServer
 apis:
   - aid: stadia-maps:stadia-maps
     name: Stadia Maps Geospatial API
