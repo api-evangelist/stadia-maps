@@ -48,6 +48,8 @@ common:
   - name: MCP Server
     url: https://github.com/stadiamaps/stadiamaps-mcp-server-ts
     type: MCPServer
+  - type: LLMsTxt
+    url: https://docs.stadiamaps.com/llms.txt
 apis:
   - aid: stadia-maps:stadia-maps
     name: Stadia Maps Geospatial API
