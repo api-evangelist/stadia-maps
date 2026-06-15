@@ -1,8 +1,8 @@
 # Stadia Maps (stadia-maps)
 
-Stadia Maps is a cutting-edge mapping platform providing high-quality, detailed maps and location APIs for developers. The platform offers routing and turn-by-turn navigation, geocoding and autocomplete search, reverse geocoding, place lookups, elevation data, time zone information, isochrone analysis, map matching, and account management. Stadia Maps delivers GDPR-compliant EU endpoints, rich map styling options, and official SDKs for TypeScript, Python, Swift, Kotlin, and PHP.
+Stadia Maps is a cutting-edge mapping platform providing high-quality, detailed maps and location APIs for developers. The platform offers routing and navigation, geocoding and search, elevation data, time zone lookups, isochrone analysis, and account management. Stadia Maps delivers GDPR-compliant EU endpoints, rich map styling options, and official SDKs for TypeScript, Python, Swift, Kotlin, and PHP. Trusted by developers building web, mobile, and data visualization applications worldwide.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/stadia-maps/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/stadia-maps/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/stadia-maps/refs/heads/main/apis.yml)
 
 ## Scope
 
@@ -23,7 +23,7 @@ Stadia Maps is a cutting-edge mapping platform providing high-quality, detailed 
 ## Timestamps
 
 - **Created:** 2024-12-16
-- **Modified:** 2026-05-02
+- **Modified:** 2026-05-19
 
 ## APIs
 
@@ -31,34 +31,63 @@ Stadia Maps is a cutting-edge mapping platform providing high-quality, detailed 
 
 The Stadia Maps Geospatial API provides routing and turn-by-turn navigation, geocoding and autocomplete search, reverse geocoding, place lookups, elevation profiles, time zone information, road attributes, isochrones, map matching, time-distance matrices, and optimized routing. Secured with API key authentication. EU-region endpoint available for GDPR compliance.
 
-**Base URL:** https://api.stadiamaps.com
+- **Human URL:** [https://docs.stadiamaps.com/](https://docs.stadiamaps.com/)
+- **Base URL:** `https://api.stadiamaps.com`
+
+#### Tags
+
+- Attributes
+- Autocomplete
+- Elevation
+- Geospatial
+- Geocoding
+- Isochrone
+- Lookups
+- Mapping
+- Match
+- Navigation
+- Place
+- Reverse
+- Roads
+- Routes
+- Routing
+- Search
+- Time Zone
 
 #### Properties
 
-- [OpenAPI](openapi/stadia-maps-openapi.yml)
 - [Documentation](https://docs.stadiamaps.com/)
+- [OpenAPI](openapi/stadia-maps-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
 - [Authentication](https://docs.stadiamaps.com/authentication/)
-- [Routing Docs](https://docs.stadiamaps.com/routing/)
-- [Geocoding Docs](https://docs.stadiamaps.com/geocoding-search-autocomplete/)
+- [Documentation](https://docs.stadiamaps.com/routing/)
+- [Documentation](https://docs.stadiamaps.com/geocoding-search-autocomplete/)
 - [Spectral Ruleset](rules/stadia-maps-rules.yml)
-- [Naftiko Capability](capabilities/geospatial-services.yaml)
-- [JSON Schema](json-schema/stadia-maps-location-schema.json)
-- [JSON-LD Context](json-ld/stadia-maps-context.jsonld)
+- [JSON Schema](json-schema/stadia-maps-location-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [J S O N L D Context](json-ld/stadia-maps-context.jsonld)
 - [Vocabulary](vocabulary/stadia-maps-vocabulary.yml)
 
 ### Stadia Maps Account Management API
 
-The Stadia Maps Account Management API enables programmatic management of properties, domains, and API keys. Access is available on request.
+The Stadia Maps Account Management API enables programmatic management of properties, domains, and API keys. Useful for managing large numbers of properties, automating domain allowlisting, and programmatically rotating API keys. Access is available on request.
 
-**Base URL:** https://client.stadiamaps.com/api/v1
+- **Human URL:** [https://docs.stadiamaps.com/client-api/](https://docs.stadiamaps.com/client-api/)
+- **Base URL:** `https://client.stadiamaps.com/api/v1`
+
+#### Tags
+
+- Account Management
+- API Keys
+- Domains
+- Properties
 
 #### Properties
 
 - [Documentation](https://docs.stadiamaps.com/client-api/)
-- [OpenAPI](https://client.stadiamaps.com/api/v1/openapi/)
+- [OpenAPI](https://client.stadiamaps.com/api/v1/openapi/) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
 
 ## Common Properties
 
+- [LinkedIn](https://www.linkedin.com/company/stadia-maps)
 - [Portal](https://stadiamaps.com/)
 - [Documentation](https://docs.stadiamaps.com/)
 - [API Reference](https://docs.stadiamaps.com/api-reference/)
@@ -66,39 +95,12 @@ The Stadia Maps Account Management API enables programmatic management of proper
 - [Contact](https://stadiamaps.com/contact/)
 - [Authentication](https://docs.stadiamaps.com/authentication/)
 - [GitHub Organization](https://github.com/stadiamaps)
-- [TypeScript SDK](https://www.npmjs.com/package/@stadiamaps/api)
-- [Python SDK](https://pypi.org/project/stadiamaps-api/)
+- [SDK](https://www.npmjs.com/package/@stadiamaps/api)
+- [SDK](https://pypi.org/project/stadiamaps-api/)
+- [M C P Server](https://github.com/stadiamaps/stadiamaps-mcp-server-ts)
+- [L L Ms Txt](https://docs.stadiamaps.com/llms.txt)
 
-## Artifacts
+## Maintainers
 
-### JSON Schema
-
-- [Location Schema](json-schema/stadia-maps-location-schema.json)
-- [Route Schema](json-schema/stadia-maps-route-schema.json)
-
-### JSON Structure
-
-- [Location Structure](json-structure/stadia-maps-location-structure.json)
-
-### JSON-LD
-
-- [Context](json-ld/stadia-maps-context.jsonld)
-
-### Examples
-
-- [Autocomplete](examples/stadia-maps-autocomplete-example.json)
-- [Route](examples/stadia-maps-route-example.json)
-- [Timezone Lookup](examples/stadia-maps-tz-lookup-example.json)
-
-### Rules
-
-- [Spectral Ruleset](rules/stadia-maps-rules.yml)
-
-### Capabilities
-
-- [Geospatial Services](capabilities/geospatial-services.yaml)
-  - Shared: [Geospatial API](capabilities/shared/geospatial-api.yaml)
-
-### Vocabulary
-
-- [Stadia Maps Vocabulary](vocabulary/stadia-maps-vocabulary.yml)
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
