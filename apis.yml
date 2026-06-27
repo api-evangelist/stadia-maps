@@ -39,13 +39,13 @@ common:
   - url: https://github.com/stadiamaps
     type: GitHubOrganization
   - url: https://www.npmjs.com/package/@stadiamaps/api
-    type: SDK
+    type: SDKs
   - url: https://pypi.org/project/stadiamaps-api/
-    type: SDK
+    type: SDKs
   - name: MCP Server
     url: https://github.com/stadiamaps/stadiamaps-mcp-server-ts
     type: MCPServer
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.stadiamaps.com/llms.txt
 apis:
   - aid: stadia-maps:stadia-maps
