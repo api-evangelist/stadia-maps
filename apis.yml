@@ -22,6 +22,8 @@ created: '2024-12-16'
 modified: '2026-05-19'
 position: Consuming
 common:
+  - type: DomainSecurity
+    url: security/stadia-maps-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/stadia-maps
   - url: https://stadiamaps.com/
@@ -47,6 +49,8 @@ common:
     type: MCPServer
   - type: LlmsText
     url: https://docs.stadiamaps.com/llms.txt
+  - url: https://stadiamaps.com/blog/rss.xml
+    type: Blog
 apis:
   - aid: stadia-maps:stadia-maps
     name: Stadia Maps Geospatial API
