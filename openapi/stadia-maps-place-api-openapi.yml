@@ -1,0 +1,368 @@
+openapi: 3.0.3
+info:
+  description: 'Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. '
+  version: 7.1.0
+  title: Stadia Maps Place API
+  contact:
+    name: Stadia Maps Support
+    url: https://www.stadiamaps.com
+    email: support@stadiamaps.com
+servers:
+- url: https://api.stadiamaps.com
+- url: https://api-eu.stadiamaps.com
+tags:
+- name: Place
+paths:
+  /geocoding/v1/place:
+    get:
+      tags:
+      - Place
+      operationId: place
+      summary: Retrieve details of a place using its GID.
+      description: Many search result components include an associated GID field (for example, an address may have a `localadmin_gid`). The place endpoint lets you look up these places directly by ID. Note that these IDs are not stable for all sources. See the [online documentation](https://docs.stadiamaps.com/geocoding-search-autocomplete/place-lookup/) for details.
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - $ref: '#/components/parameters/placeIDs'
+      - $ref: '#/components/parameters/peliasLang'
+      responses:
+        '200':
+          description: A GeoJSON collection of search results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peliasResponse'
+        '400':
+          description: Bad request
+components:
+  schemas:
+    peliasResponse:
+      type: object
+      properties:
+        geocoding:
+          allOf:
+          - $ref: '#/components/schemas/geocodingObject'
+        bbox:
+          type: array
+          minItems: 4
+          maxItems: 4
+          items:
+            type: number
+            format: double
+          description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/peliasGeoJSONFeature'
+      required:
+      - geocoding
+      - features
+      example:
+        geocoding:
+          version: '0.2'
+          attribution: https://stadiamaps.com/attribution
+          query:
+            text: 1600 Pennsylvania Ave NW
+            size: 10
+            private: false
+            lang:
+              name: English
+              iso6391: en
+              iso6393: eng
+              via: default
+              defaulted: true
+            querySize: 20
+            parser: libpostal
+            parsed_text:
+              housenumber: '1600'
+              street: pennsylvania ave nw
+          engine:
+            name: Pelias
+            author: Mapzen
+            version: '1.0'
+          timestamp: 1679043782383
+        type: FeatureCollection
+        features:
+        - type: Feature
+          geometry:
+            type: Point
+            coordinates:
+            - -77.036547
+            - 38.897675
+          properties:
+            id: us/dc/statewide:aa53d4bd0fe295be
+            gid: openaddresses:address:us/dc/statewide:aa53d4bd0fe295be
+            layer: address
+            source: openaddresses
+            source_id: us/dc/statewide:aa53d4bd0fe295be
+            country_code: US
+            name: 1600 Pennsylvania Avenue NW
+            housenumber: '1600'
+            street: Pennsylvania Avenue NW
+            postalcode: '20500'
+            confidence: 1
+            match_type: exact
+            accuracy: point
+            country: United States
+            country_gid: whosonfirst:country:85633793
+            country_a: USA
+            region: District of Columbia
+            region_gid: whosonfirst:region:85688741
+            region_a: DC
+            county: District of Columbia
+            county_gid: whosonfirst:county:1377370667
+            county_a: DI
+            locality: Washington
+            locality_gid: whosonfirst:locality:85931779
+            neighbourhood: White House Grounds
+            neighbourhood_gid: whosonfirst:neighbourhood:1108724059
+            continent: North America
+            continent_gid: whosonfirst:continent:102191575
+            label: 1600 Pennsylvania Avenue NW, Washington, DC, USA
+        bbox:
+        - -77.036547
+        - 38.897675
+        - -77.036547
+        - 38.897675
+    geoJSONPoint:
+      allOf:
+      - $ref: '#/components/schemas/geoJSONGeometryBase'
+      - type: object
+        required:
+        - coordinates
+        properties:
+          coordinates:
+            type: array
+            minItems: 2
+            maxItems: 3
+            items:
+              type: number
+              format: double
+    geocodingObject:
+      type: object
+      properties:
+        attribution:
+          type: string
+          format: uri
+          description: A URL containing attribution information. If you are not using Stadia Maps and our standard attribution already for your basemaps, you must include this attribution link somewhere in your website/app.
+        query:
+          type: object
+          additionalProperties: true
+          description: Technical details of the query. This is most useful for debugging during development. See the full example for the list of properties; these should be self-explanatory, so we don't enumerate them in the spec.
+        warnings:
+          type: array
+          items:
+            type: string
+          description: An array of non-critical warnings. This is normally for informational/debugging purposes and not a serious problem.
+        errors:
+          type: array
+          items:
+            type: string
+          description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
+    peliasLang:
+      type: string
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+    geoJSONGeometryBase:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - Point
+          - MultiPoint
+          - LineString
+          - MultiLineString
+          - Polygon
+          - MultiPolygon
+    peliasLayer:
+      type: string
+      enum:
+      - venue
+      - address
+      - street
+      - country
+      - macroregion
+      - region
+      - macrocounty
+      - county
+      - locality
+      - localadmin
+      - borough
+      - neighbourhood
+      - postalcode
+      - coarse
+      - dependency
+      - macrohood
+      - marinearea
+      - disputed
+      - empire
+      - continent
+      - ocean
+      description: 'Our database is organized into several layers (in the GIS sense of the term) as follows:
+
+
+        - `venue`: Points of interest, businesses, and things with walls
+
+        - `address`: Places with a street address
+
+        - `street`: Streets, roads, highways
+
+        - `county`: Places that issue passports, nations, nation-states
+
+        - `macroregion`: A related group of regions (mostly in Europe)
+
+        - `region`: The first administrative division within a country (usually states and provinces)
+
+        - `macrocounty`: A related group of counties (mostly in Europe)
+
+        - `county`: Official governmental areas; usually bigger than a locality, but almost always smaller than a region
+
+        - `locality`: Towns, hamlets, cities, etc.
+
+        - `localadmin`: Local administrative boundaries
+
+        - `borough`: Local administrative boundaries within cities (not widely used, but present in places such as NYC and Mexico City)
+
+        - `neighbourhood`: Social communities and neighborhoods (note the British spelling in the API!)
+
+        - `postalcode`: Postal codes used by mail services (note: not used for reverse geocoding)
+
+        - `coarse`: An alias for simultaneously using all administrative layers (everything except `venue` and `address`)
+
+        - `marinearea`: Places with fishes and boats.
+
+        - `ocean`: A really big marine area.
+
+        '
+    peliasGeoJSONFeature:
+      type: object
+      required:
+      - type
+      - geometry
+      properties:
+        type:
+          type: string
+          enum:
+          - Feature
+        geometry:
+          $ref: '#/components/schemas/geoJSONPoint'
+        properties:
+          $ref: '#/components/schemas/peliasGeoJSONProperties'
+        bbox:
+          type: array
+          minItems: 4
+          maxItems: 4
+          items:
+            type: number
+            format: double
+          description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
+    peliasGeoJSONProperties:
+      type: object
+      additionalProperties: true
+      properties:
+        gid:
+          type: string
+          description: A scoped GID for this result. This can be passed to the place endpoint. Note that these are not always stable. For Geonames and Who's on First, these are usually stable, but for other sources like OSM, no stability is guaranteed.
+        source_id:
+          type: string
+          description: An ID referencing the original data source (specified via source) for the result. These IDs are specific to the source that they originated from. For example, in the case of OSM, these typically look like way/123 or point/123.
+        label:
+          type: string
+          description: 'A full, human-readable label. However, you may not necessarily want to use this; be sure to read the docs for name, locality, and region before making a decision. This field is mostly localized. The order of components is generally locally correct (ex: for an address in South Korea, the house number appears after the street name). However, components will use a request language equivalent if one exists (ex: Seoul instead of � if lang=en).'
+        layer:
+          $ref: '#/components/schemas/peliasLayer'
+        name:
+          type: string
+          description: The name of the place, the street address including house number, or label of similar relevance. If your app is localized to a specific region, you may get better display results by combining name, locality OR region (or neither?), and postal code together in the local format. Experiment with what works best for your use case.
+        accuracy:
+          type: string
+          enum:
+          - point
+          - centroid
+          description: 'The accuracy of the geographic coordinates in the result. This value is a property of the result itself and won''t change based on the query.
+
+            A point result means that the record can reasonably be represented by a single geographic point. Addresses, venues, or interpolated addresses usually have point accuracy.
+
+            Larger areas, such as a city or country, cannot be represented by a single point, so a centroid is given instead.'
+        addendum:
+          type: object
+          additionalProperties: true
+          description: 'Optional additional information from the underlying data source (ex: OSM). This includes select fields. The most useful fields are mapped in the definition here, but others may be available.'
+          properties:
+            osm:
+              type: object
+              additionalProperties: true
+              properties:
+                website:
+                  type: string
+                  format: uri
+                wikipedia:
+                  type: string
+                wikidata:
+                  type: string
+                phone:
+                  type: string
+        continent:
+          type: string
+        continent_gid:
+          type: string
+        country:
+          type: string
+        country_gid:
+          type: string
+        neighbourhood:
+          type: string
+        neighbourhood_gid:
+          type: string
+        borough:
+          type: string
+        borough_gid:
+          type: string
+        postalcode:
+          type: string
+        street:
+          type: string
+        housenumber:
+          type: string
+        locality:
+          type: string
+          description: The city, village, town, etc. that the place / address is part of. Note that values may not always match postal or local conventions perfectly.
+        locality_gid:
+          type: string
+        county:
+          type: string
+          description: Administrative divisions between localities and regions. Useful for disambiguating nearby results with similar names.
+        region:
+          type: string
+          description: Typically the first administrative division within a country. For example, a US state or a Canadian province.
+        region_a:
+          type: string
+          description: The abbreviation for the region.
+    placeIDs:
+      type: array
+      description: A list of Pelias GIDs to search for.
+      items:
+        type: string
+  parameters:
+    placeIDs:
+      name: ids
+      in: query
+      schema:
+        $ref: '#/components/schemas/placeIDs'
+      description: A list of Pelias GIDs to search for.
+      required: true
+      style: form
+      explode: false
+    peliasLang:
+      name: lang
+      in: query
+      schema:
+        $ref: '#/components/schemas/peliasLang'
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key

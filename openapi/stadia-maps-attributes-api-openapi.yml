@@ -1,0 +1,1093 @@
+openapi: 3.0.3
+info:
+  description: 'Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. '
+  version: 7.1.0
+  title: Stadia Maps Attributes API
+  contact:
+    name: Stadia Maps Support
+    url: https://www.stadiamaps.com
+    email: support@stadiamaps.com
+servers:
+- url: https://api.stadiamaps.com
+- url: https://api-eu.stadiamaps.com
+tags:
+- name: Attributes
+paths:
+  /trace_attributes/v1:
+    post:
+      tags:
+      - Attributes
+      operationId: trace-attributes
+      summary: Trace the attributes of roads visited on a route.
+      description: The trace attributes endpoint retrieves detailed information along a route, returning details for each section along the path, as well as any intersections encountered. In addition to tracing a recording route, this is great for providing just-in-time info to navigation applications, enabling them to conserve resources by omitting info like speed limits upfront that may be irrelevant if the user goes off-route.
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/traceAttributesRequest'
+      responses:
+        '200':
+          description: The edges along the traced route with detailed info.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/traceAttributesResponse'
+        '400':
+          description: Bad request; more details will be included
+components:
+  schemas:
+    useHillsCostingOption:
+      type: number
+      format: double
+      description: A measure of willingness to take tackle hills. Values near 0 attempt to avoid hills and steeper grades even if it means a longer route, and values near 1 indicates that the user does not fear them. Note that as some routes may be impossible without hills, 0 does not guarantee avoidance of them.
+      default: 0.5
+      minimum: 0
+      maximum: 1
+    traversability:
+      type: string
+      description: The directions in which the edge is traversable.
+      enum:
+      - forward
+      - backward
+      - both
+    adminRegion:
+      type: object
+      properties:
+        country_code:
+          type: string
+          description: The [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code.
+        country_text:
+          type: string
+          description: The country name
+        state_code:
+          type: string
+          description: The abbreviation code for the state (varies by country).
+        state_text:
+          type: string
+          description: The state name.
+    valhallaLanguages:
+      type: string
+      enum:
+      - bg-BG
+      - ca-ES
+      - cs-CZ
+      - da-DK
+      - de-DE
+      - el-GR
+      - en-GB
+      - en-US-x-pirate
+      - en-US
+      - es-ES
+      - et-EE
+      - fi-FI
+      - fr-FR
+      - hi-IN
+      - hu-HU
+      - it-IT
+      - ja-JP
+      - nb-NO
+      - nl-NL
+      - pl-PL
+      - pt-BR
+      - pt-PT
+      - ro-RO
+      - ru-RU
+      - sk-SK
+      - sl-SI
+      - sv-SE
+      - tr-TR
+      - uk-UA
+      default: en-US
+    elevation_interval:
+      type: number
+      format: float
+      description: 'If greater than zero, attempts to include elevation along the route at regular intervals. The "native" internal resolution is 30m, so we recommend you use this when possible. This number is interpreted as either meters or feet depending on the unit parameter.
+
+        Elevation for route sections containing a bridge or tunnel is interpolated linearly. This doesn''t always match the true elevation of the bridge/tunnel, but it prevents sharp artifacts from the surrounding terrain. This functionality is unique to the routing endpoints and is not available via the elevation API.
+
+        NOTE: This has no effect on the OSRM response format.'
+      default: 0
+    motorcycleCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/autoCostingOptions'
+      - type: object
+        properties:
+          use_highways:
+            type: number
+            format: double
+            description: A measure of willingness to use highways. Values near 0 attempt to avoid highways and stay on roads with lower speeds, and values near 1 indicate the rider is more comfortable on these roads.
+            default: 1
+            minimum: 0
+            maximum: 1
+          use_trails:
+            type: number
+            format: double
+            description: A measure of the rider's sense of adventure. Values near 0 attempt to avoid highways and stay on roads with potentially unsuitable terrain (trails, tracks, unclassified, or bad surfaces), and values near 1 will tend to avoid major roads and route on secondary roads.
+            default: 0
+            minimum: 0
+            maximum: 1
+    endNode:
+      type: object
+      description: The node at the end of this edge
+      properties:
+        intersecting_edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/intersectingEdge'
+          description: A set of edges intersecting this node.
+        elapsed_time:
+          type: number
+          format: double
+          description: The elapsed time along the path to arrive at this node.
+        admin_index:
+          type: integer
+          description: The index into the `admins` list in which this node lies.
+        type:
+          $ref: '#/components/schemas/nodeType'
+        fork:
+          type: boolean
+          description: True if this node is a fork.
+        time_zone:
+          type: string
+          description: The canonical TZDB identifier for the node's time zone.
+          example: America/New_York
+    motorScooterCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/autoCostingOptions'
+      - type: object
+        properties:
+          use_primary:
+            type: number
+            format: double
+            description: A measure of willingness to use primary roads. Values near 0 attempt to avoid primary roads and stay on roads with lower speeds, and values near 1 indicate the rider is more comfortable on these roads.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+          use_hills:
+            type: number
+            format: double
+            description: A measure of willingness to take tackle hills. Values near 0 attempt to avoid hills and steeper grades even if it means a longer route, and values near 1 indicates that the rider does not fear them. Note that as some routes may be impossible without hills, 0 does not guarantee avoidance of them.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+    costingOptions:
+      type: object
+      properties:
+        auto:
+          $ref: '#/components/schemas/autoCostingOptions'
+        bus:
+          $ref: '#/components/schemas/autoCostingOptions'
+        taxi:
+          $ref: '#/components/schemas/autoCostingOptions'
+        truck:
+          $ref: '#/components/schemas/truckCostingOptions'
+        bicycle:
+          $ref: '#/components/schemas/bicycleCostingOptions'
+        motor_scooter:
+          $ref: '#/components/schemas/motorScooterCostingOptions'
+        motorcycle:
+          $ref: '#/components/schemas/motorcycleCostingOptions'
+        pedestrian:
+          $ref: '#/components/schemas/pedestrianCostingOptions'
+        low_speed_vehicle:
+          $ref: '#/components/schemas/lowSpeedVehicleCostingOptions'
+    autoCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/baseCostingOptions'
+      - type: object
+        properties:
+          height:
+            type: number
+            format: double
+            description: The height of the automobile (in meters).
+            default: 1.9
+          width:
+            type: number
+            format: double
+            description: The width of the automobile (in meters).
+            default: 1.6
+          toll_booth_cost:
+            type: integer
+            description: The estimated cost (in seconds) when a toll booth is encountered.
+            default: 15
+          toll_booth_penalty:
+            type: integer
+            description: A penalty (in seconds) applied to the route cost when a toll booth is encountered. This penalty can be used to reduce the likelihood of suggesting a route with toll booths unless absolutely necessary.
+            default: 0
+          ferry_cost:
+            type: integer
+            description: The estimated cost (in seconds) when a ferry is encountered.
+            default: 300
+          use_highways:
+            type: number
+            format: double
+            description: A measure of willingness to take highways. Values near 0 attempt to avoid highways, and values near 1 will favour them. Note that as some routes may be impossible without highways, 0 does not guarantee avoidance of them.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+          use_tolls:
+            type: number
+            format: double
+            description: A measure of willingness to take toll roads. Values near 0 attempt to avoid tolls, and values near 1 will favour them. Note that as some routes may be impossible without tolls, 0 does not guarantee avoidance of them.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+          use_tracks:
+            $ref: '#/components/schemas/useTracksCostingOption'
+          top_speed:
+            type: integer
+            description: The top speed (in kph) that the vehicle is capable of travelling.
+            default: 140
+            minimum: 10
+            maximum: 252
+          shortest:
+            type: boolean
+            description: If true changes the cost metric to be quasi-shortest (pure distance-based) costing. This will disable ALL other costing factors.
+            default: false
+          ignore_closures:
+            type: boolean
+            description: If true, ignores all known closures. This option cannot be set if `location.search_filter.exclude_closures` is also specified.
+            default: false
+          include_hov2:
+            type: boolean
+            description: If true, indicates the desire to include HOV roads with a 2-occupant requirement in the route when advantageous.
+            default: false
+          include_hov3:
+            type: boolean
+            description: If true, indicates the desire to include HOV roads with a 3-occupant requirement in the route when advantageous.
+            default: false
+          include_hot:
+            type: boolean
+            description: If true, indicates the desire to include toll roads which require the driver to pay a toll if the occupant requirement isn't met
+            default: false
+          alley_factor:
+            type: number
+            format: double
+            description: A factor that multiplies the cost when alleys are encountered.
+            default: 1
+    edgeUse:
+      type: string
+      enum:
+      - road
+      - ramp
+      - turn_channel
+      - track
+      - driveway
+      - alley
+      - parking_aisle
+      - emergency_access
+      - drive_through
+      - culdesac
+      - living_street
+      - service_road
+      - cycleway
+      - mountain_bike
+      - sidewalk
+      - footway
+      - steps
+      - path
+      - pedestrian
+      - pedestrian_crossing
+      - bridleway
+      - rest_area
+      - service_area
+      - other
+      - ferry
+      - rail-ferry
+      - rail
+      - bus
+      - egress_connection
+      - platform_connection
+      - transit_connection
+      description: The use for the edge.
+    travelMode:
+      type: string
+      enum:
+      - drive
+      - pedestrian
+      - bicycle
+      - transit
+    distanceUnit:
+      type: string
+      enum:
+      - km
+      - mi
+      default: km
+    traceAttributesBaseResponse:
+      type: object
+      properties:
+        edges:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/traceEdge'
+          description: The list of edges matched along the path.
+        admins:
+          type: array
+          items:
+            $ref: '#/components/schemas/adminRegion'
+          description: The set of administrative regions matched along the path. Rather than repeating this information for every end node, the admins in this list are referenced by index.
+        matched_points:
+          type: array
+          items:
+            $ref: '#/components/schemas/matchedPoint'
+          description: List of match results when using the map_snap shape match algorithm. There is a one-to-one correspondence with the input set of latitude, longitude coordinates and this list of match results.
+        osm_changeset:
+          type: integer
+        shape:
+          type: string
+          description: The encoded polyline (https://developers.google.com/maps/documentation/utilities/polylinealgorithm) of the matched path.
+        confidence_score:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+    valhallaLongUnits:
+      type: string
+      enum:
+      - miles
+      - kilometers
+      default: kilometers
+    useTracksCostingOption:
+      type: number
+      format: double
+      description: A measure of willingness to take track roads. Values near 0 attempt to avoid them, and values near 1 will favour them. Note that as some routes may be impossible without track roads, 0 does not guarantee avoidance of them. The default value is 0 for automobiles, busses, and trucks; and 0.5 for all other costing modes.
+      minimum: 0
+      maximum: 1
+    lowSpeedVehicleCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/baseCostingOptions'
+      - type: object
+        properties:
+          vehicle_type:
+            type: string
+            enum:
+            - low_speed_vehicle
+            - golf_cart
+            default: low_speed_vehicle
+            description: 'The type of vehicle:
+
+              * low_speed_vehicle (BETA): a low-speed vehicle which falls under a different regulatory and licensing regime than automobiles (ex: LSV in the US and Canada, Quadricycles in the EU, etc.) * golf_cart: a street legal golf cart that is under a similar regulator regime as the generic LSV laws, but may need to follow special paths when available or abide by restrictions specific to golf carts.'
+          top_speed:
+            type: integer
+            description: 'The top speed (in kph) that the vehicle is capable of travelling.
+
+              This impacts travel time calculations as well as which roads are preferred. A very low speed vehicle will tend to prefer lower speed roads even in the presence of other legal routes.'
+            default: 35
+            minimum: 20
+            maximum: 60
+          max_allowed_speed_limit:
+            type: integer
+            description: The maximum speed limit for highways on which it is legal for the vehicle to travel. Defaults to 57 (kph; around 35 mph). Acceptable values range from 20 to 80. Highways with *tagged* speed limits higher than this value will not be routed over (some caveats apply; this feature is still BETA).
+            default: 57
+            minimum: 20
+            maximum: 80
+    roadClass:
+      type: string
+      enum:
+      - motorway
+      - trunk
+      - primary
+      - secondary
+      - tertiary
+      - unclassified
+      - residential
+      - service_other
+      description: Class of road (ranked in descending order)
+    edgeSign:
+      type: object
+      properties:
+        exit_number:
+          type: array
+          items:
+            type: string
+            description: An exit number.
+            example: 91B
+        exit_branch:
+          type: array
+          items:
+            type: string
+            description: A subsequent road name or route number after the sign.
+            example: I 95 North
+        exit_toward:
+          type: array
+          items:
+            type: string
+            description: The interchange identifier (used more frequently outside the US).
+            example: New York
+        exit_name:
+          type: array
+          items:
+            type: string
+            description: The location where the road ahead goes (typically a city, but occasionally a road name or route number).
+            example: Gettysburg Pike
+    directionsOptions:
+      type: object
+      properties:
+        units:
+          $ref: '#/components/schemas/distanceUnit'
+        language:
+          $ref: '#/components/schemas/valhallaLanguages'
+        directions_type:
+          type: string
+          enum:
+          - none
+          - maneuvers
+          - instructions
+          default: instructions
+          description: The level of directional narrative to include. Locations and times will always be returned, but narrative generation verbosity can be controlled with this parameter.
+    useLivingStreetsCostingOption:
+      type: number
+      format: double
+      description: A measure of willingness to take living streets. Values near 0 attempt to avoid them, and values near 1 will favour them. Note that as some routes may be impossible without living streets, 0 does not guarantee avoidance of them. The default value is 0 for trucks; 0.1 for other motor vehicles; 0.5 for bicycles; and 0.6 for pedestrians.
+      minimum: 0
+      maximum: 1
+    useFerryCostingOption:
+      type: number
+      format: double
+      description: A measure of willingness to take ferries. Values near 0 attempt to avoid ferries, and values near 1 will favour them. Note that as some routes may be impossible without ferries, 0 does not guarantee avoidance of them.
+      default: 0.5
+      minimum: 0
+      maximum: 1
+    traceEdge:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+          description: The name(s) of the road at this edge, if any.
+        length:
+          type: number
+          format: double
+          description: The length of this edge in `units`.
+        speed:
+          type: integer
+          description: The speed of this edge in `units`/hr, in terms of average/free-flow speed for routing purposes. This is affected by any number of factors such as the road service, vehicle type, etc. and not just the posted speed limits.
+        road_class:
+          $ref: '#/components/schemas/roadClass'
+        begin_heading:
+          type: integer
+          description: The direction at the beginning of an edge. The units are degrees clockwise from north.
+        end_heading:
+          type: integer
+          description: The direction at the end of an edge. The units are degrees clockwise from north.
+        begin_shape_index:
+          type: integer
+          description: Index into the list of shape points for the start of the edge.
+        end_shape_index:
+          type: integer
+          description: Index into the list of shape points for the end of the edge.
+        traversability:
+          $ref: '#/components/schemas/traversability'
+        use:
+          $ref: '#/components/schemas/edgeUse'
+        toll:
+          type: boolean
+          description: True if the edge has a toll.
+        unpaved:
+          type: boolean
+          description: True if the edge has rough payment.
+        tunnel:
+          type: boolean
+          description: True if the edge is a tunnel.
+        bridge:
+          type: boolean
+          description: True if the edge is a bridge.
+        roundabout:
+          type: boolean
+          description: True if the edge is a roundabout.
+        internal_intersection:
+          type: boolean
+          description: True if the edge is an internal intersection.
+        drive_on_right:
+          type: boolean
+          description: True if the edge is in an area where you must drive on the right side of the road.
+        surface:
+          type: string
+          enum:
+          - paved_smooth
+          - paved
+          - paved_rough
+          - compacted
+          - dirt
+          - gravel
+          - path
+          - impassable
+          description: The type of surface for the edge.
+        sign:
+          $ref: '#/components/schemas/edgeSign'
+        travel_mode:
+          $ref: '#/components/schemas/travelMode'
+        vehicle_type:
+          type: string
+          enum:
+          - car
+          - motorcycle
+          - bus
+          - tractor_trailer
+          - golf_cart
+          - low_speed_vehicle
+        pedestrian_type:
+          type: string
+          enum:
+          - foot
+          - wheelchair
+          - segway
+        bicycle_type:
+          type: string
+          enum:
+          - road
+          - cross
+          - hybrid
+          - mountain
+        transit_type:
+          type: string
+          enum:
+          - tram
+          - metro
+          - rail
+          - bus
+          - ferry
+          - cable_car
+          - gondola
+          - funicular
+        id:
+          type: integer
+          format: int64
+        way_id:
+          type: integer
+          format: int64
+          description: The way identifier of the edge in OSM.
+        weighted_grade:
+          type: number
+          format: double
+          description: The weighted grade factor. The weighted grade is derived from elevation data. It is a measure used for hill avoidance in routing - sort of a relative energy use along an edge. But since an edge can possibly go up and down over several hills, it might not equate to what you would normally think of as grade.
+        max_upward_grade:
+          type: integer
+          description: The maximum upward slope. A value of 32768 indicates no elevation data is available for this edge.
+        max_downward_grade:
+          type: integer
+          description: The maximum downward slope. A value of 32768 indicates no elevation data is available for this edge.
+        mean_elevation:
+          type: integer
+          description: The mean elevation along the edge. Units are meters by default. If the `units` are specified as miles, then the mean elevation is returned in feet. A value of 32768 indicates no elevation data is available for this edge.
+        lane_count:
+          type: integer
+          description: The number of lanes for this edge.
+        cycle_lane:
+          type: string
+          enum:
+          - none
+          - shared
+          - dedicated
+          - separated
+          description: The type of cycle lane (if any) along this edge.
+        bicycle_network:
+          type: integer
+          description: 'The type of bicycle network, if any. This is an integer comprised of constants bitwise or''d together. For example, a route that''s part of both a local and mountain network would have a value of 12.
+
+            1 - National 2 - Regional 4 - Local 8 - Mountain'
+        sac_scale:
+          type: integer
+          description: 'The difficulty of the hiking trail according to the SAC scale.
+
+            0 - No Sac Scale 1 - Hiking 2 - Mountain hiking 3 - Demanding mountain hiking 4 - Alpine hiking 5 - Demanding alpine hiking 6 - Difficult alpine hiking'
+        sidewalk:
+          type: string
+          enum:
+          - left
+          - right
+          - both
+          - none
+        density:
+          type: integer
+        speed_limit:
+          description: The speed limit along the edge measured in `units`/hr. This may be either an integer or the string "unlimited" if speed limit data is available. If absent, there is no speed limit data available.
+        truck_speed:
+          type: integer
+          description: The truck speed of this edge in `units`/hr, in terms of average/free-flow speed for routing purposes. This is affected by any number of factors such as the road service, vehicle type, etc. and not just the posted speed limits.
+        truck_route:
+          type: boolean
+          description: True if the edge is part of a truck route/network.
+        end_node:
+          $ref: '#/components/schemas/endNode'
+    pedestrianCostingOptions:
+      type: object
+      properties:
+        walking_speed:
+          type: integer
+          description: Walking speed in kph.
+          default: 5.1
+          minimum: 0.5
+          maximum: 25
+        walkway_factor:
+          type: number
+          format: double
+          description: A factor that multiplies the cost when walkways are encountered.
+          default: 1
+        sidewalk_factor:
+          type: number
+          format: double
+          description: A factor that multiplies the cost when sidewalks are encountered.
+          default: 1
+        alley_factor:
+          type: number
+          format: double
+          description: A factor that multiplies the cost when alleys are encountered.
+          default: 2
+        driveway_factor:
+          type: number
+          format: double
+          description: A factor that multiplies the cost when driveways are encountered.
+          default: 5
+        step_penalty:
+          type: integer
+          description: A penalty (in seconds) added to each transition onto a path with steps or stairs.
+          default: 30
+        use_ferry:
+          $ref: '#/components/schemas/useFerryCostingOption'
+        use_living_streets:
+          $ref: '#/components/schemas/useLivingStreetsCostingOption'
+        use_tracks:
+          $ref: '#/components/schemas/useTracksCostingOption'
+        use_hills:
+          $ref: '#/components/schemas/useHillsCostingOption'
+        use_lit:
+          type: number
+          format: double
+          description: A measure of preference for streets that are lit. 0 indicates indifference toward lit streets, and 1 indicates that unlit streets should be avoided. Note that even with values near 1, there is no guarantee that the returned route will include lit segments.
+          default: 0
+          minimum: 0
+          maximum: 1
+        service_penalty:
+          $ref: '#/components/schemas/servicePenaltyCostingOption'
+        service_factor:
+          $ref: '#/components/schemas/serviceFactorCostingOption'
+        max_hiking_difficulty:
+          type: integer
+          description: The maximum difficulty of hiking trails allowed. This corresponds to the OSM `sac_scale`.
+          default: 1
+          minimum: 1
+          maximum: 6
+        bss_rent_cost:
+          type: integer
+          description: The estimated cost (in seconds) to rent a bicycle from a sharing station in `bikeshare` mode.
+          default: 120
+        bss_rent_penalty:
+          type: integer
+          description: A penalty (in seconds) to rent a bicycle in `bikeshare` mode.
+          default: 0
+    traceAttributesResponse:
+      allOf:
+      - $ref: '#/components/schemas/traceAttributesBaseResponse'
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/requestId'
+          units:
+            $ref: '#/components/schemas/valhallaLongUnits'
+          alternate_paths:
+            type: array
+            items:
+              $ref: '#/components/schemas/traceAttributesBaseResponse'
+            description: Alternate paths, if any, that were not classified as the best match.
+    servicePenaltyCostingOption:
+      type: integer
+      description: A penalty applied to transitions to service roads. This penalty can be used to reduce the likelihood of suggesting a route with service roads unless absolutely necessary. The default penalty is 15 for cars, busses, motor scooters, and motorcycles; and zero for others.
+    baseTraceRequest:
+      allOf:
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/requestId'
+          shape:
+            type: array
+            items:
+              $ref: '#/components/schemas/mapMatchWaypoint'
+            description: REQUIRED if `encoded_polyline` is not present. Note that `break` type locations are only supported when `shape_match` is set to `map_match`.
+          encoded_polyline:
+            type: string
+            description: REQUIRED if `shape` is not present. An encoded polyline (https://developers.google.com/maps/documentation/utilities/polylinealgorithm). Note that the polyline must be encoded with 6 digits of precision rather than the usual 5.
+          costing:
+            $ref: '#/components/schemas/mapMatchCostingModel'
+          costing_options:
+            $ref: '#/components/schemas/costingOptions'
+          shape_match:
+            type: string
+            enum:
+            - edge_walk
+            - map_snap
+            - walk_or_snap
+            description: 'Three snapping modes provide some control over how the map matching occurs. `edge_walk` is fast, but requires extremely precise data that matches the route graph almost perfectly. `map_snap` can handle significantly noisier data, but is very expensive. `walk_or_snap`, the default, tries to use edge walking first and falls back to map matching if edge walking fails.
+
+              In general, you should not need to change this parameter unless you want to trace a multi-leg route with multiple `break` locations in the `shape`.'
+      - $ref: '#/components/schemas/directionsOptions'
+      required:
+      - costing
+    nodeType:
+      type: string
+      enum:
+      - street_intersection
+      - gate
+      - bollard
+      - toll_booth
+      - multi_use_transit_stop
+      - bike_share
+      - parking
+      - motor_way_junction
+      - border_control
+    simpleRoutingWaypoint:
+      allOf:
+      - $ref: '#/components/schemas/coordinate'
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - break
+            - through
+            - via
+            - break_through
+            description: A `break` represents the start or end of a leg, and allows reversals. A `through` location is an intermediate waypoint that must be visited between `break`s, but at which reversals are not allowed. A `via` is similar to a `through` except that reversals are allowed. A `break_through` is similar to a `break` in that it can be the start/end of a leg, but does not allow reversals.
+            default: break
+    mapMatchWaypoint:
+      allOf:
+      - $ref: '#/components/schemas/simpleRoutingWaypoint'
+      - type: object
+        properties:
+          time:
+            type: integer
+            description: The timestamp of the waypoint, in seconds. This can inform the map matching algorithm about when the point was measured. A UNIX timestamp, or any increasing integer sequence measuring seconds from some reference point can be used.
+    intersectingEdge:
+      type: object
+      properties:
+        begin_heading:
+          type: integer
+          description: The direction at the beginning of an edge. The units are degrees clockwise from north.
+        from_edge_name_consistency:
+          type: boolean
+          description: True if this intersecting edge at the end node has consistent names with the path from the other edge.
+        to_edge_name_consistency:
+          type: boolean
+          description: True if this intersecting edge at the end node has consistent names with the path to the other edge.
+        driveability:
+          $ref: '#/components/schemas/traversability'
+        cyclability:
+          $ref: '#/components/schemas/traversability'
+        walkability:
+          $ref: '#/components/schemas/traversability'
+        use:
+          $ref: '#/components/schemas/edgeUse'
+        road_class:
+          $ref: '#/components/schemas/roadClass'
+    requestId:
+      type: string
+      description: An identifier to disambiguate requests (echoed by the server).
+      example: kesklinn
+    baseCostingOptions:
+      type: object
+      properties:
+        maneuver_penalty:
+          type: integer
+          description: A penalty (in seconds) applied when transitioning between roads (determined by name).
+          default: 5
+        gate_cost:
+          type: integer
+          description: The estimated cost (in seconds) when a gate is encountered.
+          default: 15
+        gate_penalty:
+          type: integer
+          description: A penalty (in seconds) applied to the route cost when a gate is encountered. This penalty can be used to reduce the likelihood of suggesting a route with gates unless absolutely necessary.
+          default: 300
+        country_crossing_cost:
+          type: integer
+          description: The estimated cost (in seconds) when encountering an international border.
+          default: 600
+        country_crossing_penalty:
+          type: integer
+          description: A penalty applied to transitions to international border crossings. This penalty can be used to reduce the likelihood of suggesting a route with border crossings unless absolutely necessary.
+          default: 0
+        service_penalty:
+          $ref: '#/components/schemas/servicePenaltyCostingOption'
+        service_factor:
+          $ref: '#/components/schemas/serviceFactorCostingOption'
+        use_living_streets:
+          $ref: '#/components/schemas/useLivingStreetsCostingOption'
+        use_ferry:
+          $ref: '#/components/schemas/useFerryCostingOption'
+        ignore_restrictions:
+          type: boolean
+          description: 'If set to true, ignores any restrictions (eg: turn and conditional restrictions). Useful for matching GPS traces to the road network regardless of restrictions.'
+        ignore_non_vehicular_restrictions:
+          type: boolean
+          description: 'If set to true, ignores most restrictions (eg: turn and conditional restrictions), but still respects restrictions that impact vehicle safety such as weight and size.'
+        ignore_oneways:
+          type: boolean
+          description: If set to true, ignores directional restrictions on roads. Useful for matching GPS traces to the road network regardless of restrictions.
+    serviceFactorCostingOption:
+      type: number
+      format: double
+      description: A factor that multiplies the cost when service roads are encountered. The default is 1.2 for cars and busses, and 1 for trucks, motor scooters, and motorcycles.
+      default: 1
+    truckCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/autoCostingOptions'
+      - type: object
+        properties:
+          height:
+            type: number
+            format: double
+            description: The height of the truck (in meters).
+            default: 4.11
+          width:
+            type: number
+            format: double
+            description: The width of the truck (in meters).
+            default: 2.6
+          length:
+            type: number
+            format: double
+            description: The length of the truck (in meters).
+            default: 21.64
+          weight:
+            type: number
+            format: double
+            description: The weight of the truck (in tonnes).
+            default: 21.77
+          axle_load:
+            type: number
+            format: double
+            description: The axle load of the truck (in tonnes).
+            default: 9.07
+          hazmat:
+            type: boolean
+            description: Whether or not the truck is carrying hazardous materials.
+            default: false
+    matchedPoint:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+          description: The latitude of the matched point.
+        lon:
+          type: number
+          format: double
+          description: The longitude of the matched point.
+        type:
+          type: string
+          enum:
+          - unmatched
+          - interpolated
+          - matched
+        edge_index:
+          type: integer
+          description: The index of the edge in the list of `edges`. This key will be missing if the point is unmatched.
+        begin_route_discontinuity:
+          type: boolean
+          description: If true, this match result is the begin location of a route discontinuity.
+          default: false
+        end_route_discontinuity:
+          type: boolean
+          description: If true, this match result is the end location of a route discontinuity.
+          default: false
+        distance_along_edge:
+          type: number
+          format: double
+          description: The distance along the associated edge for this matched point, expressed as a value between 0 and 1. For example, if the matched point is halfway along the edge, then the value will be 0.5. This key will be absent if the point is unmatched.
+        distance_from_trace_point:
+          type: number
+          format: double
+          description: The distance in meters from the trace point to the matched point. This key will be absent if the point is unmatched.
+      required:
+      - lat
+      - lon
+      - type
+    mapMatchCostingModel:
+      type: string
+      enum:
+      - auto
+      - bus
+      - taxi
+      - truck
+      - bicycle
+      - bikeshare
+      - motor_scooter
+      - motorcycle
+      - pedestrian
+      - low_speed_vehicle
+    traceAttributeFilterOptions:
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/traceAttributeKey'
+          minItems: 1
+        action:
+          type: string
+          enum:
+          - include
+          - exclude
+          description: Determines whether the list of attributes will be used as a whitelist or a blacklist.
+      required:
+      - attributes
+      - action
+    bicycleCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/baseCostingOptions'
+      - type: object
+        properties:
+          bicycle_type:
+            type: string
+            enum:
+            - Road
+            - Hybrid
+            - Cross
+            - Mountain
+            default: Hybrid
+            description: 'The type of bicycle:
+
+              * Road: has narrow tires and is generally lightweight and designed for speed on paved surfaces * Hybrid or City: designed for city riding or casual riding on roads and paths with good surfaces * Cross: similar to a road bike, but has wider tires so it can handle rougher surfaces * Mountain: able to handle most surfaces, but generally heavier and slower on paved surfaces'
+          cycling_speed:
+            type: integer
+            description: "The average comfortable travel speed (in kph) along smooth, flat roads. The costing will vary the speed based on the surface, bicycle type, elevation change, etc. This value should be the average sustainable cruising speed the cyclist can maintain over the entire route.\nThe default speeds are as follows based on bicycle type:\n  * Road - 25kph\n  * Cross - 20kph\n  * Hybrid - 18kph\n  * Mountain - 16kph"
+          use_roads:
+            type: number
+            format: double
+            description: A measure of willingness to use roads alongside other vehicles. Values near 0 attempt to avoid roads and stay on cycleways, and values near 1 indicate the cyclist is more comfortable on roads.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+          use_hills:
+            $ref: '#/components/schemas/useHillsCostingOption'
+          avoid_bad_surfaces:
+            type: number
+            format: double
+            description: A measure of how much the cyclist wants to avoid roads with poor surfaces relative to the type of bicycle being ridden. When 0, there is no penalization of roads with poorer surfaces, and only bicycle speed is taken into account. As the value approaches 1, roads with poor surfaces relative to the bicycle type receive a heaver penalty, so they will only be taken if they significantly reduce travel time. When the value is 1, all bad surfaces are completely avoided from the route, including the start and end points.
+            default: 0.25
+            minimum: 0
+            maximum: 1
+          bss_return_cost:
+            type: integer
+            description: The estimated cost (in seconds) to return a bicycle in `bikeshare` mode.
+            default: 120
+          bss_return_penalty:
+            type: integer
+            description: A penalty (in seconds) to return a bicycle in `bikeshare` mode.
+            default: 0
+    traceAttributesRequest:
+      allOf:
+      - $ref: '#/components/schemas/baseTraceRequest'
+      - type: object
+        properties:
+          filters:
+            description: If present, provides either a whitelist or a blacklist of keys to include/exclude in the response. This key is optional, and if omitted from the request, all available info will be returned.
+            allOf:
+            - $ref: '#/components/schemas/traceAttributeFilterOptions'
+          elevation_interval:
+            $ref: '#/components/schemas/elevation_interval'
+      example:
+        encoded_polyline: _grbgAh~{nhF?lBAzBFvBHxBEtBKdB?fB@dBZdBb@hBh@jBb@x@\|@x@pB\x@v@hBl@nBPbCXtBn@|@z@ZbAEbAa@~@q@z@QhA]pAUpAVhAPlAWtASpAAdA[dASdAQhAIlARjANnAZhAf@n@`A?lB^nCRbA\xB`@vBf@tBTbCFbARzBZvBThBRnBNrBP`CHbCF`CNdCb@vBX`ARlAJfADhA@dAFdAP`AR`Ah@hBd@bBl@rBV|B?vB]tBCvBBhAF`CFnBXtAVxAVpAVtAb@|AZ`Bd@~BJfA@fAHdADhADhABjAGzAInAAjAB|BNbCR|BTjBZtB`@lBh@lB\|Bl@rBXtBN`Al@g@t@?nAA~AKvACvAAlAMdAU`Ac@hAShAI`AJ`AIdAi@bAu@|@k@p@]p@a@bAc@z@g@~@Ot@Bz@f@X`BFtBXdCLbAf@zBh@fBb@xAb@nATjAKjAW`BI|AEpAHjAPdAAfAGdAFjAv@p@XlAVnA?~A?jAInAPtAVxAXnAf@tBDpBJpBXhBJfBDpAZ|Ax@pAz@h@~@lA|@bAnAd@hAj@tAR~AKxAc@xAShA]hAIdAAjA]~A[v@BhB?dBSv@Ct@CvAI~@Oz@Pv@dAz@lAj@~A^`B^|AXvAVpAXdBh@~Ap@fCh@hB\zBN`Aj@xBFdA@jALbAPbAJdAHdAJbAHbAHfAJhALbA\lBTvBAdC@bC@jCKjASbC?`CM`CDpB\xAj@tB\fA\bAVfAJdAJbAXz@L|BO`AOdCDdA@~B\z@l@v@l@v@l@r@j@t@b@x@b@r@z@jBVfCJdAJdANbCPfCF|BRhBS~BS`AYbAe@~BQdA
+        shape_match: map_snap
+        costing: pedestrian
+        units: miles
+    traceAttributeKey:
+      type: string
+      enum:
+      - edge.names
+      - edge.length
+      - edge.speed
+      - edge.road_class
+      - edge.begin_heading
+      - edge.end_heading
+      - edge.begin_shape_index
+      - edge.end_shape_index
+      - edge.traversability
+      - edge.use
+      - edge.toll
+      - edge.unpaved
+      - edge.tunnel
+      - edge.bridge
+      - edge.roundabout
+      - edge.internal_intersection
+      - edge.drive_on_right
+      - edge.surface
+      - edge.sign.exit_number
+      - edge.sign.exit_branch
+      - edge.sign.exit_toward
+      - edge.sign.exit_name
+      - edge.travel_mode
+      - edge.vehicle_type
+      - edge.pedestrian_type
+      - edge.bicycle_type
+      - edge.transit_type
+      - edge.id
+      - edge.way_id
+      - edge.weighted_grade
+      - edge.max_upward_grade
+      - edge.max_downward_grade
+      - edge.mean_elevation
+      - edge.lane_count
+      - edge.cycle_lane
+      - edge.bicycle_network
+      - edge.sac_scale
+      - edge.sidewalk
+      - edge.density
+      - edge.speed_limit
+      - edge.truck_speed
+      - edge.truck_route
+      - node.intersecting_edge.begin_heading
+      - node.intersecting_edge.from_edge_name_consistency
+      - node.intersecting_edge.to_edge_name_consistency
+      - node.intersecting_edge.driveability
+      - node.intersecting_edge.cyclability
+      - node.intersecting_edge.walkability
+      - node.intersecting_edge.use
+      - node.intersecting_edge.road_class
+      - node.elapsed_time
+      - node.admin_index
+      - node.type
+      - node.fork
+      - node.time_zone
+      - osm_changeset
+      - shape
+      - admin.country_code
+      - admin.country_text
+      - admin.state_code
+      - admin.state_text
+      - matched.point
+      - matched.type
+      - matched.edge_index
+      - matched.begin_route_discontinuity
+      - matched.end_route_discontinuity
+      - matched.distance_along_edge
+      - matched.distance_from_trace_point
+    coordinate:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+          description: The latitude of a point in the shape.
+          example: 59.436884
+          minimum: -90
+          maximum: 90
+        lon:
+          type: number
+          format: double
+          description: The longitude of a point in the shape.
+          example: 24.742595
+          minimum: -180
+          maximum: 180
+      required:
+      - lat
+      - lon
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key

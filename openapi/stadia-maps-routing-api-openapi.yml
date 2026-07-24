@@ -1,0 +1,2095 @@
+openapi: 3.0.3
+info:
+  description: 'Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. '
+  version: 7.1.0
+  title: Stadia Maps Routing API
+  contact:
+    name: Stadia Maps Support
+    url: https://www.stadiamaps.com
+    email: support@stadiamaps.com
+servers:
+- url: https://api.stadiamaps.com
+- url: https://api-eu.stadiamaps.com
+tags:
+- name: Routing
+paths:
+  /route/v1:
+    post:
+      tags:
+      - Routing
+      operationId: route
+      summary: Get turn by turn routing instructions between two or more locations.
+      description: The route (turn-by-turn) API computes routes between two or more locations. It supports a variety of tunable costing methods, and supports routing through intermediate waypoints and discontinuous multi-leg routes.
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/routeRequest'
+      responses:
+        '200':
+          description: The computed route(s).
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/routeResponse'
+                - $ref: '#/components/schemas/osrmRouteResponse'
+        '400':
+          description: Bad request; more details will be included
+        '500':
+          description: An internal parse error occurred; more details will be included
+  /matrix/v1:
+    post:
+      tags:
+      - Routing
+      operationId: time-distance-matrix
+      summary: Calculate a time distance matrix for use in an optimizer.
+      description: 'The time distance matrix API lets you compare travel times between a set of possible start and end points.
+
+        See https://docs.stadiamaps.com/limits/ for documentation of our latest limits.'
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/matrixRequest'
+      responses:
+        '200':
+          description: A matrix of times and distances between the start and end points.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/matrixResponse'
+        '400':
+          description: 'Bad request; more details will be included. NOTE: failure to find suitable edges near a location will result in a 400.'
+  /isochrone/v1:
+    post:
+      tags:
+      - Routing
+      operationId: isochrone
+      summary: Calculate areas of equal travel time from a location.
+      description: The isochrone API computes reachable areas within a time or distance constraint. The resulting polygon can be rendered on a map and used for assessing urban mobility, planning, or as a search filter of places within a constrained range.
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/isochroneRequest'
+      responses:
+        '200':
+          description: A GeoJSON object which can be integrated into your geospatial application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/isochroneResponse'
+        '400':
+          description: Bad request; more details will be included
+components:
+  schemas:
+    routingResponseWaypoint:
+      allOf:
+      - $ref: '#/components/schemas/simpleRoutingWaypoint'
+      - type: object
+        properties:
+          original_index:
+            type: integer
+            description: The original index of the location (locations may be reordered for optimized routes)
+            minimum: 0
+    osrmWaypoint:
+      type: object
+      properties:
+        name:
+          type: string
+        location:
+          $ref: '#/components/schemas/osrmCoordinate'
+        distance:
+          type: number
+          format: double
+          description: The distance of the snapped point from the original location.
+        hint:
+          type: string
+      required:
+      - location
+      - distance
+    osrmSpeedLimit:
+      type: object
+      properties:
+        speed:
+          type: integer
+        unit:
+          type: string
+          enum:
+          - km/h
+          - mph
+          description: The unit of measure for the speed. Always included if speed is present.
+        unknown:
+          type: boolean
+          description: True if the speed limit is not known.
+        none:
+          type: boolean
+          description: 'True if there is no explicit speed limit (ex: some Autobahn sections)'
+      description: The speed limit between the pair of coordinates.
+    useHillsCostingOption:
+      type: number
+      format: double
+      description: A measure of willingness to take tackle hills. Values near 0 attempt to avoid hills and steeper grades even if it means a longer route, and values near 1 indicates that the user does not fear them. Note that as some routes may be impossible without hills, 0 does not guarantee avoidance of them.
+      default: 0.5
+      minimum: 0
+      maximum: 1
+    matrixResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/requestId'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/coordinate'
+          description: The list of starting locations determined by snapping to the nearest appropriate point on the road network for the costing model. All locations appear in the same order as the input.
+          minItems: 1
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/coordinate'
+          description: The list of ending locations determined by snapping to the nearest appropriate point on the road network for the costing model. All locations appear in the same order as the input.
+          minItems: 1
+        sources_to_targets:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/matrixDistance'
+          description: The matrix of starting and ending locations, along with the computed distance and travel time. The array is row-ordered. This means that the time and distance from the first location to all others forms the first row of the array, followed by the time and distance from the second source location to all target locations, etc.
+          minItems: 1
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/warning'
+        units:
+          $ref: '#/components/schemas/valhallaLongUnits'
+      required:
+      - sources
+      - targets
+      - sources_to_targets
+      - units
+      example:
+        targets:
+        - - lon: -73.990508
+            lat: 40.744014
+          - lon: -73.979713
+            lat: 40.739735
+          - lon: -73.985015
+            lat: 40.752522
+          - lon: -73.983704
+            lat: 40.750117
+          - lon: -73.993519
+            lat: 40.750552
+        sources_to_targets:
+        - - distance: 0
+            time: 0
+            to_index: 0
+            from_index: 0
+          - distance: 1.115
+            time: 806
+            to_index: 1
+            from_index: 0
+          - distance: 1.278
+            time: 909
+            to_index: 2
+            from_index: 0
+          - distance: 1.112
+            time: 792
+            to_index: 3
+            from_index: 0
+          - distance: 1.22
+            time: 869
+            to_index: 4
+            from_index: 0
+        sources:
+        - - lon: -73.990508
+            lat: 40.744014
+        units: kilometers
+    routeSummary:
+      type: object
+      properties:
+        time:
+          type: number
+          format: double
+          description: The estimated travel time, in seconds
+        length:
+          type: number
+          format: double
+          description: The estimated travel distance, in `units` (km or mi)
+        min_lat:
+          type: number
+          format: double
+          description: The minimum latitude of the bounding box containing the route.
+        max_lat:
+          type: number
+          format: double
+          description: The maximum latitude of the bounding box containing the route.
+        min_lon:
+          type: number
+          format: double
+          description: The minimum longitude of the bounding box containing the route.
+        max_lon:
+          type: number
+          format: double
+          description: The maximum longitude of the bounding box containing the route.
+      required:
+      - time
+      - length
+      - min_lat
+      - min_lon
+      - max_lat
+      - max_lon
+    valhallaLanguages:
+      type: string
+      enum:
+      - bg-BG
+      - ca-ES
+      - cs-CZ
+      - da-DK
+      - de-DE
+      - el-GR
+      - en-GB
+      - en-US-x-pirate
+      - en-US
+      - es-ES
+      - et-EE
+      - fi-FI
+      - fr-FR
+      - hi-IN
+      - hu-HU
+      - it-IT
+      - ja-JP
+      - nb-NO
+      - nl-NL
+      - pl-PL
+      - pt-BR
+      - pt-PT
+      - ro-RO
+      - ru-RU
+      - sk-SK
+      - sl-SI
+      - sv-SE
+      - tr-TR
+      - uk-UA
+      default: en-US
+    osrmRouteLeg:
+      type: object
+      required:
+      - distance
+      - duration
+      - steps
+      properties:
+        distance:
+          type: number
+          format: double
+          description: The distance traveled by the route, in meters.
+        duration:
+          type: number
+          format: double
+          description: The estimated travel time, in number of seconds.
+        weight:
+          type: number
+          format: double
+          description: The total cost of the leg computed by the routing engine.
+        summary:
+          type: string
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/osrmRouteStep'
+        annotation:
+          $ref: '#/components/schemas/osrmAnnotation'
+        via_waypoints:
+          type: array
+          nullable: true
+          description: Indicates which waypoints are passed through rather than creating a new leg.
+          items:
+            $ref: '#/components/schemas/osrmViaWaypoint'
+        admins:
+          type: array
+          description: Administrative regions visited along the leg.
+          items:
+            $ref: '#/components/schemas/osrmAdmin'
+    routeResponse:
+      type: object
+      required:
+      - trip
+      properties:
+        id:
+          $ref: '#/components/schemas/requestId'
+        trip:
+          $ref: '#/components/schemas/routeTrip'
+        alternates:
+          type: array
+          items:
+            type: object
+            properties:
+              trip:
+                $ref: '#/components/schemas/routeTrip'
+      example:
+        trip:
+          locations:
+          - type: break
+            lat: 60.534715
+            lon: -149.543469
+            original_index: 0
+          - type: break
+            lat: 60.53499
+            lon: -149.54858
+            original_index: 1
+          legs:
+          - maneuvers:
+            - type: 1
+              instruction: Drive west on AK 1/Seward Highway.
+              verbal_pre_transition_instruction: Drive west on Alaska 1, Seward Highway. Then You will arrive at your destination.
+              verbal_post_transition_instruction: Continue for 900 feet.
+              street_names:
+              - AK 1
+              - Seward Highway
+              time: 11.487
+              length: 0.176
+              cost: 15.508
+              begin_shape_index: 0
+              end_shape_index: 9
+              verbal_multi_cue: true
+              travel_mode: drive
+              travel_type: car
+            - type: 4
+              instruction: You have arrived at your destination.
+              verbal_transition_alert_instruction: You will arrive at your destination.
+              verbal_pre_transition_instruction: You have arrived at your destination.
+              time: 0
+              length: 0
+              cost: 0
+              begin_shape_index: 9
+              end_shape_index: 9
+              travel_mode: drive
+              travel_type: car
+            summary:
+              has_time_restrictions: false
+              min_lat: 60.534715
+              min_lon: -149.54858
+              max_lat: 60.535008
+              max_lon: -149.543469
+              time: 11.487
+              length: 0.176
+              cost: 15.508
+            shape: wzvmrBxalf|GcCrX}A|Nu@jI}@pMkBtZ{@x^_Afj@Inn@`@veB
+          summary:
+            has_time_restrictions: false
+            min_lat: 60.534715
+            min_lon: -149.54858
+            max_lat: 60.535008
+            max_lon: -149.543469
+            time: 11.487
+            length: 0.176
+            cost: 15.508
+          status_message: Found route between points
+          status: 0
+          units: miles
+          language: en-US
+    routeTrip:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The response status code
+        status_message:
+          type: string
+          description: The response status message
+        units:
+          $ref: '#/components/schemas/valhallaLongUnits'
+        language:
+          $ref: '#/components/schemas/valhallaLanguages'
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/routingResponseWaypoint'
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/routeLeg'
+        summary:
+          $ref: '#/components/schemas/routeSummary'
+      required:
+      - status
+      - status_message
+      - units
+      - language
+      - locations
+      - legs
+      - summary
+    elevation_interval:
+      type: number
+      format: float
+      description: 'If greater than zero, attempts to include elevation along the route at regular intervals. The "native" internal resolution is 30m, so we recommend you use this when possible. This number is interpreted as either meters or feet depending on the unit parameter.
+
+        Elevation for route sections containing a bridge or tunnel is interpolated linearly. This doesn''t always match the true elevation of the bridge/tunnel, but it prevents sharp artifacts from the surrounding terrain. This functionality is unique to the routing endpoints and is not available via the elevation API.
+
+        NOTE: This has no effect on the OSRM response format.'
+      default: 0
+    motorcycleCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/autoCostingOptions'
+      - type: object
+        properties:
+          use_highways:
+            type: number
+            format: double
+            description: A measure of willingness to use highways. Values near 0 attempt to avoid highways and stay on roads with lower speeds, and values near 1 indicate the rider is more comfortable on these roads.
+            default: 1
+            minimum: 0
+            maximum: 1
+          use_trails:
+            type: number
+            format: double
+            description: A measure of the rider's sense of adventure. Values near 0 attempt to avoid highways and stay on roads with potentially unsuitable terrain (trails, tracks, unclassified, or bad surfaces), and values near 1 will tend to avoid major roads and route on secondary roads.
+            default: 0
+            minimum: 0
+            maximum: 1
+    osrmRouteResponse:
+      allOf:
+      - $ref: '#/components/schemas/osrmBaseApiResponse'
+      - type: object
+        properties:
+          waypoints:
+            type: array
+            items:
+              $ref: '#/components/schemas/osrmWaypoint'
+          routes:
+            type: array
+            items:
+              $ref: '#/components/schemas/osrmRoute'
+    motorScooterCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/autoCostingOptions'
+      - type: object
+        properties:
+          use_primary:
+            type: number
+            format: double
+            description: A measure of willingness to use primary roads. Values near 0 attempt to avoid primary roads and stay on roads with lower speeds, and values near 1 indicate the rider is more comfortable on these roads.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+          use_hills:
+            type: number
+            format: double
+            description: A measure of willingness to take tackle hills. Values near 0 attempt to avoid hills and steeper grades even if it means a longer route, and values near 1 indicates that the rider does not fear them. Note that as some routes may be impossible without hills, 0 does not guarantee avoidance of them.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+    osrmRouteStep:
+      type: object
+      description: A maneuver such as a turn or merge, followed by travel along a single road or path.
+      required:
+      - distance
+      - duration
+      - geometry
+      - mode
+      - maneuver
+      properties:
+        distance:
+          type: number
+          format: double
+          description: The distance traveled by the route, in meters.
+        duration:
+          type: number
+          format: double
+          description: The estimated travel time, in number of seconds.
+        geometry:
+          type: string
+          description: An encoded polyline (https://developers.google.com/maps/documentation/utilities/polylinealgorithm) with 6 digits of decimal precision.
+        weight:
+          type: number
+          format: double
+        name:
+          type: string
+          description: 'The name of the segment (ex: road) being traversed'
+        ref:
+          type: string
+          description: A reference number of code for the segment being traversed.
+        pronunciation:
+          type: string
+          description: Pronunciation of the name (if available). The format of this varies by implementation/vendor.
+        destinations:
+          type: string
+        exits:
+          type: string
+        mode:
+          type: string
+          description: The mode of travel.
+        maneuver:
+          $ref: '#/components/schemas/osrmStepManeuver'
+        intersections:
+          type: array
+          items:
+            $ref: '#/components/schemas/osrmIntersection'
+        rotary_name:
+          type: string
+          description: The name of the traffic circle.
+        rotary_pronunciation:
+          type: string
+          description: Pronunciation of the rotary name (if available). The format of this varies by implementation/vendor.
+        driving_side:
+          type: string
+          enum:
+          - left
+          - right
+          description: The side of the road on which driving is legal for this step.
+        voiceInstructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/osrmVoiceInstruction'
+          description: A list of announcements which should be spoken at various points along the maneuver.
+        bannerInstructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/osrmBannerInstruction'
+          description: A list of announcements which should be displayed prominently on screen at various points along the maneuver.
+        speedLimitSign:
+          type: string
+          enum:
+          - mutcd
+          - vienna
+          description: The style of speed limit signs used along the step.
+        speedLimitUnit:
+          type: string
+          description: The unit of measure that is used locally along the step. This may be different from the unit used in maxspeed annotations, and is provided so that apps can localize their display.
+    osrmAnnotation:
+      type: object
+      properties:
+        distance:
+          type: array
+          items:
+            type: number
+            format: double
+          description: The distance, in meters, between each pair of coordinates.
+        duration:
+          type: array
+          items:
+            type: number
+            format: double
+          description: The duration between each pair of coordinates, in seconds.
+        weight:
+          type: array
+          items:
+            type: integer
+        speed:
+          type: array
+          items:
+            type: number
+            format: double
+          description: The estimated speed of travel between each pair of coordinates in meters/sec.
+        maxspeed:
+          type: array
+          items:
+            $ref: '#/components/schemas/osrmSpeedLimit'
+    costingOptions:
+      type: object
+      properties:
+        auto:
+          $ref: '#/components/schemas/autoCostingOptions'
+        bus:
+          $ref: '#/components/schemas/autoCostingOptions'
+        taxi:
+          $ref: '#/components/schemas/autoCostingOptions'
+        truck:
+          $ref: '#/components/schemas/truckCostingOptions'
+        bicycle:
+          $ref: '#/components/schemas/bicycleCostingOptions'
+        motor_scooter:
+          $ref: '#/components/schemas/motorScooterCostingOptions'
+        motorcycle:
+          $ref: '#/components/schemas/motorcycleCostingOptions'
+        pedestrian:
+          $ref: '#/components/schemas/pedestrianCostingOptions'
+        low_speed_vehicle:
+          $ref: '#/components/schemas/lowSpeedVehicleCostingOptions'
+    osrmBaseApiResponse:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          enum:
+          - Ok
+          - InvalidUrl
+          - InvalidService
+          - InvalidVersion
+          - InvalidOptions
+          - InvalidQuery
+          - InvalidValue
+          - NoSegment
+          - TooBig
+          - NoRoute
+          - NoTable
+          - NotImplemented
+          - NoTrips
+        message:
+          type: string
+        data_version:
+          type: string
+    maneuverSign:
+      type: object
+      properties:
+        exit_number_elements:
+          type: array
+          description: A list of exit number elements. This is typically just a single value.
+          items:
+            $ref: '#/components/schemas/maneuverSignElement'
+        exit_branch_elements:
+          type: array
+          description: A list of exit branch elements. The text is a subsequent road name or route number after the sign.
+          items:
+            $ref: '#/components/schemas/maneuverSignElement'
+        exit_toward_elements:
+          type: array
+          description: A list of exit name elements. The text is the interchange identifier (used more frequently outside the US).
+          items:
+            $ref: '#/components/schemas/maneuverSignElement'
+        exit_name_elements:
+          type: array
+          description: A list of exit name elements. The text is the location where the road ahead goes (typically a city, but occasionally a road name or route number).
+          items:
+            $ref: '#/components/schemas/maneuverSignElement'
+    autoCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/baseCostingOptions'
+      - type: object
+        properties:
+          height:
+            type: number
+            format: double
+            description: The height of the automobile (in meters).
+            default: 1.9
+          width:
+            type: number
+            format: double
+            description: The width of the automobile (in meters).
+            default: 1.6
+          toll_booth_cost:
+            type: integer
+            description: The estimated cost (in seconds) when a toll booth is encountered.
+            default: 15
+          toll_booth_penalty:
+            type: integer
+            description: A penalty (in seconds) applied to the route cost when a toll booth is encountered. This penalty can be used to reduce the likelihood of suggesting a route with toll booths unless absolutely necessary.
+            default: 0
+          ferry_cost:
+            type: integer
+            description: The estimated cost (in seconds) when a ferry is encountered.
+            default: 300
+          use_highways:
+            type: number
+            format: double
+            description: A measure of willingness to take highways. Values near 0 attempt to avoid highways, and values near 1 will favour them. Note that as some routes may be impossible without highways, 0 does not guarantee avoidance of them.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+          use_tolls:
+            type: number
+            format: double
+            description: A measure of willingness to take toll roads. Values near 0 attempt to avoid tolls, and values near 1 will favour them. Note that as some routes may be impossible without tolls, 0 does not guarantee avoidance of them.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+          use_tracks:
+            $ref: '#/components/schemas/useTracksCostingOption'
+          top_speed:
+            type: integer
+            description: The top speed (in kph) that the vehicle is capable of travelling.
+            default: 140
+            minimum: 10
+            maximum: 252
+          shortest:
+            type: boolean
+            description: If true changes the cost metric to be quasi-shortest (pure distance-based) costing. This will disable ALL other costing factors.
+            default: false
+          ignore_closures:
+            type: boolean
+            description: If true, ignores all known closures. This option cannot be set if `location.search_filter.exclude_closures` is also specified.
+            default: false
+          include_hov2:
+            type: boolean
+            description: If true, indicates the desire to include HOV roads with a 2-occupant requirement in the route when advantageous.
+            default: false
+          include_hov3:
+            type: boolean
+            description: If true, indicates the desire to include HOV roads with a 3-occupant requirement in the route when advantageous.
+            default: false
+          include_hot:
+            type: boolean
+            description: If true, indicates the desire to include toll roads which require the driver to pay a toll if the occupant requirement isn't met
+            default: false
+          alley_factor:
+            type: number
+            format: double
+            description: A factor that multiplies the cost when alleys are encountered.
+            default: 1
+    isochroneFeature:
+      type: object
+      properties:
+        properties:
+          $ref: '#/components/schemas/isochroneProperties'
+        geometry:
+          type: object
+          additionalProperties: true
+        type:
+          type: string
+          enum:
+          - Feature
+    osrmLane:
+      type: object
+      properties:
+        indications:
+          type: array
+          items:
+            type: string
+            enum:
+            - none
+            - uturn
+            - sharp right
+            - right
+            - slight right
+            - straight
+            - slight left
+            - left
+            - sharp left
+          description: A list of indication (e.g. marking on the road) specifying the turn lane. A road can have multiple indications (e.g. an arrow pointing straight and left).
+        valid:
+          type: boolean
+          description: True if the lane is a valid choice for the current maneuver.
+      required:
+      - indications
+      - valid
+    osrmGuidanceModifier:
+      type: string
+      nullable: true
+      enum:
+      - uturn
+      - sharp right
+      - right
+      - slight right
+      - straight
+      - slight left
+      - left
+      - sharp left
+      description: An optional value indicating the directional change of the maneuver (further clarifying type).
+    osrmRoute:
+      type: object
+      required:
+      - distance
+      - duration
+      - geometry
+      - legs
+      properties:
+        distance:
+          type: number
+          format: double
+          description: The distance traveled by the route, in meters.
+        duration:
+          type: number
+          format: double
+          description: The estimated travel time, in number of seconds.
+        geometry:
+          type: string
+          description: An encoded polyline (https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
+        weight:
+          type: number
+          format: double
+          description: The total cost of the route computed by the routing engine.
+        weight_name:
+          type: string
+          description: The costing model used for the route.
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/osrmRouteLeg'
+    osrmViaWaypoint:
+      type: object
+      properties:
+        distance_from_start:
+          type: number
+          format: double
+          description: The distance from the start of the leg, in meters.
+        geometry_index:
+          type: integer
+          description: The index of the waypoint's location in the route geometry.
+        waypoint_index:
+          type: integer
+          description: The index of the associated waypoint.
+      required:
+      - distance_from_start
+      - geometry_index
+      - waypoint_index
+    travelMode:
+      type: string
+      enum:
+      - drive
+      - pedestrian
+      - bicycle
+      - transit
+    distanceUnit:
+      type: string
+      enum:
+      - km
+      - mi
+      default: km
+    valhallaLongUnits:
+      type: string
+      enum:
+      - miles
+      - kilometers
+      default: kilometers
+    routeLeg:
+      type: object
+      properties:
+        maneuvers:
+          type: array
+          items:
+            $ref: '#/components/schemas/routeManeuver'
+          minItems: 1
+        shape:
+          type: string
+          description: An encoded polyline (https://developers.google.com/maps/documentation/utilities/polylinealgorithm) with 6 digits of decimal precision.
+        summary:
+          $ref: '#/components/schemas/routeSummary'
+        elevation_interval:
+          type: number
+          format: float
+          description: The sampling distance between elevation values along the route. This echoes the request parameter having the same name (converted to `units` if necessary).
+        elevation:
+          type: array
+          items:
+            type: number
+            format: float
+          description: An array of elevation values sampled every `elevation_interval`. Units are either metric or imperial depending on the value of `units`.
+      required:
+      - maneuvers
+      - shape
+      - summary
+    routingWaypoint:
+      allOf:
+      - $ref: '#/components/schemas/simpleRoutingWaypoint'
+      - type: object
+        properties:
+          heading:
+            type: integer
+            description: The preferred direction of travel when starting the route, in integer clockwise degrees from north. North is 0, south is 180, east is 90, and west is 270.
+            minimum: 0
+            maximum: 360
+          heading_tolerance:
+            type: integer
+            description: The tolerance (in degrees) determining whether a street is considered the same direction.
+            minimum: 0
+            maximum: 360
+            default: 60
+          minimum_reachability:
+            type: integer
+            description: The minimum number of nodes that must be reachable for a given edge to consider that edge as belonging to a connected region. If a candidate edge has fewer connections, it will be considered a disconnected island.
+            minimum: 0
+            default: 50
+          radius:
+            type: integer
+            description: The distance (in meters) to look for candidate edges around the location for purposes of snapping locations to the route graph. If there are no candidates within this distance, the closest candidate within a reasonable search distance will be used. This is subject to clamping by internal limits.
+            minimum: 0
+            default: 0
+          rank_candidates:
+            type: boolean
+            description: If true, candidates will be ranked according to their distance from the target location as well as other factors. If false, candidates will only be ranked using their distance from the target.
+            default: true
+          preferred_side:
+            type: string
+            enum:
+            - same
+            - opposite
+            - either
+            description: If the location is not offset from the road centerline or is closest to an intersection, this option has no effect. Otherwise, the preferred side of street is used to determine whether or not the location should be visited from the same, opposite or either side of the road with respect to the side of the road the given locale drives on.
+          node_snap_tolerance:
+            type: integer
+            description: During edge correlation this is the tolerance (in meters) used to determine whether or not to snap to the intersection rather than along the street, if the snap location is within this distance from the intersection, the intersection is used instead.
+            minimum: 0
+            default: 5
+          street_side_tolerance:
+            type: integer
+            description: A tolerance in meters from the edge centerline used for determining the side of the street that the location is on. If the distance to the centerline is less than this tolerance, no side will be inferred. Otherwise, the left or right side will be selected depending on the direction of travel.
+            minimum: 0
+            default: 5
+          street_side_max_distance:
+            type: integer
+            description: A tolerance in meters from the edge centerline used for determining the side of the street that the location is on. If the distance to the centerline is greater than this tolerance, no side will be inferred. Otherwise, the left or right side will be selected depending on the direction of travel.
+            minimum: 0
+            default: 1000
+          search_filter:
+            type: object
+            properties:
+              exclude_tunnel:
+                type: boolean
+                description: Excludes roads marked as tunnels
+                default: false
+              exclude_bridge:
+                type: boolean
+                description: Excludes roads marked as bridges
+                default: false
+              exclude_ramp:
+                type: boolean
+                description: Excludes roads marked as ramps
+                default: false
+              exclude_closures:
+                type: boolean
+                description: Excludes roads marked as closed
+                default: true
+              min_road_class:
+                description: The lowest road class allowed
+                default: service_other
+                allOf:
+                - $ref: '#/components/schemas/roadClass'
+              max_road_class:
+                description: The highest road class allowed
+                default: motorway
+                allOf:
+                - $ref: '#/components/schemas/roadClass'
+    matrixWaypoint:
+      allOf:
+      - $ref: '#/components/schemas/coordinate'
+      - type: object
+        properties:
+          search_cutoff:
+            type: integer
+            description: The cutoff (in meters) at which we will assume the input is too far away from civilisation to be worth correlating to the nearest graph elements. The default is 35 km.
+            default: break
+    warning:
+      type: object
+      properties:
+        text:
+          type: string
+        code:
+          type: integer
+    roadClass:
+      type: string
+      enum:
+      - motorway
+      - trunk
+      - primary
+      - secondary
+      - tertiary
+      - unclassified
+      - residential
+      - service_other
+      description: Class of road (ranked in descending order)
+    useTracksCostingOption:
+      type: number
+      format: double
+      description: A measure of willingness to take track roads. Values near 0 attempt to avoid them, and values near 1 will favour them. Note that as some routes may be impossible without track roads, 0 does not guarantee avoidance of them. The default value is 0 for automobiles, busses, and trucks; and 0.5 for all other costing modes.
+      minimum: 0
+      maximum: 1
+    osrmBannerComponent:
+      type: object
+      properties:
+        text:
+          type: string
+        type:
+          type: string
+          enum:
+          - text
+          - icon
+          - delimiter
+          - exit-number
+          - exit
+          - lane
+    lowSpeedVehicleCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/baseCostingOptions'
+      - type: object
+        properties:
+          vehicle_type:
+            type: string
+            enum:
+            - low_speed_vehicle
+            - golf_cart
+            default: low_speed_vehicle
+            description: 'The type of vehicle:
+
+              * low_speed_vehicle (BETA): a low-speed vehicle which falls under a different regulatory and licensing regime than automobiles (ex: LSV in the US and Canada, Quadricycles in the EU, etc.) * golf_cart: a street legal golf cart that is under a similar regulator regime as the generic LSV laws, but may need to follow special paths when available or abide by restrictions specific to golf carts.'
+          top_speed:
+            type: integer
+            description: 'The top speed (in kph) that the vehicle is capable of travelling.
+
+              This impacts travel time calculations as well as which roads are preferred. A very low speed vehicle will tend to prefer lower speed roads even in the presence of other legal routes.'
+            default: 35
+            minimum: 20
+            maximum: 60
+          max_allowed_speed_limit:
+            type: integer
+            description: The maximum speed limit for highways on which it is legal for the vehicle to travel. Defaults to 57 (kph; around 35 mph). Acceptable values range from 20 to 80. Highways with *tagged* speed limits higher than this value will not be routed over (some caveats apply; this feature is still BETA).
+            default: 57
+            minimum: 20
+            maximum: 80
+    transitInfo:
+      type: object
+      description: Public transit info (not currently supported).
+      additionalProperties: true
+    contour:
+      type: object
+      properties:
+        time:
+          type: number
+          format: double
+          description: The time in minutes for the contour. Mutually exclusive of distance.
+          example: 15
+        distance:
+          type: number
+          format: double
+          description: The distance in km for the contour. Mutually exclusive of time.
+          example: 10
+        color:
+          type: string
+          description: The color for the output contour, specified as a hex value (without a leading `#`). If no color is specified, one will be assigned automatically.
+          example: aabbcc
+    maneuverSignElement:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The interchange sign text (varies based on the context; see the `maneuverSign` schema).
+        is_route_number:
+          type: boolean
+          description: True if the sign is a route number.
+        consecutive_count:
+          type: integer
+          description: The frequency of this sign element within a set a consecutive signs.
+      required:
+      - text
+    annotationFilters:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - include
+          - exclude
+        attributes:
+          type: array
+          items:
+            type: string
+            enum:
+            - shape_attributes.speed
+            - shape_attributes.speed_limit
+            - shape_attributes.time
+            - shape_attributes.length
+          description: A set of granular attributes to include between every pair of coordinates along the route. This can significantly increase the response size.
+    costingModel:
+      type: string
+      enum:
+      - auto
+      - bus
+      - taxi
+      - truck
+      - bicycle
+      - bikeshare
+      - motor_scooter
+      - motorcycle
+      - pedestrian
+      - low_speed_vehicle
+      description: 'A model which influences the routing based on the type of travel. The costing model affects parameters ranging from which roads are legally accessible to preferences based on comfort or speed.
+
+        See https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/#costing-models for in-depth descriptions of each costing model.'
+    directionsOptions:
+      type: object
+      properties:
+        units:
+          $ref: '#/components/schemas/distanceUnit'
+        language:
+          $ref: '#/components/schemas/valhallaLanguages'
+        directions_type:
+          type: string
+          enum:
+          - none
+          - maneuvers
+          - instructions
+          default: instructions
+          description: The level of directional narrative to include. Locations and times will always be returned, but narrative generation verbosity can be controlled with this parameter.
+    useLivingStreetsCostingOption:
+      type: number
+      format: double
+      description: A measure of willingness to take living streets. Values near 0 attempt to avoid them, and values near 1 will favour them. Note that as some routes may be impossible without living streets, 0 does not guarantee avoidance of them. The default value is 0 for trucks; 0.1 for other motor vehicles; 0.5 for bicycles; and 0.6 for pedestrians.
+      minimum: 0
+      maximum: 1
+    useFerryCostingOption:
+      type: number
+      format: double
+      description: A measure of willingness to take ferries. Values near 0 attempt to avoid ferries, and values near 1 will favour them. Note that as some routes may be impossible without ferries, 0 does not guarantee avoidance of them.
+      default: 0.5
+      minimum: 0
+      maximum: 1
+    pedestrianCostingOptions:
+      type: object
+      properties:
+        walking_speed:
+          type: integer
+          description: Walking speed in kph.
+          default: 5.1
+          minimum: 0.5
+          maximum: 25
+        walkway_factor:
+          type: number
+          format: double
+          description: A factor that multiplies the cost when walkways are encountered.
+          default: 1
+        sidewalk_factor:
+          type: number
+          format: double
+          description: A factor that multiplies the cost when sidewalks are encountered.
+          default: 1
+        alley_factor:
+          type: number
+          format: double
+          description: A factor that multiplies the cost when alleys are encountered.
+          default: 2
+        driveway_factor:
+          type: number
+          format: double
+          description: A factor that multiplies the cost when driveways are encountered.
+          default: 5
+        step_penalty:
+          type: integer
+          description: A penalty (in seconds) added to each transition onto a path with steps or stairs.
+          default: 30
+        use_ferry:
+          $ref: '#/components/schemas/useFerryCostingOption'
+        use_living_streets:
+          $ref: '#/components/schemas/useLivingStreetsCostingOption'
+        use_tracks:
+          $ref: '#/components/schemas/useTracksCostingOption'
+        use_hills:
+          $ref: '#/components/schemas/useHillsCostingOption'
+        use_lit:
+          type: number
+          format: double
+          description: A measure of preference for streets that are lit. 0 indicates indifference toward lit streets, and 1 indicates that unlit streets should be avoided. Note that even with values near 1, there is no guarantee that the returned route will include lit segments.
+          default: 0
+          minimum: 0
+          maximum: 1
+        service_penalty:
+          $ref: '#/components/schemas/servicePenaltyCostingOption'
+        service_factor:
+          $ref: '#/components/schemas/serviceFactorCostingOption'
+        max_hiking_difficulty:
+          type: integer
+          description: The maximum difficulty of hiking trails allowed. This corresponds to the OSM `sac_scale`.
+          default: 1
+          minimum: 1
+          maximum: 6
+        bss_rent_cost:
+          type: integer
+          description: The estimated cost (in seconds) to rent a bicycle from a sharing station in `bikeshare` mode.
+          default: 120
+        bss_rent_penalty:
+          type: integer
+          description: A penalty (in seconds) to rent a bicycle in `bikeshare` mode.
+          default: 0
+    osrmVoiceInstruction:
+      type: object
+      required:
+      - distanceAlongGeometry
+      - announcement
+      properties:
+        distanceAlongGeometry:
+          type: number
+          format: double
+          description: How far (in meters) from the upcoming maneuver the instruction should be announced.
+        announcement:
+          type: string
+          description: The plain-text announcement.
+        ssmlAnnouncement:
+          type: string
+          description: The announcement in Speech Synthesis Markup Language (SSML). Supported TTS engines include Amazon Polly and Apple's AVSpeechSynthesizer.
+    matrixDistance:
+      type: object
+      properties:
+        distance:
+          type: number
+          format: double
+          nullable: true
+          description: 'The distance (in `units`) between the location in `sources` at `from_index` and the location in `targets` at `to_index`.
+
+            This value may be 0 in the case that the source and destination are the same, and `null` if no route was found between the locations.'
+        time:
+          type: integer
+          nullable: true
+          description: 'The travel time (in seconds) between the location in `sources` at `from_index` and the location in `targets` at `to_index`.
+
+            This value may be 0 in the case that the source and destination are the same, and `null` if no route was found between the locations.'
+        from_index:
+          type: integer
+          description: The index of the start location in the `sources` array.
+        to_index:
+          type: integer
+          description: The index of the end location in the `targets` array.
+      required:
+      - distance
+      - time
+      - from_index
+      - to_index
+    servicePenaltyCostingOption:
+      type: integer
+      description: A penalty applied to transitions to service roads. This penalty can be used to reduce the likelihood of suggesting a route with service roads unless absolutely necessary. The default penalty is 15 for cars, busses, motor scooters, and motorcycles; and zero for others.
+    osrmAdmin:
+      type: object
+      properties:
+        iso_3166_1:
+          type: string
+          description: The ISO 3166-1 two-character code for the admin region.
+        iso_3166_1_alpha3:
+          type: string
+          description: The ISO 3166-1 three-character code for the admin region.
+    simpleRoutingWaypoint:
+      allOf:
+      - $ref: '#/components/schemas/coordinate'
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - break
+            - through
+            - via
+            - break_through
+            description: A `break` represents the start or end of a leg, and allows reversals. A `through` location is an intermediate waypoint that must be visited between `break`s, but at which reversals are not allowed. A `via` is similar to a `through` except that reversals are allowed. A `break_through` is similar to a `break` in that it can be the start/end of a leg, but does not allow reversals.
+            default: break
+    osrmCoordinate:
+      type: array
+      items:
+        type: number
+        format: double
+      minItems: 2
+      maxItems: 2
+      description: A (longitude, latitude) coordinate pair.
+    osrmBannerContent:
+      type: object
+      required:
+      - text
+      properties:
+        text:
+          type: string
+        type:
+          type: string
+          enum:
+          - turn
+          - new name
+          - depart
+          - arrive
+          - merge
+          - on ramp
+          - off ramp
+          - fork
+          - end of road
+          - continue
+          - roundabout
+          - rotary
+          - roundabout turn
+          - notification
+          - exit roundabout
+          - exit rotary
+        modifier:
+          $ref: '#/components/schemas/osrmGuidanceModifier'
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/osrmBannerComponent'
+          description: A list of objects with additional context that allow for visual layout improvements beyond what's possible with plain text.
+    isochroneRequest:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/requestId'
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/coordinate'
+        costing:
+          $ref: '#/components/schemas/isochroneCostingModel'
+        costing_options:
+          $ref: '#/components/schemas/costingOptions'
+        contours:
+          type: array
+          items:
+            $ref: '#/components/schemas/contour'
+          maxItems: 4
+          minItems: 1
+        polygons:
+          type: boolean
+          default: false
+          description: If true, the generated GeoJSON will use polygons. The default is to use LineStrings. Polygon output makes it easier to render overlapping areas in some visualization tools (such as MapLibre renderers).
+        denoise:
+          type: number
+          format: double
+          default: 1
+          minimum: 0
+          maximum: 1
+          description: A value in the range [0, 1] which will be used to smooth out or remove smaller contours. A value of 1 will only return the largest contour for a given time value. A value of 0.5 drops any contours that are less than half the area of the largest contour in the set of contours for that same time value.
+        generalize:
+          type: number
+          format: double
+          default: 200
+          description: The value in meters to be used as a tolerance for Douglas-Peucker generalization.
+        show_locations:
+          type: boolean
+          default: false
+          description: 'If true, then the output GeoJSON will include the input locations as two MultiPoint features: one for the exact input coordinates, and a second for the route network node location that the point was snapped to.'
+      required:
+      - locations
+      - contours
+      - costing
+      example: "{\n  \"id\": \"kesklinn\",\n  \"locations\": [\n    {\n      \"lat\": 59.436884,\n      \"lon\": 24.742595\n    }\n  ],\n  \"costing\": \"pedestrian\",\n  \"contours\": [\n    {\n      \"time\": 5,\n      \"color\": \"aabbcc\"\n    }\n  ],\n  \"polygons\": true\n}"
+    osrmStepManeuver:
+      type: object
+      required:
+      - location
+      - bearing_before
+      - bearing_after
+      - type
+      properties:
+        location:
+          $ref: '#/components/schemas/osrmCoordinate'
+        instruction:
+          type: string
+          description: A human-readable instruction for the maneuver.
+        bearing_before:
+          type: integer
+          description: The clockwise angle from true north to the direction of travel immediately before the maneuver.
+        bearing_after:
+          type: integer
+          description: The clockwise angle from true north to the direction of travel immediately after the maneuver.
+        type:
+          type: string
+          enum:
+          - turn
+          - new name
+          - depart
+          - arrive
+          - merge
+          - ramp
+          - on ramp
+          - off ramp
+          - fork
+          - end of road
+          - use lane
+          - continue
+          - roundabout
+          - rotary
+          - roundabout turn
+          - notification
+        modifier:
+          $ref: '#/components/schemas/osrmGuidanceModifier'
+        exit:
+          type: integer
+          description: The exit number to take (for roundabouts, rotaries, and number of intersections).
+    osrmBannerInstruction:
+      type: object
+      required:
+      - distanceAlongGeometry
+      - primary
+      properties:
+        distanceAlongGeometry:
+          type: number
+          format: double
+          description: How far (in meters) from the upcoming maneuver the instruction should start being displayed.
+        primary:
+          $ref: '#/components/schemas/osrmBannerContent'
+        secondary:
+          $ref: '#/components/schemas/osrmBannerContent'
+    requestId:
+      type: string
+      description: An identifier to disambiguate requests (echoed by the server).
+      example: kesklinn
+    baseCostingOptions:
+      type: object
+      properties:
+        maneuver_penalty:
+          type: integer
+          description: A penalty (in seconds) applied when transitioning between roads (determined by name).
+          default: 5
+        gate_cost:
+          type: integer
+          description: The estimated cost (in seconds) when a gate is encountered.
+          default: 15
+        gate_penalty:
+          type: integer
+          description: A penalty (in seconds) applied to the route cost when a gate is encountered. This penalty can be used to reduce the likelihood of suggesting a route with gates unless absolutely necessary.
+          default: 300
+        country_crossing_cost:
+          type: integer
+          description: The estimated cost (in seconds) when encountering an international border.
+          default: 600
+        country_crossing_penalty:
+          type: integer
+          description: A penalty applied to transitions to international border crossings. This penalty can be used to reduce the likelihood of suggesting a route with border crossings unless absolutely necessary.
+          default: 0
+        service_penalty:
+          $ref: '#/components/schemas/servicePenaltyCostingOption'
+        service_factor:
+          $ref: '#/components/schemas/serviceFactorCostingOption'
+        use_living_streets:
+          $ref: '#/components/schemas/useLivingStreetsCostingOption'
+        use_ferry:
+          $ref: '#/components/schemas/useFerryCostingOption'
+        ignore_restrictions:
+          type: boolean
+          description: 'If set to true, ignores any restrictions (eg: turn and conditional restrictions). Useful for matching GPS traces to the road network regardless of restrictions.'
+        ignore_non_vehicular_restrictions:
+          type: boolean
+          description: 'If set to true, ignores most restrictions (eg: turn and conditional restrictions), but still respects restrictions that impact vehicle safety such as weight and size.'
+        ignore_oneways:
+          type: boolean
+          description: If set to true, ignores directional restrictions on roads. Useful for matching GPS traces to the road network regardless of restrictions.
+    serviceFactorCostingOption:
+      type: number
+      format: double
+      description: A factor that multiplies the cost when service roads are encountered. The default is 1.2 for cars and busses, and 1 for trucks, motor scooters, and motorcycles.
+      default: 1
+    truckCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/autoCostingOptions'
+      - type: object
+        properties:
+          height:
+            type: number
+            format: double
+            description: The height of the truck (in meters).
+            default: 4.11
+          width:
+            type: number
+            format: double
+            description: The width of the truck (in meters).
+            default: 2.6
+          length:
+            type: number
+            format: double
+            description: The length of the truck (in meters).
+            default: 21.64
+          weight:
+            type: number
+            format: double
+            description: The weight of the truck (in tonnes).
+            default: 21.77
+          axle_load:
+            type: number
+            format: double
+            description: The axle load of the truck (in tonnes).
+            default: 9.07
+          hazmat:
+            type: boolean
+            description: Whether or not the truck is carrying hazardous materials.
+            default: false
+    isochroneResponse:
+      type: object
+      required:
+      - features
+      - type
+      properties:
+        id:
+          type: string
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/isochroneFeature'
+        type:
+          type: string
+          enum:
+          - FeatureCollection
+      example:
+        features:
+        - properties:
+            fill: '#ff0000'
+            fillOpacity: 0.33
+            fill-opacity: 0.33
+            fillColor: '#ff0000'
+            color: '#ff0000'
+            contour: 15
+            opacity: 0.33
+            metric: time
+          geometry:
+            coordinates:
+            - - -73.985021
+              - 40.753501
+            - - -73.983892
+              - 40.75163
+            - - -73.982508
+              - 40.751546
+            - - -73.981969
+              - 40.751014
+            - - -73.977881
+              - 40.739014
+            - - -73.979577
+              - 40.738083
+            - - -73.980361
+              - 40.737014
+            - - -73.988508
+              - 40.73467
+            - - -73.990508
+              - 40.733708
+            - - -73.991514
+              - 40.734008
+            - - -73.994628
+              - 40.733894
+            - - -73.995388
+              - 40.734134
+            - - -73.995662
+              - 40.73486
+            - - -73.996508
+              - 40.735006
+            - - -73.998508
+              - 40.734576
+            - - -74.003292
+              - 40.746014
+            - - -74.004016
+              - 40.749014
+            - - -74.002508
+              - 40.749907
+            - - -73.993508
+              - 40.751786
+            - - -73.987508
+              - 40.75397
+            - - -73.985021
+              - 40.753501
+            type: LineString
+          type: Feature
+        type: FeatureCollection
+    routeManeuver:
+      type: object
+      properties:
+        type:
+          type: integer
+          description: 'The type of route maneuver.
+
+
+            | Code | Type                                |
+
+            |------|-------------------------------------|
+
+            | 0    | None                                |
+
+            | 1    | Start                               |
+
+            | 2    | Start right                         |
+
+            | 3    | Start left                          |
+
+            | 4    | Destination                         |
+
+            | 5    | Destination right                   |
+
+            | 6    | Destination left                    |
+
+            | 7    | Becomes                             |
+
+            | 8    | Continue                            |
+
+            | 9    | Slight right                        |
+
+            | 10   | Right                               |
+
+            | 11   | Sharp right                         |
+
+            | 12   | U-turn right                        |
+
+            | 13   | U-turn left                         |
+
+            | 14   | Sharp left                          |
+
+            | 15   | Left                                |
+
+            | 16   | Slight left                         |
+
+            | 17   | Ramp straight                       |
+
+            | 18   | Ramp right                          |
+
+            | 19   | Ramp left                           |
+
+            | 20   | Exit right                          |
+
+            | 21   | Exit left                           |
+
+            | 22   | Stay straight                       |
+
+            | 23   | Stay right                          |
+
+            | 24   | Stay left                           |
+
+            | 25   | Merge                               |
+
+            | 26   | Enter roundabout                    |
+
+            | 27   | Exit roundabout                     |
+
+            | 28   | Enter ferry                         |
+
+            | 29   | Exit ferry                          |
+
+            | 30   | Transit                             |
+
+            | 31   | Transit transfer                    |
+
+            | 32   | Transit remain on                   |
+
+            | 33   | Transit connection start            |
+
+            | 34   | Transit connection transfer         |
+
+            | 35   | Transit connection destination      |
+
+            | 36   | Post-transit connection destination |
+
+            | 37   | Merge right                         |
+
+            | 38   | Merge left                          |
+
+            '
+        instruction:
+          type: string
+          description: The written maneuver instruction.
+        verbal_transition_alert_instruction:
+          type: string
+          description: Text suitable for use as a verbal navigation alert.
+        verbal_pre_transition_instruction:
+          type: string
+          description: Text suitable for use as a verbal navigation alert immediately prior to the maneuver transition.
+        verbal_post_transition_instruction:
+          type: string
+          description: Text suitable for use as a verbal navigation alert immediately after to the maneuver transition.
+        street_names:
+          type: array
+          description: A list of street names that are consistent along the entire maneuver.
+          items:
+            type: string
+            example: A1
+        begin_street_names:
+          type: array
+          description: A list of street names at the beginning of the maneuver, if they are different from the names at the end.
+          items:
+            type: string
+            example: A1
+        time:
+          type: number
+          format: double
+          description: The estimated time to complete the entire maneuver, in seconds.
+        length:
+          type: number
+          format: double
+          description: The length of the maneuver, in `units`.
+        begin_shape_index:
+          type: integer
+          description: The index into the list of shape points for the start of the maneuver.
+        end_shape_index:
+          type: integer
+          description: The index into the list of shape points for the end of the maneuver.
+        toll:
+          type: boolean
+          description: True any portion of the maneuver is subject to a toll.
+          default: false
+        rough:
+          type: boolean
+          description: True any portion of the maneuver is unpaved or has portions of rough pavement.
+          default: false
+        gate:
+          type: boolean
+          description: True if a gate is encountered in the course of this maneuver.
+          default: false
+        ferry:
+          type: boolean
+          description: True if a ferry is encountered in the course of this maneuver.
+          default: false
+        sign:
+          $ref: '#/components/schemas/maneuverSign'
+        roundabout_exit_count:
+          type: integer
+          description: The exit number of the roundabout to take after entering.
+        depart_instruction:
+          type: integer
+          description: The written departure time instruction (typically used in a transit maneuver).
+          example: 'Depart: 8:04 AM from Seoul Station'
+        verbal_depart_instruction:
+          type: integer
+          description: Text suitable for use as a verbal departure time instruction (typically used in a transit maneuver).
+          example: Depart at 8:04 AM from Seoul Station
+        arrive_instruction:
+          type: integer
+          description: The written arrival time instruction (typically used in a transit maneuver).
+          example: 'Arrive: 8:06 AM at City Hall'
+        verbal_arrive_instruction:
+          type: integer
+          description: Text suitable for use as a verbal departure time instruction (typically used in a transit maneuver).
+          example: Arrive at 8:06 AM at City Hall
+        transit_info:
+          $ref: '#/components/schemas/transitInfo'
+        verbal_multi_cue:
+          type: boolean
+          description: True if the `verbal_pre_transition_instruction` has been appended with the verbal instruction of the next maneuver.
+          default: false
+        travel_mode:
+          $ref: '#/components/schemas/travelMode'
+        travel_type:
+          type: string
+          description: The type of travel over the maneuver. This can be thought of as a specialization of the travel mode. For example, vehicular travel may be via car, motorcycle, etc.; and travel via bicycle may be via a road bike, mountain bike, etc.
+          enum:
+          - car
+          - motorcycle
+          - bus
+          - tractor_trailer
+          - motor_scooter
+          - foot
+          - wheelchair
+          - segway
+          - road
+          - cross
+          - hybrid
+          - mountain
+          - tram
+          - metro
+          - rail
+          - ferry
+          - cable_car
+          - gondola
+          - funicular
+          - golf_cart
+          - low_speed_vehicle
+        bss_maneuver_type:
+          type: string
+          description: Describes a bike share action when using bikeshare routing.
+          enum:
+          - NoneAction
+          - RentBikeAtBikeShare
+          - ReturnBikeAtBikeShare
+      required:
+      - type
+      - instruction
+      - time
+      - length
+      - cost
+      - begin_shape_index
+      - end_shape_index
+      - travel_mode
+      - travel_type
+    isochroneProperties:
+      type: object
+      properties:
+        fillColor:
+          type: string
+        opacity:
+          type: number
+          format: float
+        fill:
+          type: string
+        fillOpacity:
+          type: number
+          format: float
+        color:
+          type: string
+        contour:
+          type: number
+          format: float
+        metric:
+          type: string
+          enum:
+          - time
+          - distance
+    matrixRequest:
+      allOf:
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/requestId'
+          sources:
+            type: array
+            items:
+              $ref: '#/components/schemas/matrixWaypoint'
+            description: The list of starting locations
+            minItems: 1
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/matrixWaypoint'
+            description: The list of ending locations
+            minItems: 1
+          costing:
+            $ref: '#/components/schemas/matrixCostingModel'
+          costing_options:
+            $ref: '#/components/schemas/costingOptions'
+          matrix_locations:
+            type: integer
+            description: Only applicable to one-to-many or many-to-one requests. This defaults to all locations. When specified explicitly, this option allows a partial result to be returned. This is basically equivalent to "find the closest/best locations out of the full set." This can have a dramatic improvement for large requests.
+      - $ref: '#/components/schemas/directionsOptions'
+      required:
+      - sources
+      - targets
+      - costing
+      example:
+        sources:
+        - lat: 40.744014
+          lon: -73.990508
+        targets:
+        - lat: 40.744014
+          lon: -73.990508
+        - lat: 40.739735
+          lon: -73.979713
+        - lat: 40.752522
+          lon: -73.985015
+        - lat: 40.750117
+          lon: -73.983704
+        - lat: 40.750552
+          lon: -73.993519
+        costing: pedestrian
+    routeRequest:
+      allOf:
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/requestId'
+          locations:
+            type: array
+            items:
+              $ref: '#/components/schemas/routingWaypoint'
+            minItems: 2
+          costing:
+            $ref: '#/components/schemas/costingModel'
+          costing_options:
+            $ref: '#/components/schemas/costingOptions'
+          exclude_locations:
+            type: array
+            items:
+              $ref: '#/components/schemas/routingWaypoint'
+            description: This has the same format as the locations list. Locations are mapped to the closed road(s), and these road(s) are excluded from the route path computation.
+          exclude_polygons:
+            type: array
+            items:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+                  format: double
+            description: One or multiple exterior rings of polygons in the form of nested JSON arrays. Roads intersecting these rings will be avoided during path finding. Open rings will be closed automatically. If you only need to avoid a few specific roads, it's much more efficient to use `exclude_locations`.
+            example:
+            - - - 30
+                - 10
+              - - 40
+                - 40
+              - - 20
+                - 40
+              - - 10
+                - 20
+              - - 30
+                - 10
+          alternates:
+            type: integer
+            description: How many alternate routes are desired. Note that fewer or no alternates may be returned. Alternates are not yet supported on routes with more than 2 locations or on time-dependent routes.
+          elevation_interval:
+            $ref: '#/components/schemas/elevation_interval'
+          roundabout_exits:
+            type: boolean
+            description: Determines whether the output should include roundabout exit instructions.
+            default: true
+      - $ref: '#/components/schemas/directionsOptions'
+      - $ref: '#/components/schemas/extendedDirectionsOptions'
+      required:
+      - locations
+      - costing
+      example:
+        locations:
+        - lon: -149.543469
+          lat: 60.5347155
+          type: break
+        - lon: -149.5485806
+          lat: 60.5349908
+          type: break
+        costing: auto
+        costing_options:
+          auto:
+            use_tolls: 1
+            use_highways: 0
+        units: miles
+    bicycleCostingOptions:
+      allOf:
+      - $ref: '#/components/schemas/baseCostingOptions'
+      - type: object
+        properties:
+          bicycle_type:
+            type: string
+            enum:
+            - Road
+            - Hybrid
+            - Cross
+            - Mountain
+            default: Hybrid
+            description: 'The type of bicycle:
+
+              * Road: has narrow tires and is generally lightweight and designed for speed on paved surfaces * Hybrid or City: designed for city riding or casual riding on roads and paths with good surfaces * Cross: similar to a road bike, but has wider tires so it can handle rougher surfaces * Mountain: able to handle most surfaces, but generally heavier and slower on paved surfaces'
+          cycling_speed:
+            type: integer
+            description: "The average comfortable travel speed (in kph) along smooth, flat roads. The costing will vary the speed based on the surface, bicycle type, elevation change, etc. This value should be the average sustainable cruising speed the cyclist can maintain over the entire route.\nThe default speeds are as follows based on bicycle type:\n  * Road - 25kph\n  * Cross - 20kph\n  * Hybrid - 18kph\n  * Mountain - 16kph"
+          use_roads:
+            type: number
+            format: double
+            description: A measure of willingness to use roads alongside other vehicles. Values near 0 attempt to avoid roads and stay on cycleways, and values near 1 indicate the cyclist is more comfortable on roads.
+            default: 0.5
+            minimum: 0
+            maximum: 1
+          use_hills:
+            $ref: '#/components/schemas/useHillsCostingOption'
+          avoid_bad_surfaces:
+            type: number
+            format: double
+            description: A measure of how much the cyclist wants to avoid roads with poor surfaces relative to the type of bicycle being ridden. When 0, there is no penalization of roads with poorer surfaces, and only bicycle speed is taken into account. As the value approaches 1, roads with poor surfaces relative to the bicycle type receive a heaver penalty, so they will only be taken if they significantly reduce travel time. When the value is 1, all bad surfaces are completely avoided from the route, including the start and end points.
+            default: 0.25
+            minimum: 0
+            maximum: 1
+          bss_return_cost:
+            type: integer
+            description: The estimated cost (in seconds) to return a bicycle in `bikeshare` mode.
+            default: 120
+          bss_return_penalty:
+            type: integer
+            description: A penalty (in seconds) to return a bicycle in `bikeshare` mode.
+            default: 0
+    matrixCostingModel:
+      type: string
+      enum:
+      - auto
+      - bus
+      - taxi
+      - truck
+      - bicycle
+      - bikeshare
+      - motor_scooter
+      - motorcycle
+      - pedestrian
+      - low_speed_vehicle
+    isochroneCostingModel:
+      type: string
+      enum:
+      - auto
+      - bus
+      - taxi
+      - truck
+      - bicycle
+      - bikeshare
+      - motor_scooter
+      - motorcycle
+      - pedestrian
+      - low_speed_vehicle
+    extendedDirectionsOptions:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - json
+          - osrm
+          description: The output response format. The default JSON format is extremely compact and ideal for web or data-constrained use cases where you want to fetch additional attributes on demand in small chunks. The OSRM format is much richer and is configurable with significantly more info for turn-by-turn navigation use cases.
+        banner_instructions:
+          type: boolean
+          description: Optionally includes helpful banners with timing information for turn-by-turn navigation. This is only available in the OSRM format.
+        voice_instructions:
+          type: boolean
+          description: Optionally includes voice instructions with timing information for turn-by-turn navigation. This is only available in the OSRM format.
+        filters:
+          $ref: '#/components/schemas/annotationFilters'
+    osrmIntersection:
+      type: object
+      description: Detailed information about intersections that the route traverses. For every step, the first intersection is at the location of the maneuver. Additional intersections will be provided for every road or path traversed until the next step.
+      required:
+      - location
+      - bearings
+      - entry
+      properties:
+        location:
+          $ref: '#/components/schemas/osrmCoordinate'
+        bearings:
+          type: array
+          items:
+            type: integer
+          description: A list of bearing values that are available for travel through the intersection.
+        classes:
+          type: array
+          items:
+            type: string
+            enum:
+            - toll
+            - ferry
+            - restricted
+            - motorway
+            - tunnel
+            description: The classes of roads exiting the intersection.
+        entry:
+          type: array
+          items:
+            type: boolean
+          description: A list of entry flags, which map 1:1 to the bearings. A value of true indicates that the respective road could be entered on a valid route. False indicates that the turn onto the respective road would violate a restriction.
+        in:
+          type: integer
+          description: An index into bearings/entry array. Used to calculate the bearing just before the turn. Namely, the clockwise angle from true north to the direction of travel immediately before the maneuver/passing the intersection. Bearings are given relative to the intersection. To get the bearing in the direction of driving, the bearing has to be rotated by a value of 180. The value is not supplied for depart maneuvers.
+        out:
+          type: integer
+          description: An index into bearings/entry array. Used to calculate the bearing just after the turn. Namely, the clockwise angle from true north to the direction of travel immediately after the maneuver/passing the intersection. This is not supplied for arrive maneuvers.
+        lanes:
+          type: array
+          items:
+            $ref: '#/components/schemas/osrmLane'
+          description: Available turn lanes at the intersection. May be omitted if no lane information is available for the intersection.
+        admin_index:
+          type: integer
+          description: The index into the admin boundaries list on the route leg.
+        duration:
+          type: number
+          format: double
+          description: The estimated duration, in seconds, to traverse the intersection.
+        turn_duration:
+          type: number
+          format: double
+          description: The estimated duration, in seconds, to complete the turn.
+        turn_weight:
+          type: number
+          format: double
+        geometry_index:
+          type: integer
+          description: The index of the intersection in the leg geometry.
+        weight:
+          type: number
+          format: double
+    coordinate:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+          description: The latitude of a point in the shape.
+          example: 59.436884
+          minimum: -90
+          maximum: 90
+        lon:
+          type: number
+          format: double
+          description: The longitude of a point in the shape.
+          example: 24.742595
+          minimum: -180
+          maximum: 180
+      required:
+      - lat
+      - lon
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key

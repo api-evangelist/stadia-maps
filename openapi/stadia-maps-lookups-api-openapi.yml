@@ -1,0 +1,88 @@
+openapi: 3.0.3
+info:
+  description: 'Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. '
+  version: 7.1.0
+  title: Stadia Maps Lookups API
+  contact:
+    name: Stadia Maps Support
+    url: https://www.stadiamaps.com
+    email: support@stadiamaps.com
+servers:
+- url: https://api.stadiamaps.com
+- url: https://api-eu.stadiamaps.com
+tags:
+- name: Lookups
+paths:
+  /tz/lookup/v1:
+    get:
+      tags:
+      - Lookups
+      operationId: tz-lookup
+      summary: Get the current time zone information for any point on earth.
+      description: The Stadia TZ API provides time zone information, as well as information about any special offset (such as DST) in effect based on the latest IANA TZDB. Note that this API may not be accurate for timestamps in the past and does not claim to report precise nautical times in the open ocean beyond territorial waters.
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: lat
+        in: query
+        description: The latitude of the point you are interested in.
+        required: true
+        schema:
+          type: number
+          format: double
+          minimum: -90
+          maximum: 90
+      - name: lng
+        in: query
+        description: The longitude of the point you are interested in.
+        required: true
+        schema:
+          type: number
+          format: double
+          minimum: -180
+          maximum: 180
+      - name: timestamp
+        in: query
+        description: 'The UNIX timestamp at which the UTC and DST offsets will be calculated. This defaults to the present time. This endpoint is not necessarily guaranteed to be accurate for timestamps that occurred in the past. Time zone geographic boundaries change over time, so if the point you are querying for was previously in a different time zone, historical results will not be accurate. If, however, the point has been in the same geographic time zone for a very long time (ex: `America/New_York`), the historical data may be accurate for 100+ years in the past (depending on how far back the IANA TZDB rules have been specified).'
+        required: false
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 8200290900000
+      responses:
+        '200':
+          description: The time zone metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tzResponse'
+        '404':
+          description: Time zone not found
+components:
+  schemas:
+    tzResponse:
+      type: object
+      properties:
+        tz_id:
+          type: string
+          description: The canonical time zone ID. In the event that multiple time zones could be returned, the first one from the Unicode CLDR timezone.xml is returned.
+        base_utc_offset:
+          type: integer
+          description: The base offset, in seconds, from UTC that is normally in effect for this time zone.
+        dst_offset:
+          type: integer
+          description: The special offset, in seconds, from UTC that is in effect for this time zone as of the queried timestamp (defaults to now). If no additional offsets are in effect, this value is zero. This typically reflects Daylight Saving Time, but may indicate other special offsets. To get the total offset in effect, add `dst_offset` and `utc_offset` together.
+      required:
+      - tz_id
+      - base_utc_offset
+      - dst_offset
+      example:
+        tz_id: Europe/Zurich
+        base_utc_offset: 3600
+        dst_offset: 3600
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key

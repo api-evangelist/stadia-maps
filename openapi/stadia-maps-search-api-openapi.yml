@@ -1,0 +1,834 @@
+openapi: 3.0.3
+info:
+  description: 'Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. '
+  version: 7.1.0
+  title: Stadia Maps Search API
+  contact:
+    name: Stadia Maps Support
+    url: https://www.stadiamaps.com
+    email: support@stadiamaps.com
+servers:
+- url: https://api.stadiamaps.com
+- url: https://api-eu.stadiamaps.com
+tags:
+- name: Search
+paths:
+  /geocoding/v1/search:
+    get:
+      tags:
+      - Search
+      operationId: search
+      summary: Search for location and other info using a place name or address (forward geocoding).
+      description: The search endpoint lets you search for addresses, points of interest, and administrative areas. This is most commonly used for forward geocoding applications where you need to find the geographic coordinates of an address.
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - $ref: '#/components/parameters/searchText'
+      - $ref: '#/components/parameters/searchFocusLat'
+      - $ref: '#/components/parameters/searchFocusLon'
+      - $ref: '#/components/parameters/searchBoundaryRectMinLat'
+      - $ref: '#/components/parameters/searchBoundaryRectMaxLat'
+      - $ref: '#/components/parameters/searchBoundaryRectMinLon'
+      - $ref: '#/components/parameters/searchBoundaryRectMaxLon'
+      - $ref: '#/components/parameters/searchBoundaryCircleLat'
+      - $ref: '#/components/parameters/searchBoundaryCircleLon'
+      - $ref: '#/components/parameters/searchBoundaryCircleRadius'
+      - $ref: '#/components/parameters/searchBoundaryCountry'
+      - $ref: '#/components/parameters/searchBoundaryGID'
+      - $ref: '#/components/parameters/searchLayers'
+      - $ref: '#/components/parameters/searchSources'
+      - $ref: '#/components/parameters/size'
+      - $ref: '#/components/parameters/peliasLang'
+      responses:
+        '200':
+          description: A GeoJSON collection of search results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peliasResponse'
+        '400':
+          description: Bad request
+  /geocoding/v1/search/structured:
+    get:
+      tags:
+      - Search
+      operationId: search-structured
+      summary: Find locations matching components (structured forward geocoding).
+      description: The structured search endpoint lets you search for addresses, points of interest, and administrative areas. Rather than a single string which the API must infer meaning from, the structured search endpoint allows you to specify the known components upfront, which is useful in many forward geocoding workflows.
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - $ref: '#/components/parameters/searchAddress'
+      - $ref: '#/components/parameters/searchNeighborhood'
+      - $ref: '#/components/parameters/searchBorough'
+      - $ref: '#/components/parameters/searchLocality'
+      - $ref: '#/components/parameters/searchCounty'
+      - $ref: '#/components/parameters/searchRegion'
+      - $ref: '#/components/parameters/searchPostalCode'
+      - $ref: '#/components/parameters/searchCountry'
+      - $ref: '#/components/parameters/searchFocusLat'
+      - $ref: '#/components/parameters/searchFocusLon'
+      - $ref: '#/components/parameters/searchBoundaryRectMinLat'
+      - $ref: '#/components/parameters/searchBoundaryRectMaxLat'
+      - $ref: '#/components/parameters/searchBoundaryRectMinLon'
+      - $ref: '#/components/parameters/searchBoundaryRectMaxLon'
+      - $ref: '#/components/parameters/searchBoundaryCircleLat'
+      - $ref: '#/components/parameters/searchBoundaryCircleLon'
+      - $ref: '#/components/parameters/searchBoundaryCircleRadius'
+      - $ref: '#/components/parameters/searchBoundaryCountry'
+      - $ref: '#/components/parameters/searchBoundaryGID'
+      - $ref: '#/components/parameters/searchLayers'
+      - $ref: '#/components/parameters/searchSources'
+      - $ref: '#/components/parameters/size'
+      - $ref: '#/components/parameters/peliasLang'
+      responses:
+        '200':
+          description: A GeoJSON collection of search results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/peliasResponse'
+        '400':
+          description: Bad request
+  /geocoding/v1/search/bulk:
+    post:
+      tags:
+      - Search
+      operationId: search-bulk
+      summary: Quickly run a batch of geocoding queries against the search or structured search endpoints.
+      description: The batch endpoint lets you specify many search or structured search requests at once. Once received, all requests will be processed internally on our infrastructure, improving throughput when you need to do a lot of queries.
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bulkSearchRequest'
+      responses:
+        '200':
+          description: A JSON array of the individual query responses, each annotated with a status code. Individual requests may fail but this endpoint will still return all results. Responses will be in the same order as the input.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/bulkSearchResponse'
+        '400':
+          description: Bad request; more details will be included
+components:
+  parameters:
+    peliasLang:
+      name: lang
+      in: query
+      schema:
+        $ref: '#/components/schemas/peliasLang'
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+    searchPostalCode:
+      name: postalcode
+      in: query
+      schema:
+        $ref: '#/components/schemas/postalCode'
+      description: A mail sorting code.
+      required: false
+    searchBoundaryCircleRadius:
+      name: boundary.circle.radius
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryCircleRadius'
+      description: The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.
+    searchFocusLat:
+      name: focus.point.lat
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchFocusLat'
+      description: The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.
+      required: false
+    searchBoundaryGID:
+      name: boundary.gid
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryGID'
+      description: The Pelias GID of an area to limit the search to.
+    searchBoundaryRectMinLat:
+      name: boundary.rect.min_lat
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryRectMinLat'
+      description: Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.
+      required: false
+    size:
+      name: size
+      in: query
+      schema:
+        $ref: '#/components/schemas/limit'
+      description: The maximum number of results to return.
+    searchRegion:
+      name: region
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchRegion'
+      description: Typically the first administrative division within a country. For example, a US state or a Canadian province.
+      required: false
+    searchNeighborhood:
+      name: neighbourhood
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchNeighborhood'
+      description: Varies by area, but has a locally specific meaning (NOT always an official administrative unit).
+      required: false
+    searchBorough:
+      name: borough
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBorough'
+      description: A unit within a city (not widely used, but present in places like NYC and Mexico City).
+      required: false
+    searchFocusLon:
+      name: focus.point.lon
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchFocusLon'
+      description: The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.
+      required: false
+    searchLocality:
+      name: locality
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchLocality'
+      description: The city, village, town, etc. that the place/address is part of.
+      required: false
+    searchBoundaryCountry:
+      name: boundary.country
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryCountry'
+      description: 'A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.'
+      style: form
+      explode: false
+    searchAddress:
+      name: address
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchAddress'
+      description: A street name, optionally with a house number.
+      required: false
+    searchText:
+      name: text
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchText'
+      description: The place name (address, venue name, etc.) to search for.
+      required: true
+    searchSources:
+      name: sources
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchSources'
+      description: A list of sources to limit the search to.
+      style: form
+      explode: false
+    searchCountry:
+      name: country
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchCountry'
+      description: 'A full name (ex: Canada), or a 2 or 3 character ISO code. Prefer ISO codes when possible.'
+      required: false
+    searchLayers:
+      name: layers
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchLayers'
+      description: A list of layers to limit the search to.
+      style: form
+      explode: false
+    searchBoundaryCircleLat:
+      name: boundary.circle.lat
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryCircleLat'
+      description: The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.
+    searchBoundaryRectMinLon:
+      name: boundary.rect.min_lon
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryRectMinLon'
+      description: Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.
+      required: false
+    searchBoundaryRectMaxLat:
+      name: boundary.rect.max_lat
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryRectMaxLat'
+      description: Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.
+      required: false
+    searchCounty:
+      name: county
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchCounty'
+      description: Administrative divisions between localities and regions. Not commonly used as input to structured geocoding.
+      required: false
+    searchBoundaryRectMaxLon:
+      name: boundary.rect.max_lon
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryRectMaxLon'
+      description: Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.
+      required: false
+    searchBoundaryCircleLon:
+      name: boundary.circle.lon
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryCircleLon'
+      description: The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.
+  schemas:
+    limit:
+      type: integer
+      description: The maximum number of results to return.
+    postalCode:
+      type: string
+      description: A mail sorting code.
+      example: 10005
+    peliasLayer:
+      type: string
+      enum:
+      - venue
+      - address
+      - street
+      - country
+      - macroregion
+      - region
+      - macrocounty
+      - county
+      - locality
+      - localadmin
+      - borough
+      - neighbourhood
+      - postalcode
+      - coarse
+      - dependency
+      - macrohood
+      - marinearea
+      - disputed
+      - empire
+      - continent
+      - ocean
+      description: 'Our database is organized into several layers (in the GIS sense of the term) as follows:
+
+
+        - `venue`: Points of interest, businesses, and things with walls
+
+        - `address`: Places with a street address
+
+        - `street`: Streets, roads, highways
+
+        - `county`: Places that issue passports, nations, nation-states
+
+        - `macroregion`: A related group of regions (mostly in Europe)
+
+        - `region`: The first administrative division within a country (usually states and provinces)
+
+        - `macrocounty`: A related group of counties (mostly in Europe)
+
+        - `county`: Official governmental areas; usually bigger than a locality, but almost always smaller than a region
+
+        - `locality`: Towns, hamlets, cities, etc.
+
+        - `localadmin`: Local administrative boundaries
+
+        - `borough`: Local administrative boundaries within cities (not widely used, but present in places such as NYC and Mexico City)
+
+        - `neighbourhood`: Social communities and neighborhoods (note the British spelling in the API!)
+
+        - `postalcode`: Postal codes used by mail services (note: not used for reverse geocoding)
+
+        - `coarse`: An alias for simultaneously using all administrative layers (everything except `venue` and `address`)
+
+        - `marinearea`: Places with fishes and boats.
+
+        - `ocean`: A really big marine area.
+
+        '
+    peliasGeoJSONFeature:
+      type: object
+      required:
+      - type
+      - geometry
+      properties:
+        type:
+          type: string
+          enum:
+          - Feature
+        geometry:
+          $ref: '#/components/schemas/geoJSONPoint'
+        properties:
+          $ref: '#/components/schemas/peliasGeoJSONProperties'
+        bbox:
+          type: array
+          minItems: 4
+          maxItems: 4
+          items:
+            type: number
+            format: double
+          description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
+    searchAddress:
+      type: string
+      description: A street name, optionally with a house number.
+      example: 11 Wall Street
+    searchBoundaryCountry:
+      type: array
+      items:
+        type: string
+      description: 'A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.'
+    bulkSearchRequest:
+      type: array
+      items:
+        title: BulkRequest
+        type: object
+        properties:
+          endpoint:
+            type: string
+            enum:
+            - /v1/search
+            - /v1/search/structured
+          query:
+            oneOf:
+            - $ref: '#/components/schemas/searchQuery'
+            - $ref: '#/components/schemas/searchStructuredQuery'
+      example:
+      - endpoint: /v1/search
+        query:
+          text: P�hja pst 27
+      - endpoint: /v1/search/structured
+        query:
+          address: P�hja pst 27
+          country: EE
+          locality: Tallinn
+          layers:
+          - coarse
+          - address
+    searchFocusLon:
+      type: number
+      description: The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.
+      format: double
+      minimum: -180
+      maximum: 180
+    peliasResponse:
+      type: object
+      properties:
+        geocoding:
+          allOf:
+          - $ref: '#/components/schemas/geocodingObject'
+        bbox:
+          type: array
+          minItems: 4
+          maxItems: 4
+          items:
+            type: number
+            format: double
+          description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/peliasGeoJSONFeature'
+      required:
+      - geocoding
+      - features
+      example:
+        geocoding:
+          version: '0.2'
+          attribution: https://stadiamaps.com/attribution
+          query:
+            text: 1600 Pennsylvania Ave NW
+            size: 10
+            private: false
+            lang:
+              name: English
+              iso6391: en
+              iso6393: eng
+              via: default
+              defaulted: true
+            querySize: 20
+            parser: libpostal
+            parsed_text:
+              housenumber: '1600'
+              street: pennsylvania ave nw
+          engine:
+            name: Pelias
+            author: Mapzen
+            version: '1.0'
+          timestamp: 1679043782383
+        type: FeatureCollection
+        features:
+        - type: Feature
+          geometry:
+            type: Point
+            coordinates:
+            - -77.036547
+            - 38.897675
+          properties:
+            id: us/dc/statewide:aa53d4bd0fe295be
+            gid: openaddresses:address:us/dc/statewide:aa53d4bd0fe295be
+            layer: address
+            source: openaddresses
+            source_id: us/dc/statewide:aa53d4bd0fe295be
+            country_code: US
+            name: 1600 Pennsylvania Avenue NW
+            housenumber: '1600'
+            street: Pennsylvania Avenue NW
+            postalcode: '20500'
+            confidence: 1
+            match_type: exact
+            accuracy: point
+            country: United States
+            country_gid: whosonfirst:country:85633793
+            country_a: USA
+            region: District of Columbia
+            region_gid: whosonfirst:region:85688741
+            region_a: DC
+            county: District of Columbia
+            county_gid: whosonfirst:county:1377370667
+            county_a: DI
+            locality: Washington
+            locality_gid: whosonfirst:locality:85931779
+            neighbourhood: White House Grounds
+            neighbourhood_gid: whosonfirst:neighbourhood:1108724059
+            continent: North America
+            continent_gid: whosonfirst:continent:102191575
+            label: 1600 Pennsylvania Avenue NW, Washington, DC, USA
+        bbox:
+        - -77.036547
+        - 38.897675
+        - -77.036547
+        - 38.897675
+    searchCounty:
+      type: string
+      description: Administrative divisions between localities and regions. Not commonly used as input to structured geocoding.
+      example: New York County
+    geoJSONGeometryBase:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - Point
+          - MultiPoint
+          - LineString
+          - MultiLineString
+          - Polygon
+          - MultiPolygon
+    searchQuery:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/searchText'
+        focus.point.lat:
+          $ref: '#/components/schemas/searchFocusLat'
+        focus.point.lon:
+          $ref: '#/components/schemas/searchFocusLon'
+        boundary.rect.min_lat:
+          $ref: '#/components/schemas/searchBoundaryRectMinLat'
+        boundary.rect.max_lat:
+          $ref: '#/components/schemas/searchBoundaryRectMaxLat'
+        boundary.rect.min_lon:
+          $ref: '#/components/schemas/searchBoundaryRectMinLon'
+        boundary.rect.max_lon:
+          $ref: '#/components/schemas/searchBoundaryRectMaxLon'
+        boundary.circle.lat:
+          $ref: '#/components/schemas/searchBoundaryCircleLat'
+        boundary.circle.lon:
+          $ref: '#/components/schemas/searchBoundaryCircleLon'
+        boundary.circle.radius:
+          $ref: '#/components/schemas/searchBoundaryCircleRadius'
+        boundary.country:
+          $ref: '#/components/schemas/searchBoundaryCountry'
+        boundary.gid:
+          $ref: '#/components/schemas/searchBoundaryGID'
+        layers:
+          $ref: '#/components/schemas/searchLayers'
+        sources:
+          $ref: '#/components/schemas/searchSources'
+        size:
+          $ref: '#/components/schemas/limit'
+        lang:
+          $ref: '#/components/schemas/peliasLang'
+    searchBoundaryCircleRadius:
+      type: number
+      description: The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.
+      format: double
+    searchBoundaryCircleLon:
+      type: number
+      description: The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.
+      format: double
+      minimum: -180
+      maximum: 180
+    searchLayers:
+      type: array
+      description: A list of layers to limit the search to.
+      items:
+        $ref: '#/components/schemas/peliasLayer'
+    peliasGeoJSONProperties:
+      type: object
+      additionalProperties: true
+      properties:
+        gid:
+          type: string
+          description: A scoped GID for this result. This can be passed to the place endpoint. Note that these are not always stable. For Geonames and Who's on First, these are usually stable, but for other sources like OSM, no stability is guaranteed.
+        source_id:
+          type: string
+          description: An ID referencing the original data source (specified via source) for the result. These IDs are specific to the source that they originated from. For example, in the case of OSM, these typically look like way/123 or point/123.
+        label:
+          type: string
+          description: 'A full, human-readable label. However, you may not necessarily want to use this; be sure to read the docs for name, locality, and region before making a decision. This field is mostly localized. The order of components is generally locally correct (ex: for an address in South Korea, the house number appears after the street name). However, components will use a request language equivalent if one exists (ex: Seoul instead of � if lang=en).'
+        layer:
+          $ref: '#/components/schemas/peliasLayer'
+        name:
+          type: string
+          description: The name of the place, the street address including house number, or label of similar relevance. If your app is localized to a specific region, you may get better display results by combining name, locality OR region (or neither?), and postal code together in the local format. Experiment with what works best for your use case.
+        accuracy:
+          type: string
+          enum:
+          - point
+          - centroid
+          description: 'The accuracy of the geographic coordinates in the result. This value is a property of the result itself and won''t change based on the query.
+
+            A point result means that the record can reasonably be represented by a single geographic point. Addresses, venues, or interpolated addresses usually have point accuracy.
+
+            Larger areas, such as a city or country, cannot be represented by a single point, so a centroid is given instead.'
+        addendum:
+          type: object
+          additionalProperties: true
+          description: 'Optional additional information from the underlying data source (ex: OSM). This includes select fields. The most useful fields are mapped in the definition here, but others may be available.'
+          properties:
+            osm:
+              type: object
+              additionalProperties: true
+              properties:
+                website:
+                  type: string
+                  format: uri
+                wikipedia:
+                  type: string
+                wikidata:
+                  type: string
+                phone:
+                  type: string
+        continent:
+          type: string
+        continent_gid:
+          type: string
+        country:
+          type: string
+        country_gid:
+          type: string
+        neighbourhood:
+          type: string
+        neighbourhood_gid:
+          type: string
+        borough:
+          type: string
+        borough_gid:
+          type: string
+        postalcode:
+          type: string
+        street:
+          type: string
+        housenumber:
+          type: string
+        locality:
+          type: string
+          description: The city, village, town, etc. that the place / address is part of. Note that values may not always match postal or local conventions perfectly.
+        locality_gid:
+          type: string
+        county:
+          type: string
+          description: Administrative divisions between localities and regions. Useful for disambiguating nearby results with similar names.
+        region:
+          type: string
+          description: Typically the first administrative division within a country. For example, a US state or a Canadian province.
+        region_a:
+          type: string
+          description: The abbreviation for the region.
+    peliasLang:
+      type: string
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+    searchLocality:
+      type: string
+      description: The city, village, town, etc. that the place/address is part of.
+      example: New York
+    searchNeighborhood:
+      type: string
+      description: Varies by area, but has a locally specific meaning (NOT always an official administrative unit).
+      example: Financial District
+    searchRegion:
+      type: string
+      description: Typically the first administrative division within a country. For example, a US state or a Canadian province.
+      example: New York
+    searchBoundaryGID:
+      type: string
+      description: The Pelias GID of an area to limit the search to.
+    searchSources:
+      type: array
+      description: A list of sources to limit the search to.
+      items:
+        $ref: '#/components/schemas/peliasSource'
+    searchBoundaryRectMinLat:
+      type: number
+      description: Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.
+      format: double
+      minimum: -90
+      maximum: 90
+    searchBoundaryRectMaxLat:
+      type: number
+      description: Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.
+      format: double
+      minimum: -90
+      maximum: 90
+    searchFocusLat:
+      type: number
+      description: The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.
+      format: double
+      minimum: -90
+      maximum: 90
+    geoJSONPoint:
+      allOf:
+      - $ref: '#/components/schemas/geoJSONGeometryBase'
+      - type: object
+        required:
+        - coordinates
+        properties:
+          coordinates:
+            type: array
+            minItems: 2
+            maxItems: 3
+            items:
+              type: number
+              format: double
+    peliasSource:
+      type: string
+      enum:
+      - openstreetmap
+      - openaddresses
+      - whosonfirst
+      - geonames
+      description: Our database contains info from multiple sources. These identifiers can be used to either limit search results or to determine the relevance of a result.
+    searchBoundaryRectMaxLon:
+      type: number
+      description: Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.
+      format: double
+      minimum: -180
+      maximum: 180
+    bulkSearchResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        response:
+          $ref: '#/components/schemas/peliasResponse'
+        msg:
+          type: string
+          description: An error message describing what went wrong (if the status is not 200).
+      required:
+      - status
+    geocodingObject:
+      type: object
+      properties:
+        attribution:
+          type: string
+          format: uri
+          description: A URL containing attribution information. If you are not using Stadia Maps and our standard attribution already for your basemaps, you must include this attribution link somewhere in your website/app.
+        query:
+          type: object
+          additionalProperties: true
+          description: Technical details of the query. This is most useful for debugging during development. See the full example for the list of properties; these should be self-explanatory, so we don't enumerate them in the spec.
+        warnings:
+          type: array
+          items:
+            type: string
+          description: An array of non-critical warnings. This is normally for informational/debugging purposes and not a serious problem.
+        errors:
+          type: array
+          items:
+            type: string
+          description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
+    searchBoundaryRectMinLon:
+      type: number
+      description: Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.
+      format: double
+      minimum: -180
+      maximum: 180
+    searchBoundaryCircleLat:
+      type: number
+      description: The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.
+      format: double
+      minimum: -90
+      maximum: 90
+    searchBorough:
+      type: string
+      description: A unit within a city (not widely used, but present in places like NYC and Mexico City).
+      example: Manhattan
+    searchCountry:
+      type: string
+      description: 'A full name (ex: Canada), or a 2 or 3 character ISO code. Prefer ISO codes when possible.'
+      example: USA
+    searchText:
+      type: string
+      description: The place name (address, venue name, etc.) to search for.
+      example: 1600 Pennsylvania Ave NW
+    searchStructuredQuery:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/searchAddress'
+        neighbourhood:
+          $ref: '#/components/schemas/searchNeighborhood'
+        borough:
+          $ref: '#/components/schemas/searchBorough'
+        locality:
+          $ref: '#/components/schemas/searchLocality'
+        county:
+          $ref: '#/components/schemas/searchCounty'
+        region:
+          $ref: '#/components/schemas/searchRegion'
+        postalCode:
+          $ref: '#/components/schemas/postalCode'
+        country:
+          $ref: '#/components/schemas/searchCountry'
+        focus.point.lat:
+          $ref: '#/components/schemas/searchFocusLat'
+        focus.point.lon:
+          $ref: '#/components/schemas/searchFocusLon'
+        boundary.rect.min_lat:
+          $ref: '#/components/schemas/searchBoundaryRectMinLat'
+        boundary.rect.max_lat:
+          $ref: '#/components/schemas/searchBoundaryRectMaxLat'
+        boundary.rect.min_lon:
+          $ref: '#/components/schemas/searchBoundaryRectMinLon'
+        boundary.rect.max_lon:
+          $ref: '#/components/schemas/searchBoundaryRectMaxLon'
+        boundary.circle.lat:
+          $ref: '#/components/schemas/searchBoundaryCircleLat'
+        boundary.circle.lon:
+          $ref: '#/components/schemas/searchBoundaryCircleLon'
+        boundary.circle.radius:
+          $ref: '#/components/schemas/searchBoundaryCircleRadius'
+        boundary.country:
+          $ref: '#/components/schemas/searchBoundaryCountry'
+        boundary.gid:
+          $ref: '#/components/schemas/searchBoundaryGID'
+        layers:
+          $ref: '#/components/schemas/searchLayers'
+        sources:
+          $ref: '#/components/schemas/searchSources'
+        size:
+          $ref: '#/components/schemas/limit'
+        lang:
+          $ref: '#/components/schemas/peliasLang'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
