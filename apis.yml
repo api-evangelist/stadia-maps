@@ -16,12 +16,26 @@ tags:
   - Geospatial
   - Location
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/stadia-maps.png
 access: 3rd-Party
 created: '2024-12-16'
 modified: '2026-05-19'
 position: Consuming
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/stadia-maps/overview
   - type: DomainSecurity
     url: security/stadia-maps-domain-security.yml
   - type: LinkedIn
@@ -52,70 +66,314 @@ common:
   - url: https://stadiamaps.com/blog/rss.xml
     type: Blog
 apis:
-  - aid: stadia-maps:stadia-maps
-    name: Stadia Maps Geospatial API
-    tags:
-      - Attributes
-      - Autocomplete
-      - Elevation
-      - Geospatial
-      - Geocoding
-      - Isochrone
-      - Lookups
-      - Mapping
-      - Match
-      - Navigation
-      - Place
-      - Reverse
-      - Roads
-      - Routes
-      - Routing
-      - Search
-      - Time Zone
-    humanURL: https://docs.stadiamaps.com/
-    baseURL: https://api.stadiamaps.com
-    description: >-
-      The Stadia Maps Geospatial API provides routing and turn-by-turn navigation, geocoding and autocomplete search,
-      reverse geocoding, place lookups, elevation profiles, time zone information, road attributes, isochrones, map
-      matching, time-distance matrices, and optimized routing. Secured with API key authentication. EU-region endpoint
-      available for GDPR compliance.
-    properties:
-      - url: https://docs.stadiamaps.com/
-        type: Documentation
-      - url: openapi/stadia-maps-openapi.yml
-        type: OpenAPI
-      - url: https://docs.stadiamaps.com/authentication/
-        type: Authentication
-      - url: https://docs.stadiamaps.com/routing/
-        type: Documentation
-      - url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
-        type: Documentation
-      - url: rules/stadia-maps-rules.yml
-        type: SpectralRuleset
-      - url: json-schema/stadia-maps-location-schema.json
-        type: JSONSchema
-      - url: json-ld/stadia-maps-context.jsonld
-        type: JSONLDContext
-      - url: vocabulary/stadia-maps-vocabulary.yml
-        type: Vocabulary
-  - aid: stadia-maps:stadia-maps-account-management
-    name: Stadia Maps Account Management API
-    tags:
-      - Account Management
-      - API Keys
-      - Domains
-      - Properties
-    humanURL: https://docs.stadiamaps.com/client-api/
-    baseURL: https://client.stadiamaps.com/api/v1
-    description: >-
-      The Stadia Maps Account Management API enables programmatic management of properties, domains, and API keys.
-      Useful for managing large numbers of properties, automating domain allowlisting, and programmatically rotating API
-      keys. Access is available on request.
-    properties:
-      - url: https://docs.stadiamaps.com/client-api/
-        type: Documentation
-      - url: https://client.stadiamaps.com/api/v1/openapi/
-        type: OpenAPI
+- aid: stadia-maps:stadia-maps-attributes-api
+  name: Stadia Maps Attributes API
+  description: The Attributes API from Stadia Maps — 1 operation(s) for attributes.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-autocomplete-api
+  name: Stadia Maps Autocomplete API
+  description: The Autocomplete API from Stadia Maps — 1 operation(s) for autocomplete.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Autocomplete
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-autocomplete-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-geospatial-api
+  name: Stadia Maps Geospatial API
+  description: The Geospatial API from Stadia Maps — 1 operation(s) for geospatial.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Geospatial
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-geospatial-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-lookups-api
+  name: Stadia Maps Lookups API
+  description: The Lookups API from Stadia Maps — 1 operation(s) for lookups.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Lookups
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-lookups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-match-api
+  name: Stadia Maps Match API
+  description: The Match API from Stadia Maps — 1 operation(s) for match.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Match
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-match-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-place-api
+  name: Stadia Maps Place API
+  description: The Place API from Stadia Maps — 1 operation(s) for place.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Place
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-place-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-reverse-api
+  name: Stadia Maps Reverse API
+  description: The Reverse API from Stadia Maps — 1 operation(s) for reverse.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Reverse
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-reverse-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-roads-api
+  name: Stadia Maps Roads API
+  description: The Roads API from Stadia Maps — 1 operation(s) for roads.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Roads
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-roads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-routes-api
+  name: Stadia Maps Routes API
+  description: The Routes API from Stadia Maps — 1 operation(s) for routes.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Routes
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-routes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-routing-api
+  name: Stadia Maps Routing API
+  description: The Routing API from Stadia Maps — 3 operation(s) for routing.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Routing
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-routing-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
+- aid: stadia-maps:stadia-maps-search-api
+  name: Stadia Maps Search API
+  description: The Search API from Stadia Maps — 3 operation(s) for search.
+  humanURL: https://docs.stadiamaps.com/
+  baseURL: https://api.stadiamaps.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/stadia-maps-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/
+  - type: Authentication
+    url: https://docs.stadiamaps.com/authentication/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/routing/
+  - type: Documentation
+    url: https://docs.stadiamaps.com/geocoding-search-autocomplete/
+  - type: SpectralRuleset
+    url: rules/stadia-maps-rules.yml
+  - type: JSONSchema
+    url: json-schema/stadia-maps-location-schema.json
+  - type: JSONLDContext
+    url: json-ld/stadia-maps-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/stadia-maps-vocabulary.yml
+  - type: Documentation
+    url: https://docs.stadiamaps.com/client-api/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
