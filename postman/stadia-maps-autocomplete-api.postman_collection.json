@@ -1,0 +1,424 @@
+{
+  "info": {
+    "_postman_id": "b0bc9440-656e-4618-b5b1-27b14203e81f",
+    "name": "Stadia Maps Autocomplete API",
+    "description": "Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. \n\nContact Support:\n Name: Stadia Maps Support\n Email: support@stadiamaps.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:05:09.000Z",
+    "updatedAt": "2026-07-28T03:05:09.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b0bc9440-656e-4618-b5b1-27b14203e81f"
+  },
+  "item": [
+    {
+      "name": "geocoding",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "autocomplete",
+              "item": [
+                {
+                  "name": "Search and geocode quickly based on partial input.",
+                  "id": "2b00b558-40c7-43e3-bc31-8cad902bac82",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "api_key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "query",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/geocoding/v1/autocomplete?text=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=empire,neighbourhood&sources=openaddresses,openaddresses&size=<integer>&lang=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "geocoding",
+                        "v1",
+                        "autocomplete"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The place name (address, venue name, etc.) to search for.",
+                          "key": "text",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                          "key": "focus.point.lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                          "key": "focus.point.lon",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                          "key": "boundary.rect.min_lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                          "key": "boundary.rect.max_lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                          "key": "boundary.rect.min_lon",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                          "key": "boundary.rect.max_lon",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                          "key": "boundary.circle.lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                          "key": "boundary.circle.lon",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                          "key": "boundary.circle.radius",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                          "key": "boundary.country",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "The Pelias GID of an area to limit the search to.",
+                          "key": "boundary.gid",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A list of layers to limit the search to.",
+                          "key": "layers",
+                          "value": "empire,neighbourhood"
+                        },
+                        {
+                          "description": "A list of sources to limit the search to.",
+                          "key": "sources",
+                          "value": "openaddresses,openaddresses"
+                        },
+                        {
+                          "description": "The maximum number of results to return.",
+                          "key": "size",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                          "key": "lang",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "Autocomplete enables interactive search-as-you-type user experiences, suggesting places as you type, along with information that will help your users find the correct place quickly."
+                  },
+                  "response": [
+                    {
+                      "id": "30c076cb-fc8a-46bb-951e-61068fc3bf8f",
+                      "name": "A GeoJSON collection of autocomplete search results.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/geocoding/v1/autocomplete?text=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=empire,neighbourhood&sources=openaddresses,openaddresses&size=<integer>&lang=<string>&api_key=<API Key>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "geocoding",
+                            "v1",
+                            "autocomplete"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The place name (address, venue name, etc.) to search for.",
+                              "key": "text",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                              "key": "focus.point.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                              "key": "focus.point.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                              "key": "boundary.circle.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                              "key": "boundary.circle.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                              "key": "boundary.circle.radius",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                              "key": "boundary.country",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "The Pelias GID of an area to limit the search to.",
+                              "key": "boundary.gid",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "A list of layers to limit the search to.",
+                              "key": "layers",
+                              "value": "empire,neighbourhood"
+                            },
+                            {
+                              "description": "A list of sources to limit the search to.",
+                              "key": "sources",
+                              "value": "openaddresses,openaddresses"
+                            },
+                            {
+                              "description": "The maximum number of results to return.",
+                              "key": "size",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                              "key": "lang",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Added as a part of security scheme: apikey",
+                              "key": "api_key",
+                              "value": "<API Key>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"geocoding\": {\n    \"attribution\": \"<uri>\",\n    \"query\": {\n      \"elit_f\": -27564457.082897097\n    },\n    \"warnings\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"errors\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"type\": \"Point\"\n      },\n      \"properties\": {\n        \"gid\": \"<string>\",\n        \"source_id\": \"<string>\",\n        \"label\": \"<string>\",\n        \"layer\": \"marinearea\",\n        \"name\": \"<string>\",\n        \"accuracy\": \"centroid\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"<uri>\",\n            \"wikipedia\": \"<string>\",\n            \"wikidata\": \"<string>\",\n            \"phone\": \"<string>\",\n            \"occaecat_00\": true,\n            \"veniam_\": -47187933,\n            \"qui_81\": -46427099\n          }\n        },\n        \"continent\": \"<string>\",\n        \"continent_gid\": \"<string>\",\n        \"country\": \"<string>\",\n        \"country_gid\": \"<string>\",\n        \"neighbourhood\": \"<string>\",\n        \"neighbourhood_gid\": \"<string>\",\n        \"borough\": \"<string>\",\n        \"borough_gid\": \"<string>\",\n        \"postalcode\": \"<string>\",\n        \"street\": \"<string>\",\n        \"housenumber\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"locality_gid\": \"<string>\",\n        \"county\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_a\": \"<string>\"\n      },\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    },\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"type\": \"Point\"\n      },\n      \"properties\": {\n        \"gid\": \"<string>\",\n        \"source_id\": \"<string>\",\n        \"label\": \"<string>\",\n        \"layer\": \"empire\",\n        \"name\": \"<string>\",\n        \"accuracy\": \"centroid\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"<uri>\",\n            \"wikipedia\": \"<string>\",\n            \"wikidata\": \"<string>\",\n            \"phone\": \"<string>\"\n          }\n        },\n        \"continent\": \"<string>\",\n        \"continent_gid\": \"<string>\",\n        \"country\": \"<string>\",\n        \"country_gid\": \"<string>\",\n        \"neighbourhood\": \"<string>\",\n        \"neighbourhood_gid\": \"<string>\",\n        \"borough\": \"<string>\",\n        \"borough_gid\": \"<string>\",\n        \"postalcode\": \"<string>\",\n        \"street\": \"<string>\",\n        \"housenumber\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"locality_gid\": \"<string>\",\n        \"county\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_a\": \"<string>\"\n      },\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    }\n  ],\n  \"bbox\": [\n    \"<double>\",\n    \"<double>\",\n    \"<double>\",\n    \"<double>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:05:10.000Z",
+                      "updatedAt": "2026-07-28T03:05:10.000Z",
+                      "uid": "35240-30c076cb-fc8a-46bb-951e-61068fc3bf8f"
+                    },
+                    {
+                      "id": "f80b34c2-f2bd-405e-a234-ea1657980457",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/geocoding/v1/autocomplete?text=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=empire,neighbourhood&sources=openaddresses,openaddresses&size=<integer>&lang=<string>&api_key=<API Key>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "geocoding",
+                            "v1",
+                            "autocomplete"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The place name (address, venue name, etc.) to search for.",
+                              "key": "text",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                              "key": "focus.point.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                              "key": "focus.point.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                              "key": "boundary.circle.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                              "key": "boundary.circle.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                              "key": "boundary.circle.radius",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                              "key": "boundary.country",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "The Pelias GID of an area to limit the search to.",
+                              "key": "boundary.gid",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "A list of layers to limit the search to.",
+                              "key": "layers",
+                              "value": "empire,neighbourhood"
+                            },
+                            {
+                              "description": "A list of sources to limit the search to.",
+                              "key": "sources",
+                              "value": "openaddresses,openaddresses"
+                            },
+                            {
+                              "description": "The maximum number of results to return.",
+                              "key": "size",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                              "key": "lang",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Added as a part of security scheme: apikey",
+                              "key": "api_key",
+                              "value": "<API Key>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:05:10.000Z",
+                      "updatedAt": "2026-07-28T03:05:10.000Z",
+                      "uid": "35240-f80b34c2-f2bd-405e-a234-ea1657980457"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:05:10.000Z",
+                  "updatedAt": "2026-07-28T03:05:10.000Z",
+                  "uid": "35240-2b00b558-40c7-43e3-bc31-8cad902bac82"
+                }
+              ],
+              "id": "c8762871-0769-4c70-89b6-95d80eb36981",
+              "createdAt": "2026-07-28T03:05:09.000Z",
+              "updatedAt": "2026-07-28T03:05:09.000Z",
+              "uid": "35240-c8762871-0769-4c70-89b6-95d80eb36981"
+            }
+          ],
+          "id": "2913b8bb-4397-4598-b038-f2d07b4cd666",
+          "createdAt": "2026-07-28T03:05:09.000Z",
+          "updatedAt": "2026-07-28T03:05:09.000Z",
+          "uid": "35240-2913b8bb-4397-4598-b038-f2d07b4cd666"
+        }
+      ],
+      "id": "578cafbb-f8c5-473d-a02a-1abd02bbdeb0",
+      "createdAt": "2026-07-28T03:05:09.000Z",
+      "updatedAt": "2026-07-28T03:05:09.000Z",
+      "uid": "35240-578cafbb-f8c5-473d-a02a-1abd02bbdeb0"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.stadiamaps.com"
+    }
+  ]
+}

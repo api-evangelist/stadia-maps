@@ -1,0 +1,38 @@
+{
+  "provider": "stadia-maps",
+  "sources": [
+    "stadia-maps-openapi.yml"
+  ],
+  "outputs": [
+    "stadia-maps-attributes-api-openapi.yml",
+    "stadia-maps-autocomplete-api-openapi.yml",
+    "stadia-maps-geospatial-api-openapi.yml",
+    "stadia-maps-lookups-api-openapi.yml",
+    "stadia-maps-match-api-openapi.yml",
+    "stadia-maps-place-api-openapi.yml",
+    "stadia-maps-reverse-api-openapi.yml",
+    "stadia-maps-roads-api-openapi.yml",
+    "stadia-maps-routes-api-openapi.yml",
+    "stadia-maps-routing-api-openapi.yml",
+    "stadia-maps-search-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/stadia-maps-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "stadia-maps-openapi.yml: declared missing tag: Attributes",
+    "stadia-maps-openapi.yml: declared missing tag: Autocomplete",
+    "stadia-maps-openapi.yml: declared missing tag: Geospatial",
+    "stadia-maps-openapi.yml: declared missing tag: Lookups",
+    "stadia-maps-openapi.yml: declared missing tag: Match",
+    "stadia-maps-openapi.yml: declared missing tag: Place",
+    "stadia-maps-openapi.yml: declared missing tag: Reverse",
+    "stadia-maps-openapi.yml: declared missing tag: Roads",
+    "stadia-maps-openapi.yml: declared missing tag: Routes",
+    "stadia-maps-openapi.yml: declared missing tag: Routing",
+    "stadia-maps-openapi.yml: declared missing tag: Search"
+  ],
+  "skipped": []
+}

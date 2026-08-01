@@ -1,0 +1,214 @@
+{
+  "info": {
+    "_postman_id": "c87ca7cf-d11e-4c1f-901d-af045318ce5d",
+    "name": "Stadia Maps Place API",
+    "description": "Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. \n\nContact Support:\n Name: Stadia Maps Support\n Email: support@stadiamaps.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:05:25.000Z",
+    "updatedAt": "2026-07-28T03:05:25.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c87ca7cf-d11e-4c1f-901d-af045318ce5d"
+  },
+  "item": [
+    {
+      "name": "geocoding",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "place",
+              "item": [
+                {
+                  "name": "Retrieve details of a place using its GID.",
+                  "id": "a0b8fbb4-937e-46f4-9231-9e08f0d40140",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "api_key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "query",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/geocoding/v1/place?ids=<string>,<string>&lang=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "geocoding",
+                        "v1",
+                        "place"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) A list of Pelias GIDs to search for.",
+                          "key": "ids",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                          "key": "lang",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "Many search result components include an associated GID field (for example, an address may have a `localadmin_gid`). The place endpoint lets you look up these places directly by ID. Note that these IDs are not stable for all sources. See the [online documentation](https://docs.stadiamaps.com/geocoding-search-autocomplete/place-lookup/) for details."
+                  },
+                  "response": [
+                    {
+                      "id": "1d5a20f0-5849-4144-8c1b-9353220f18e9",
+                      "name": "A GeoJSON collection of search results.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/geocoding/v1/place?ids=<string>,<string>&lang=<string>&api_key=<API Key>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "geocoding",
+                            "v1",
+                            "place"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A list of Pelias GIDs to search for.",
+                              "key": "ids",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                              "key": "lang",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Added as a part of security scheme: apikey",
+                              "key": "api_key",
+                              "value": "<API Key>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"geocoding\": {\n    \"attribution\": \"<uri>\",\n    \"query\": {\n      \"reprehenderitd97\": 82247010.93148613,\n      \"laboris_f\": 44033921.62876254\n    },\n    \"warnings\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"errors\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"type\": \"Polygon\"\n      },\n      \"properties\": {\n        \"gid\": \"<string>\",\n        \"source_id\": \"<string>\",\n        \"label\": \"<string>\",\n        \"layer\": \"macrohood\",\n        \"name\": \"<string>\",\n        \"accuracy\": \"point\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"<uri>\",\n            \"wikipedia\": \"<string>\",\n            \"wikidata\": \"<string>\",\n            \"phone\": \"<string>\"\n          },\n          \"laborum__e\": -7522117\n        },\n        \"continent\": \"<string>\",\n        \"continent_gid\": \"<string>\",\n        \"country\": \"<string>\",\n        \"country_gid\": \"<string>\",\n        \"neighbourhood\": \"<string>\",\n        \"neighbourhood_gid\": \"<string>\",\n        \"borough\": \"<string>\",\n        \"borough_gid\": \"<string>\",\n        \"postalcode\": \"<string>\",\n        \"street\": \"<string>\",\n        \"housenumber\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"locality_gid\": \"<string>\",\n        \"county\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_a\": \"<string>\"\n      },\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    },\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"type\": \"MultiPolygon\"\n      },\n      \"properties\": {\n        \"gid\": \"<string>\",\n        \"source_id\": \"<string>\",\n        \"label\": \"<string>\",\n        \"layer\": \"region\",\n        \"name\": \"<string>\",\n        \"accuracy\": \"centroid\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"<uri>\",\n            \"wikipedia\": \"<string>\",\n            \"wikidata\": \"<string>\",\n            \"phone\": \"<string>\"\n          },\n          \"Lorem_668\": 78460447.51028681,\n          \"est40f\": 89409331,\n          \"eu_5\": false\n        },\n        \"continent\": \"<string>\",\n        \"continent_gid\": \"<string>\",\n        \"country\": \"<string>\",\n        \"country_gid\": \"<string>\",\n        \"neighbourhood\": \"<string>\",\n        \"neighbourhood_gid\": \"<string>\",\n        \"borough\": \"<string>\",\n        \"borough_gid\": \"<string>\",\n        \"postalcode\": \"<string>\",\n        \"street\": \"<string>\",\n        \"housenumber\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"locality_gid\": \"<string>\",\n        \"county\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_a\": \"<string>\"\n      },\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    }\n  ],\n  \"bbox\": [\n    \"<double>\",\n    \"<double>\",\n    \"<double>\",\n    \"<double>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:05:25.000Z",
+                      "updatedAt": "2026-07-28T03:05:25.000Z",
+                      "uid": "35240-1d5a20f0-5849-4144-8c1b-9353220f18e9"
+                    },
+                    {
+                      "id": "a7cdbf30-f90b-49ac-998e-3382da1de224",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/geocoding/v1/place?ids=<string>,<string>&lang=<string>&api_key=<API Key>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "geocoding",
+                            "v1",
+                            "place"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) A list of Pelias GIDs to search for.",
+                              "key": "ids",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                              "key": "lang",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Added as a part of security scheme: apikey",
+                              "key": "api_key",
+                              "value": "<API Key>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:05:25.000Z",
+                      "updatedAt": "2026-07-28T03:05:25.000Z",
+                      "uid": "35240-a7cdbf30-f90b-49ac-998e-3382da1de224"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:05:25.000Z",
+                  "updatedAt": "2026-07-28T03:05:25.000Z",
+                  "uid": "35240-a0b8fbb4-937e-46f4-9231-9e08f0d40140"
+                }
+              ],
+              "id": "24022aa9-a18e-46da-b5d0-42126fb0c9fc",
+              "createdAt": "2026-07-28T03:05:25.000Z",
+              "updatedAt": "2026-07-28T03:05:25.000Z",
+              "uid": "35240-24022aa9-a18e-46da-b5d0-42126fb0c9fc"
+            }
+          ],
+          "id": "674cf4f2-ef94-4a49-91a7-7ac51878fd24",
+          "createdAt": "2026-07-28T03:05:25.000Z",
+          "updatedAt": "2026-07-28T03:05:25.000Z",
+          "uid": "35240-674cf4f2-ef94-4a49-91a7-7ac51878fd24"
+        }
+      ],
+      "id": "f2e814c7-c895-4343-8169-95edca9b25a7",
+      "createdAt": "2026-07-28T03:05:25.000Z",
+      "updatedAt": "2026-07-28T03:05:25.000Z",
+      "uid": "35240-f2e814c7-c895-4343-8169-95edca9b25a7"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.stadiamaps.com"
+    }
+  ]
+}

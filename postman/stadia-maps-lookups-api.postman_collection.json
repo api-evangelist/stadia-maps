@@ -1,0 +1,229 @@
+{
+  "info": {
+    "_postman_id": "c90e7605-2ef9-45a4-9f6d-85b4c8e463ef",
+    "name": "Stadia Maps Lookups API",
+    "description": "Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. \n\nContact Support:\n Name: Stadia Maps Support\n Email: support@stadiamaps.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:05:23.000Z",
+    "updatedAt": "2026-07-28T03:05:23.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c90e7605-2ef9-45a4-9f6d-85b4c8e463ef"
+  },
+  "item": [
+    {
+      "name": "tz",
+      "item": [
+        {
+          "name": "lookup",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "Get the current time zone information for any point on earth.",
+                  "id": "0f4bc159-4ab1-4011-81a9-deeedae5d1c7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "api_key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "query",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tz/lookup/v1?lat=<double>&lng=<double>&timestamp=<long>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tz",
+                        "lookup",
+                        "v1"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The latitude of the point you are interested in.",
+                          "key": "lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "(Required) The longitude of the point you are interested in.",
+                          "key": "lng",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The UNIX timestamp at which the UTC and DST offsets will be calculated. This defaults to the present time. This endpoint is not necessarily guaranteed to be accurate for timestamps that occurred in the past. Time zone geographic boundaries change over time, so if the point you are querying for was previously in a different time zone, historical results will not be accurate. If, however, the point has been in the same geographic time zone for a very long time (ex: `America/New_York`), the historical data may be accurate for 100+ years in the past (depending on how far back the IANA TZDB rules have been specified).",
+                          "key": "timestamp",
+                          "value": "<long>"
+                        }
+                      ]
+                    },
+                    "description": "The Stadia TZ API provides time zone information, as well as information about any special offset (such as DST) in effect based on the latest IANA TZDB. Note that this API may not be accurate for timestamps in the past and does not claim to report precise nautical times in the open ocean beyond territorial waters."
+                  },
+                  "response": [
+                    {
+                      "id": "f62f0990-4508-40c6-a13f-2976cdf02043",
+                      "name": "The time zone metadata.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tz/lookup/v1?lat=<double>&lng=<double>&timestamp=<long>&api_key=<API Key>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tz",
+                            "lookup",
+                            "v1"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The latitude of the point you are interested in.",
+                              "key": "lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "(Required) The longitude of the point you are interested in.",
+                              "key": "lng",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The UNIX timestamp at which the UTC and DST offsets will be calculated. This defaults to the present time. This endpoint is not necessarily guaranteed to be accurate for timestamps that occurred in the past. Time zone geographic boundaries change over time, so if the point you are querying for was previously in a different time zone, historical results will not be accurate. If, however, the point has been in the same geographic time zone for a very long time (ex: `America/New_York`), the historical data may be accurate for 100+ years in the past (depending on how far back the IANA TZDB rules have been specified).",
+                              "key": "timestamp",
+                              "value": "<long>"
+                            },
+                            {
+                              "description": "Added as a part of security scheme: apikey",
+                              "key": "api_key",
+                              "value": "<API Key>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"tz_id\": \"<string>\",\n  \"base_utc_offset\": \"<integer>\",\n  \"dst_offset\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T03:05:23.000Z",
+                      "updatedAt": "2026-07-28T03:05:23.000Z",
+                      "uid": "35240-f62f0990-4508-40c6-a13f-2976cdf02043"
+                    },
+                    {
+                      "id": "9d4c82e6-2c07-445d-b85a-ed1d331271b8",
+                      "name": "Time zone not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/tz/lookup/v1?lat=<double>&lng=<double>&timestamp=<long>&api_key=<API Key>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tz",
+                            "lookup",
+                            "v1"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The latitude of the point you are interested in.",
+                              "key": "lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "(Required) The longitude of the point you are interested in.",
+                              "key": "lng",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The UNIX timestamp at which the UTC and DST offsets will be calculated. This defaults to the present time. This endpoint is not necessarily guaranteed to be accurate for timestamps that occurred in the past. Time zone geographic boundaries change over time, so if the point you are querying for was previously in a different time zone, historical results will not be accurate. If, however, the point has been in the same geographic time zone for a very long time (ex: `America/New_York`), the historical data may be accurate for 100+ years in the past (depending on how far back the IANA TZDB rules have been specified).",
+                              "key": "timestamp",
+                              "value": "<long>"
+                            },
+                            {
+                              "description": "Added as a part of security scheme: apikey",
+                              "key": "api_key",
+                              "value": "<API Key>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:05:23.000Z",
+                      "updatedAt": "2026-07-28T03:05:23.000Z",
+                      "uid": "35240-9d4c82e6-2c07-445d-b85a-ed1d331271b8"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:05:23.000Z",
+                  "updatedAt": "2026-07-28T03:05:23.000Z",
+                  "uid": "35240-0f4bc159-4ab1-4011-81a9-deeedae5d1c7"
+                }
+              ],
+              "id": "4eea4cc5-6349-42d3-81da-653fd1a2bc0f",
+              "createdAt": "2026-07-28T03:05:23.000Z",
+              "updatedAt": "2026-07-28T03:05:23.000Z",
+              "uid": "35240-4eea4cc5-6349-42d3-81da-653fd1a2bc0f"
+            }
+          ],
+          "id": "95901a8e-6bec-445b-8689-c51bc492cbf9",
+          "createdAt": "2026-07-28T03:05:23.000Z",
+          "updatedAt": "2026-07-28T03:05:23.000Z",
+          "uid": "35240-95901a8e-6bec-445b-8689-c51bc492cbf9"
+        }
+      ],
+      "id": "40ad32dd-4a2f-4746-afa8-877d671cf830",
+      "createdAt": "2026-07-28T03:05:23.000Z",
+      "updatedAt": "2026-07-28T03:05:23.000Z",
+      "uid": "35240-40ad32dd-4a2f-4746-afa8-877d671cf830"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.stadiamaps.com"
+    }
+  ]
+}

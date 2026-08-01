@@ -1,0 +1,1108 @@
+{
+  "info": {
+    "_postman_id": "d10ffc23-c180-49d9-be60-dcdf84cafa12",
+    "name": "Stadia Maps Search API",
+    "description": "Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. \n\nContact Support:\n Name: Stadia Maps Support\n Email: support@stadiamaps.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:05:35.000Z",
+    "updatedAt": "2026-07-28T03:05:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d10ffc23-c180-49d9-be60-dcdf84cafa12"
+  },
+  "item": [
+    {
+      "name": "geocoding",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "search",
+              "item": [
+                {
+                  "name": "structured",
+                  "item": [
+                    {
+                      "name": "Find locations matching components (structured forward geocoding).",
+                      "id": "66ecde42-0d8b-4b5f-a9c3-5d5ed75cf6ce",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "apikey",
+                          "apikey": [
+                            {
+                              "key": "key",
+                              "value": "api_key",
+                              "type": "string"
+                            },
+                            {
+                              "key": "value",
+                              "value": "{{apiKey}}",
+                              "type": "string"
+                            },
+                            {
+                              "key": "in",
+                              "value": "query",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/geocoding/v1/search/structured?address=<string>&neighbourhood=<string>&borough=<string>&locality=<string>&county=<string>&region=<string>&postalcode=<string>&country=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=county,dependency&sources=openaddresses,whosonfirst&size=<integer>&lang=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "geocoding",
+                            "v1",
+                            "search",
+                            "structured"
+                          ],
+                          "query": [
+                            {
+                              "description": "A street name, optionally with a house number.",
+                              "key": "address",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Varies by area, but has a locally specific meaning (NOT always an official administrative unit).",
+                              "key": "neighbourhood",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "A unit within a city (not widely used, but present in places like NYC and Mexico City).",
+                              "key": "borough",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The city, village, town, etc. that the place/address is part of.",
+                              "key": "locality",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Administrative divisions between localities and regions. Not commonly used as input to structured geocoding.",
+                              "key": "county",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Typically the first administrative division within a country. For example, a US state or a Canadian province.",
+                              "key": "region",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "A mail sorting code.",
+                              "key": "postalcode",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "A full name (ex: Canada), or a 2 or 3 character ISO code. Prefer ISO codes when possible.",
+                              "key": "country",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                              "key": "focus.point.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                              "key": "focus.point.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                              "key": "boundary.circle.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                              "key": "boundary.circle.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                              "key": "boundary.circle.radius",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                              "key": "boundary.country",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "The Pelias GID of an area to limit the search to.",
+                              "key": "boundary.gid",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "A list of layers to limit the search to.",
+                              "key": "layers",
+                              "value": "county,dependency"
+                            },
+                            {
+                              "description": "A list of sources to limit the search to.",
+                              "key": "sources",
+                              "value": "openaddresses,whosonfirst"
+                            },
+                            {
+                              "description": "The maximum number of results to return.",
+                              "key": "size",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                              "key": "lang",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "The structured search endpoint lets you search for addresses, points of interest, and administrative areas. Rather than a single string which the API must infer meaning from, the structured search endpoint allows you to specify the known components upfront, which is useful in many forward geocoding workflows."
+                      },
+                      "response": [
+                        {
+                          "id": "bb5dceea-b478-4aad-8e86-fb2ddc102dfe",
+                          "name": "A GeoJSON collection of search results.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/geocoding/v1/search/structured?address=<string>&neighbourhood=<string>&borough=<string>&locality=<string>&county=<string>&region=<string>&postalcode=<string>&country=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=county,dependency&sources=openaddresses,whosonfirst&size=<integer>&lang=<string>&api_key=<API Key>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "geocoding",
+                                "v1",
+                                "search",
+                                "structured"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A street name, optionally with a house number.",
+                                  "key": "address",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Varies by area, but has a locally specific meaning (NOT always an official administrative unit).",
+                                  "key": "neighbourhood",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "A unit within a city (not widely used, but present in places like NYC and Mexico City).",
+                                  "key": "borough",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The city, village, town, etc. that the place/address is part of.",
+                                  "key": "locality",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Administrative divisions between localities and regions. Not commonly used as input to structured geocoding.",
+                                  "key": "county",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Typically the first administrative division within a country. For example, a US state or a Canadian province.",
+                                  "key": "region",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "A mail sorting code.",
+                                  "key": "postalcode",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "A full name (ex: Canada), or a 2 or 3 character ISO code. Prefer ISO codes when possible.",
+                                  "key": "country",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                                  "key": "focus.point.lat",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                                  "key": "focus.point.lon",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                                  "key": "boundary.rect.min_lat",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                                  "key": "boundary.rect.max_lat",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                                  "key": "boundary.rect.min_lon",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                                  "key": "boundary.rect.max_lon",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                                  "key": "boundary.circle.lat",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                                  "key": "boundary.circle.lon",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                                  "key": "boundary.circle.radius",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                                  "key": "boundary.country",
+                                  "value": "<string>,<string>"
+                                },
+                                {
+                                  "description": "The Pelias GID of an area to limit the search to.",
+                                  "key": "boundary.gid",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "A list of layers to limit the search to.",
+                                  "key": "layers",
+                                  "value": "county,dependency"
+                                },
+                                {
+                                  "description": "A list of sources to limit the search to.",
+                                  "key": "sources",
+                                  "value": "openaddresses,whosonfirst"
+                                },
+                                {
+                                  "description": "The maximum number of results to return.",
+                                  "key": "size",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                                  "key": "lang",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Added as a part of security scheme: apikey",
+                                  "key": "api_key",
+                                  "value": "<API Key>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"geocoding\": {\n    \"attribution\": \"<uri>\",\n    \"query\": {\n      \"qui_a4e\": \"eiusmod anim\",\n      \"culpa_e1\": \"d\",\n      \"ex_8\": \"et do aute id ex\"\n    },\n    \"warnings\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"errors\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"type\": \"MultiLineString\"\n      },\n      \"properties\": {\n        \"gid\": \"<string>\",\n        \"source_id\": \"<string>\",\n        \"label\": \"<string>\",\n        \"layer\": \"region\",\n        \"name\": \"<string>\",\n        \"accuracy\": \"point\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"<uri>\",\n            \"wikipedia\": \"<string>\",\n            \"wikidata\": \"<string>\",\n            \"phone\": \"<string>\"\n          },\n          \"exercitation_c\": -45027595,\n          \"quisa\": true,\n          \"culpa27e\": false,\n          \"velit5\": \"veniam ad enim\"\n        },\n        \"continent\": \"<string>\",\n        \"continent_gid\": \"<string>\",\n        \"country\": \"<string>\",\n        \"country_gid\": \"<string>\",\n        \"neighbourhood\": \"<string>\",\n        \"neighbourhood_gid\": \"<string>\",\n        \"borough\": \"<string>\",\n        \"borough_gid\": \"<string>\",\n        \"postalcode\": \"<string>\",\n        \"street\": \"<string>\",\n        \"housenumber\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"locality_gid\": \"<string>\",\n        \"county\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_a\": \"<string>\"\n      },\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    },\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"type\": \"Polygon\"\n      },\n      \"properties\": {\n        \"gid\": \"<string>\",\n        \"source_id\": \"<string>\",\n        \"label\": \"<string>\",\n        \"layer\": \"macrohood\",\n        \"name\": \"<string>\",\n        \"accuracy\": \"point\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"<uri>\",\n            \"wikipedia\": \"<string>\",\n            \"wikidata\": \"<string>\",\n            \"phone\": \"<string>\",\n            \"in_f_4\": true\n          },\n          \"ullamco8f2\": -89723746,\n          \"ad0\": 34935307,\n          \"exc01\": -97952744\n        },\n        \"continent\": \"<string>\",\n        \"continent_gid\": \"<string>\",\n        \"country\": \"<string>\",\n        \"country_gid\": \"<string>\",\n        \"neighbourhood\": \"<string>\",\n        \"neighbourhood_gid\": \"<string>\",\n        \"borough\": \"<string>\",\n        \"borough_gid\": \"<string>\",\n        \"postalcode\": \"<string>\",\n        \"street\": \"<string>\",\n        \"housenumber\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"locality_gid\": \"<string>\",\n        \"county\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_a\": \"<string>\"\n      },\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    }\n  ],\n  \"bbox\": [\n    \"<double>\",\n    \"<double>\",\n    \"<double>\",\n    \"<double>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T03:05:36.000Z",
+                          "updatedAt": "2026-07-28T03:05:36.000Z",
+                          "uid": "35240-bb5dceea-b478-4aad-8e86-fb2ddc102dfe"
+                        },
+                        {
+                          "id": "8db7499a-137d-49aa-a817-75121bbf1b0c",
+                          "name": "Bad request",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/geocoding/v1/search/structured?address=<string>&neighbourhood=<string>&borough=<string>&locality=<string>&county=<string>&region=<string>&postalcode=<string>&country=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=county,dependency&sources=openaddresses,whosonfirst&size=<integer>&lang=<string>&api_key=<API Key>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "geocoding",
+                                "v1",
+                                "search",
+                                "structured"
+                              ],
+                              "query": [
+                                {
+                                  "description": "A street name, optionally with a house number.",
+                                  "key": "address",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Varies by area, but has a locally specific meaning (NOT always an official administrative unit).",
+                                  "key": "neighbourhood",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "A unit within a city (not widely used, but present in places like NYC and Mexico City).",
+                                  "key": "borough",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The city, village, town, etc. that the place/address is part of.",
+                                  "key": "locality",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Administrative divisions between localities and regions. Not commonly used as input to structured geocoding.",
+                                  "key": "county",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Typically the first administrative division within a country. For example, a US state or a Canadian province.",
+                                  "key": "region",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "A mail sorting code.",
+                                  "key": "postalcode",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "A full name (ex: Canada), or a 2 or 3 character ISO code. Prefer ISO codes when possible.",
+                                  "key": "country",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                                  "key": "focus.point.lat",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                                  "key": "focus.point.lon",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                                  "key": "boundary.rect.min_lat",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                                  "key": "boundary.rect.max_lat",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                                  "key": "boundary.rect.min_lon",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                                  "key": "boundary.rect.max_lon",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                                  "key": "boundary.circle.lat",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                                  "key": "boundary.circle.lon",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                                  "key": "boundary.circle.radius",
+                                  "value": "<double>"
+                                },
+                                {
+                                  "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                                  "key": "boundary.country",
+                                  "value": "<string>,<string>"
+                                },
+                                {
+                                  "description": "The Pelias GID of an area to limit the search to.",
+                                  "key": "boundary.gid",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "A list of layers to limit the search to.",
+                                  "key": "layers",
+                                  "value": "county,dependency"
+                                },
+                                {
+                                  "description": "A list of sources to limit the search to.",
+                                  "key": "sources",
+                                  "value": "openaddresses,whosonfirst"
+                                },
+                                {
+                                  "description": "The maximum number of results to return.",
+                                  "key": "size",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                                  "key": "lang",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Added as a part of security scheme: apikey",
+                                  "key": "api_key",
+                                  "value": "<API Key>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:05:36.000Z",
+                          "updatedAt": "2026-07-28T03:05:36.000Z",
+                          "uid": "35240-8db7499a-137d-49aa-a817-75121bbf1b0c"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:05:36.000Z",
+                      "updatedAt": "2026-07-28T03:05:36.000Z",
+                      "uid": "35240-66ecde42-0d8b-4b5f-a9c3-5d5ed75cf6ce"
+                    }
+                  ],
+                  "id": "f2b588e3-d4e5-48a9-8634-de6674ac239a",
+                  "createdAt": "2026-07-28T03:05:36.000Z",
+                  "updatedAt": "2026-07-28T03:05:36.000Z",
+                  "uid": "35240-f2b588e3-d4e5-48a9-8634-de6674ac239a"
+                },
+                {
+                  "name": "bulk",
+                  "item": [
+                    {
+                      "name": "Quickly run a batch of geocoding queries against the search or structured search endpoints.",
+                      "id": "262435d1-05a6-4307-8d1b-464c9a6638ef",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "apikey",
+                          "apikey": [
+                            {
+                              "key": "key",
+                              "value": "api_key",
+                              "type": "string"
+                            },
+                            {
+                              "key": "value",
+                              "value": "{{apiKey}}",
+                              "type": "string"
+                            },
+                            {
+                              "key": "in",
+                              "value": "query",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "[\n  {\n    \"endpoint\": \"/v1/search/structured\",\n    \"query\": {\n      \"text\": \"<string>\",\n      \"focus.point.lat\": \"<double>\",\n      \"focus.point.lon\": \"<double>\",\n      \"boundary.rect.min_lat\": \"<double>\",\n      \"boundary.rect.max_lat\": \"<double>\",\n      \"boundary.rect.min_lon\": \"<double>\",\n      \"boundary.rect.max_lon\": \"<double>\",\n      \"boundary.circle.lat\": \"<double>\",\n      \"boundary.circle.lon\": \"<double>\",\n      \"boundary.circle.radius\": \"<double>\",\n      \"boundary.country\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"boundary.gid\": \"<string>\",\n      \"layers\": [\n        \"localadmin\",\n        \"county\"\n      ],\n      \"sources\": [\n        \"openaddresses\",\n        \"whosonfirst\"\n      ],\n      \"size\": \"<integer>\",\n      \"lang\": \"<string>\"\n    }\n  },\n  {\n    \"endpoint\": \"/v1/search\",\n    \"query\": {\n      \"text\": \"<string>\",\n      \"focus.point.lat\": \"<double>\",\n      \"focus.point.lon\": \"<double>\",\n      \"boundary.rect.min_lat\": \"<double>\",\n      \"boundary.rect.max_lat\": \"<double>\",\n      \"boundary.rect.min_lon\": \"<double>\",\n      \"boundary.rect.max_lon\": \"<double>\",\n      \"boundary.circle.lat\": \"<double>\",\n      \"boundary.circle.lon\": \"<double>\",\n      \"boundary.circle.radius\": \"<double>\",\n      \"boundary.country\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"boundary.gid\": \"<string>\",\n      \"layers\": [\n        \"borough\",\n        \"macrocounty\"\n      ],\n      \"sources\": [\n        \"whosonfirst\",\n        \"openstreetmap\"\n      ],\n      \"size\": \"<integer>\",\n      \"lang\": \"<string>\"\n    }\n  }\n]",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/geocoding/v1/search/bulk",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "geocoding",
+                            "v1",
+                            "search",
+                            "bulk"
+                          ]
+                        },
+                        "description": "The batch endpoint lets you specify many search or structured search requests at once. Once received, all requests will be processed internally on our infrastructure, improving throughput when you need to do a lot of queries."
+                      },
+                      "response": [
+                        {
+                          "id": "37ee3c8d-c086-45e1-8772-9df6b7817915",
+                          "name": "A JSON array of the individual query responses, each annotated with a status code. Individual requests may fail but this endpoint will still return all results. Responses will be in the same order as the input.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \"endpoint\": \"/v1/search/structured\",\n    \"query\": {\n      \"text\": \"<string>\",\n      \"focus.point.lat\": \"<double>\",\n      \"focus.point.lon\": \"<double>\",\n      \"boundary.rect.min_lat\": \"<double>\",\n      \"boundary.rect.max_lat\": \"<double>\",\n      \"boundary.rect.min_lon\": \"<double>\",\n      \"boundary.rect.max_lon\": \"<double>\",\n      \"boundary.circle.lat\": \"<double>\",\n      \"boundary.circle.lon\": \"<double>\",\n      \"boundary.circle.radius\": \"<double>\",\n      \"boundary.country\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"boundary.gid\": \"<string>\",\n      \"layers\": [\n        \"localadmin\",\n        \"county\"\n      ],\n      \"sources\": [\n        \"openaddresses\",\n        \"whosonfirst\"\n      ],\n      \"size\": \"<integer>\",\n      \"lang\": \"<string>\"\n    }\n  },\n  {\n    \"endpoint\": \"/v1/search\",\n    \"query\": {\n      \"text\": \"<string>\",\n      \"focus.point.lat\": \"<double>\",\n      \"focus.point.lon\": \"<double>\",\n      \"boundary.rect.min_lat\": \"<double>\",\n      \"boundary.rect.max_lat\": \"<double>\",\n      \"boundary.rect.min_lon\": \"<double>\",\n      \"boundary.rect.max_lon\": \"<double>\",\n      \"boundary.circle.lat\": \"<double>\",\n      \"boundary.circle.lon\": \"<double>\",\n      \"boundary.circle.radius\": \"<double>\",\n      \"boundary.country\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"boundary.gid\": \"<string>\",\n      \"layers\": [\n        \"borough\",\n        \"macrocounty\"\n      ],\n      \"sources\": [\n        \"whosonfirst\",\n        \"openstreetmap\"\n      ],\n      \"size\": \"<integer>\",\n      \"lang\": \"<string>\"\n    }\n  }\n]",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/geocoding/v1/search/bulk?api_key=<API Key>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "geocoding",
+                                "v1",
+                                "search",
+                                "bulk"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Added as a part of security scheme: apikey",
+                                  "key": "api_key",
+                                  "value": "<API Key>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"status\": \"<integer>\",\n    \"response\": {\n      \"geocoding\": {\n        \"attribution\": \"<uri>\",\n        \"query\": {\n          \"inc\": -16473105,\n          \"eue03\": false,\n          \"nostrud__\": false\n        },\n        \"warnings\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"errors\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"features\": [\n        {\n          \"type\": \"Feature\",\n          \"geometry\": {\n            \"coordinates\": [\n              \"<double>\",\n              \"<double>\"\n            ],\n            \"type\": \"MultiPoint\"\n          },\n          \"properties\": {\n            \"gid\": \"<string>\",\n            \"source_id\": \"<string>\",\n            \"label\": \"<string>\",\n            \"layer\": \"marinearea\",\n            \"name\": \"<string>\",\n            \"accuracy\": \"centroid\",\n            \"addendum\": {\n              \"osm\": {\n                \"website\": \"<uri>\",\n                \"wikipedia\": \"<string>\",\n                \"wikidata\": \"<string>\",\n                \"phone\": \"<string>\"\n              },\n              \"non57\": \"occaecat\",\n              \"consequata\": \"sit eu in\"\n            },\n            \"continent\": \"<string>\",\n            \"continent_gid\": \"<string>\",\n            \"country\": \"<string>\",\n            \"country_gid\": \"<string>\",\n            \"neighbourhood\": \"<string>\",\n            \"neighbourhood_gid\": \"<string>\",\n            \"borough\": \"<string>\",\n            \"borough_gid\": \"<string>\",\n            \"postalcode\": \"<string>\",\n            \"street\": \"<string>\",\n            \"housenumber\": \"<string>\",\n            \"locality\": \"<string>\",\n            \"locality_gid\": \"<string>\",\n            \"county\": \"<string>\",\n            \"region\": \"<string>\",\n            \"region_a\": \"<string>\"\n          },\n          \"bbox\": [\n            \"<double>\",\n            \"<double>\",\n            \"<double>\",\n            \"<double>\"\n          ]\n        },\n        {\n          \"type\": \"Feature\",\n          \"geometry\": {\n            \"coordinates\": [\n              \"<double>\",\n              \"<double>\"\n            ],\n            \"type\": \"MultiPoint\"\n          },\n          \"properties\": {\n            \"gid\": \"<string>\",\n            \"source_id\": \"<string>\",\n            \"label\": \"<string>\",\n            \"layer\": \"borough\",\n            \"name\": \"<string>\",\n            \"accuracy\": \"centroid\",\n            \"addendum\": {\n              \"osm\": {\n                \"website\": \"<uri>\",\n                \"wikipedia\": \"<string>\",\n                \"wikidata\": \"<string>\",\n                \"phone\": \"<string>\"\n              }\n            },\n            \"continent\": \"<string>\",\n            \"continent_gid\": \"<string>\",\n            \"country\": \"<string>\",\n            \"country_gid\": \"<string>\",\n            \"neighbourhood\": \"<string>\",\n            \"neighbourhood_gid\": \"<string>\",\n            \"borough\": \"<string>\",\n            \"borough_gid\": \"<string>\",\n            \"postalcode\": \"<string>\",\n            \"street\": \"<string>\",\n            \"housenumber\": \"<string>\",\n            \"locality\": \"<string>\",\n            \"locality_gid\": \"<string>\",\n            \"county\": \"<string>\",\n            \"region\": \"<string>\",\n            \"region_a\": \"<string>\"\n          },\n          \"bbox\": [\n            \"<double>\",\n            \"<double>\",\n            \"<double>\",\n            \"<double>\"\n          ]\n        }\n      ],\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    },\n    \"msg\": \"<string>\"\n  },\n  {\n    \"status\": \"<integer>\",\n    \"response\": {\n      \"geocoding\": {\n        \"attribution\": \"<uri>\",\n        \"query\": {\n          \"culpa_8e8\": 40624457.92439976\n        },\n        \"warnings\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"errors\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"features\": [\n        {\n          \"type\": \"Feature\",\n          \"geometry\": {\n            \"coordinates\": [\n              \"<double>\",\n              \"<double>\"\n            ],\n            \"type\": \"MultiPolygon\"\n          },\n          \"properties\": {\n            \"gid\": \"<string>\",\n            \"source_id\": \"<string>\",\n            \"label\": \"<string>\",\n            \"layer\": \"locality\",\n            \"name\": \"<string>\",\n            \"accuracy\": \"centroid\",\n            \"addendum\": {\n              \"osm\": {\n                \"website\": \"<uri>\",\n                \"wikipedia\": \"<string>\",\n                \"wikidata\": \"<string>\",\n                \"phone\": \"<string>\"\n              }\n            },\n            \"continent\": \"<string>\",\n            \"continent_gid\": \"<string>\",\n            \"country\": \"<string>\",\n            \"country_gid\": \"<string>\",\n            \"neighbourhood\": \"<string>\",\n            \"neighbourhood_gid\": \"<string>\",\n            \"borough\": \"<string>\",\n            \"borough_gid\": \"<string>\",\n            \"postalcode\": \"<string>\",\n            \"street\": \"<string>\",\n            \"housenumber\": \"<string>\",\n            \"locality\": \"<string>\",\n            \"locality_gid\": \"<string>\",\n            \"county\": \"<string>\",\n            \"region\": \"<string>\",\n            \"region_a\": \"<string>\"\n          },\n          \"bbox\": [\n            \"<double>\",\n            \"<double>\",\n            \"<double>\",\n            \"<double>\"\n          ]\n        },\n        {\n          \"type\": \"Feature\",\n          \"geometry\": {\n            \"coordinates\": [\n              \"<double>\",\n              \"<double>\"\n            ],\n            \"type\": \"MultiPolygon\"\n          },\n          \"properties\": {\n            \"gid\": \"<string>\",\n            \"source_id\": \"<string>\",\n            \"label\": \"<string>\",\n            \"layer\": \"disputed\",\n            \"name\": \"<string>\",\n            \"accuracy\": \"centroid\",\n            \"addendum\": {\n              \"osm\": {\n                \"website\": \"<uri>\",\n                \"wikipedia\": \"<string>\",\n                \"wikidata\": \"<string>\",\n                \"phone\": \"<string>\"\n              },\n              \"reprehenderit89\": 64355811,\n              \"aliqua_0\": true,\n              \"do88\": -70164139.41211134\n            },\n            \"continent\": \"<string>\",\n            \"continent_gid\": \"<string>\",\n            \"country\": \"<string>\",\n            \"country_gid\": \"<string>\",\n            \"neighbourhood\": \"<string>\",\n            \"neighbourhood_gid\": \"<string>\",\n            \"borough\": \"<string>\",\n            \"borough_gid\": \"<string>\",\n            \"postalcode\": \"<string>\",\n            \"street\": \"<string>\",\n            \"housenumber\": \"<string>\",\n            \"locality\": \"<string>\",\n            \"locality_gid\": \"<string>\",\n            \"county\": \"<string>\",\n            \"region\": \"<string>\",\n            \"region_a\": \"<string>\"\n          },\n          \"bbox\": [\n            \"<double>\",\n            \"<double>\",\n            \"<double>\",\n            \"<double>\"\n          ]\n        }\n      ],\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    },\n    \"msg\": \"<string>\"\n  }\n]",
+                          "createdAt": "2026-07-28T03:05:36.000Z",
+                          "updatedAt": "2026-07-28T03:05:36.000Z",
+                          "uid": "35240-37ee3c8d-c086-45e1-8772-9df6b7817915"
+                        },
+                        {
+                          "id": "d8e55751-2501-49d6-b351-3f28587dc8b1",
+                          "name": "Bad request; more details will be included",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \"endpoint\": \"/v1/search/structured\",\n    \"query\": {\n      \"text\": \"<string>\",\n      \"focus.point.lat\": \"<double>\",\n      \"focus.point.lon\": \"<double>\",\n      \"boundary.rect.min_lat\": \"<double>\",\n      \"boundary.rect.max_lat\": \"<double>\",\n      \"boundary.rect.min_lon\": \"<double>\",\n      \"boundary.rect.max_lon\": \"<double>\",\n      \"boundary.circle.lat\": \"<double>\",\n      \"boundary.circle.lon\": \"<double>\",\n      \"boundary.circle.radius\": \"<double>\",\n      \"boundary.country\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"boundary.gid\": \"<string>\",\n      \"layers\": [\n        \"localadmin\",\n        \"county\"\n      ],\n      \"sources\": [\n        \"openaddresses\",\n        \"whosonfirst\"\n      ],\n      \"size\": \"<integer>\",\n      \"lang\": \"<string>\"\n    }\n  },\n  {\n    \"endpoint\": \"/v1/search\",\n    \"query\": {\n      \"text\": \"<string>\",\n      \"focus.point.lat\": \"<double>\",\n      \"focus.point.lon\": \"<double>\",\n      \"boundary.rect.min_lat\": \"<double>\",\n      \"boundary.rect.max_lat\": \"<double>\",\n      \"boundary.rect.min_lon\": \"<double>\",\n      \"boundary.rect.max_lon\": \"<double>\",\n      \"boundary.circle.lat\": \"<double>\",\n      \"boundary.circle.lon\": \"<double>\",\n      \"boundary.circle.radius\": \"<double>\",\n      \"boundary.country\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"boundary.gid\": \"<string>\",\n      \"layers\": [\n        \"borough\",\n        \"macrocounty\"\n      ],\n      \"sources\": [\n        \"whosonfirst\",\n        \"openstreetmap\"\n      ],\n      \"size\": \"<integer>\",\n      \"lang\": \"<string>\"\n    }\n  }\n]",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/geocoding/v1/search/bulk?api_key=<API Key>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "geocoding",
+                                "v1",
+                                "search",
+                                "bulk"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Added as a part of security scheme: apikey",
+                                  "key": "api_key",
+                                  "value": "<API Key>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:05:36.000Z",
+                          "updatedAt": "2026-07-28T03:05:36.000Z",
+                          "uid": "35240-d8e55751-2501-49d6-b351-3f28587dc8b1"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:05:36.000Z",
+                      "updatedAt": "2026-07-28T03:05:36.000Z",
+                      "uid": "35240-262435d1-05a6-4307-8d1b-464c9a6638ef"
+                    }
+                  ],
+                  "id": "ec9811b2-f07b-49f1-b3eb-57bcc91e5dfd",
+                  "createdAt": "2026-07-28T03:05:36.000Z",
+                  "updatedAt": "2026-07-28T03:05:36.000Z",
+                  "uid": "35240-ec9811b2-f07b-49f1-b3eb-57bcc91e5dfd"
+                },
+                {
+                  "name": "Search for location and other info using a place name or address (forward geocoding).",
+                  "id": "55433301-e394-49d2-a020-d0b177ef710d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "key",
+                          "value": "api_key",
+                          "type": "string"
+                        },
+                        {
+                          "key": "value",
+                          "value": "{{apiKey}}",
+                          "type": "string"
+                        },
+                        {
+                          "key": "in",
+                          "value": "query",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/geocoding/v1/search?text=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=county,dependency&sources=openaddresses,whosonfirst&size=<integer>&lang=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "geocoding",
+                        "v1",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The place name (address, venue name, etc.) to search for.",
+                          "key": "text",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                          "key": "focus.point.lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                          "key": "focus.point.lon",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                          "key": "boundary.rect.min_lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                          "key": "boundary.rect.max_lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                          "key": "boundary.rect.min_lon",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                          "key": "boundary.rect.max_lon",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                          "key": "boundary.circle.lat",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                          "key": "boundary.circle.lon",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                          "key": "boundary.circle.radius",
+                          "value": "<double>"
+                        },
+                        {
+                          "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                          "key": "boundary.country",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "The Pelias GID of an area to limit the search to.",
+                          "key": "boundary.gid",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "A list of layers to limit the search to.",
+                          "key": "layers",
+                          "value": "county,dependency"
+                        },
+                        {
+                          "description": "A list of sources to limit the search to.",
+                          "key": "sources",
+                          "value": "openaddresses,whosonfirst"
+                        },
+                        {
+                          "description": "The maximum number of results to return.",
+                          "key": "size",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                          "key": "lang",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "description": "The search endpoint lets you search for addresses, points of interest, and administrative areas. This is most commonly used for forward geocoding applications where you need to find the geographic coordinates of an address."
+                  },
+                  "response": [
+                    {
+                      "id": "13efc63c-33e5-4c6f-a398-ce873c2a0525",
+                      "name": "A GeoJSON collection of search results.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/geocoding/v1/search?text=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=county,dependency&sources=openaddresses,whosonfirst&size=<integer>&lang=<string>&api_key=<API Key>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "geocoding",
+                            "v1",
+                            "search"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The place name (address, venue name, etc.) to search for.",
+                              "key": "text",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                              "key": "focus.point.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                              "key": "focus.point.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                              "key": "boundary.circle.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                              "key": "boundary.circle.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                              "key": "boundary.circle.radius",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                              "key": "boundary.country",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "The Pelias GID of an area to limit the search to.",
+                              "key": "boundary.gid",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "A list of layers to limit the search to.",
+                              "key": "layers",
+                              "value": "county,dependency"
+                            },
+                            {
+                              "description": "A list of sources to limit the search to.",
+                              "key": "sources",
+                              "value": "openaddresses,whosonfirst"
+                            },
+                            {
+                              "description": "The maximum number of results to return.",
+                              "key": "size",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                              "key": "lang",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Added as a part of security scheme: apikey",
+                              "key": "api_key",
+                              "value": "<API Key>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"geocoding\": {\n    \"attribution\": \"<uri>\",\n    \"query\": {\n      \"qui_a4e\": \"eiusmod anim\",\n      \"culpa_e1\": \"d\",\n      \"ex_8\": \"et do aute id ex\"\n    },\n    \"warnings\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"errors\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"type\": \"MultiLineString\"\n      },\n      \"properties\": {\n        \"gid\": \"<string>\",\n        \"source_id\": \"<string>\",\n        \"label\": \"<string>\",\n        \"layer\": \"region\",\n        \"name\": \"<string>\",\n        \"accuracy\": \"point\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"<uri>\",\n            \"wikipedia\": \"<string>\",\n            \"wikidata\": \"<string>\",\n            \"phone\": \"<string>\"\n          },\n          \"exercitation_c\": -45027595,\n          \"quisa\": true,\n          \"culpa27e\": false,\n          \"velit5\": \"veniam ad enim\"\n        },\n        \"continent\": \"<string>\",\n        \"continent_gid\": \"<string>\",\n        \"country\": \"<string>\",\n        \"country_gid\": \"<string>\",\n        \"neighbourhood\": \"<string>\",\n        \"neighbourhood_gid\": \"<string>\",\n        \"borough\": \"<string>\",\n        \"borough_gid\": \"<string>\",\n        \"postalcode\": \"<string>\",\n        \"street\": \"<string>\",\n        \"housenumber\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"locality_gid\": \"<string>\",\n        \"county\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_a\": \"<string>\"\n      },\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    },\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          \"<double>\",\n          \"<double>\"\n        ],\n        \"type\": \"Polygon\"\n      },\n      \"properties\": {\n        \"gid\": \"<string>\",\n        \"source_id\": \"<string>\",\n        \"label\": \"<string>\",\n        \"layer\": \"macrohood\",\n        \"name\": \"<string>\",\n        \"accuracy\": \"point\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"<uri>\",\n            \"wikipedia\": \"<string>\",\n            \"wikidata\": \"<string>\",\n            \"phone\": \"<string>\",\n            \"in_f_4\": true\n          },\n          \"ullamco8f2\": -89723746,\n          \"ad0\": 34935307,\n          \"exc01\": -97952744\n        },\n        \"continent\": \"<string>\",\n        \"continent_gid\": \"<string>\",\n        \"country\": \"<string>\",\n        \"country_gid\": \"<string>\",\n        \"neighbourhood\": \"<string>\",\n        \"neighbourhood_gid\": \"<string>\",\n        \"borough\": \"<string>\",\n        \"borough_gid\": \"<string>\",\n        \"postalcode\": \"<string>\",\n        \"street\": \"<string>\",\n        \"housenumber\": \"<string>\",\n        \"locality\": \"<string>\",\n        \"locality_gid\": \"<string>\",\n        \"county\": \"<string>\",\n        \"region\": \"<string>\",\n        \"region_a\": \"<string>\"\n      },\n      \"bbox\": [\n        \"<double>\",\n        \"<double>\",\n        \"<double>\",\n        \"<double>\"\n      ]\n    }\n  ],\n  \"bbox\": [\n    \"<double>\",\n    \"<double>\",\n    \"<double>\",\n    \"<double>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:05:36.000Z",
+                      "updatedAt": "2026-07-28T03:05:36.000Z",
+                      "uid": "35240-13efc63c-33e5-4c6f-a398-ce873c2a0525"
+                    },
+                    {
+                      "id": "a6accf98-a2bb-4923-9fcc-482d39c887d7",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/geocoding/v1/search?text=<string>&focus.point.lat=<double>&focus.point.lon=<double>&boundary.rect.min_lat=<double>&boundary.rect.max_lat=<double>&boundary.rect.min_lon=<double>&boundary.rect.max_lon=<double>&boundary.circle.lat=<double>&boundary.circle.lon=<double>&boundary.circle.radius=<double>&boundary.country=<string>,<string>&boundary.gid=<string>&layers=county,dependency&sources=openaddresses,whosonfirst&size=<integer>&lang=<string>&api_key=<API Key>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "geocoding",
+                            "v1",
+                            "search"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The place name (address, venue name, etc.) to search for.",
+                              "key": "text",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`.",
+                              "key": "focus.point.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`.",
+                              "key": "focus.point.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.min_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified.",
+                              "key": "boundary.rect.max_lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`.",
+                              "key": "boundary.circle.lat",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`.",
+                              "key": "boundary.circle.lon",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.",
+                              "key": "boundary.circle.radius",
+                              "value": "<double>"
+                            },
+                            {
+                              "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.",
+                              "key": "boundary.country",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "The Pelias GID of an area to limit the search to.",
+                              "key": "boundary.gid",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "A list of layers to limit the search to.",
+                              "key": "layers",
+                              "value": "county,dependency"
+                            },
+                            {
+                              "description": "A list of sources to limit the search to.",
+                              "key": "sources",
+                              "value": "openaddresses,whosonfirst"
+                            },
+                            {
+                              "description": "The maximum number of results to return.",
+                              "key": "size",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.",
+                              "key": "lang",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Added as a part of security scheme: apikey",
+                              "key": "api_key",
+                              "value": "<API Key>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:05:36.000Z",
+                      "updatedAt": "2026-07-28T03:05:36.000Z",
+                      "uid": "35240-a6accf98-a2bb-4923-9fcc-482d39c887d7"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:05:36.000Z",
+                  "updatedAt": "2026-07-28T03:05:36.000Z",
+                  "uid": "35240-55433301-e394-49d2-a020-d0b177ef710d"
+                }
+              ],
+              "id": "a6f27782-f3d6-4fbe-88f7-259f3a5fd15a",
+              "createdAt": "2026-07-28T03:05:36.000Z",
+              "updatedAt": "2026-07-28T03:05:36.000Z",
+              "uid": "35240-a6f27782-f3d6-4fbe-88f7-259f3a5fd15a"
+            }
+          ],
+          "id": "6b9aa87a-a570-4c68-bc07-0b69816717c9",
+          "createdAt": "2026-07-28T03:05:36.000Z",
+          "updatedAt": "2026-07-28T03:05:36.000Z",
+          "uid": "35240-6b9aa87a-a570-4c68-bc07-0b69816717c9"
+        }
+      ],
+      "id": "3685f383-0a0d-489c-98ee-54859c735835",
+      "createdAt": "2026-07-28T03:05:36.000Z",
+      "updatedAt": "2026-07-28T03:05:36.000Z",
+      "uid": "35240-3685f383-0a0d-489c-98ee-54859c735835"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.stadiamaps.com"
+    }
+  ]
+}
