@@ -1,0 +1,189 @@
+{
+  "item": [
+    {
+      "id": "d9976ba7-4da0-458a-820a-ee07383cf340",
+      "name": "Roads",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "22c36a9a-8c56-44d7-b3d3-d24b258004f8",
+          "name": "Find the nearest roads to the set of input locations.",
+          "request": {
+            "name": "Find the nearest roads to the set of input locations.",
+            "description": {
+              "content": "The nearest roads API allows you query for detailed information about streets and intersections near the input locations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "nearest_roads",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"locations\": [\n    {\n      \"lat\": \"<double>\",\n      \"lon\": \"<double>\"\n    }\n  ],\n  \"costing\": \"<string>\",\n  \"costing_options\": {\n    \"auto\": {\n      \"maneuver_penalty\": 5,\n      \"gate_cost\": 15,\n      \"gate_penalty\": 300,\n      \"country_crossing_cost\": 600,\n      \"country_crossing_penalty\": 0,\n      \"service_penalty\": \"<integer>\",\n      \"service_factor\": 1,\n      \"use_living_streets\": \"<double>\",\n      \"use_ferry\": 0.5,\n      \"ignore_restrictions\": \"<boolean>\",\n      \"ignore_non_vehicular_restrictions\": \"<boolean>\",\n      \"ignore_oneways\": \"<boolean>\",\n      \"height\": 1.9,\n      \"width\": 1.6,\n      \"toll_booth_cost\": 15,\n      \"toll_booth_penalty\": 0,\n      \"ferry_cost\": 300,\n      \"use_highways\": 0.5,\n      \"use_tolls\": 0.5,\n      \"use_tracks\": \"<double>\",\n      \"top_speed\": 140,\n      \"shortest\": false,\n      \"ignore_closures\": false,\n      \"include_hov2\": false,\n      \"include_hov3\": false,\n      \"include_hot\": false,\n      \"alley_factor\": 1\n    },\n    \"bus\": {\n      \"maneuver_penalty\": 5,\n      \"gate_cost\": 15,\n      \"gate_penalty\": 300,\n      \"country_crossing_cost\": 600,\n      \"country_crossing_penalty\": 0,\n      \"service_penalty\": \"<integer>\",\n      \"service_factor\": 1,\n      \"use_living_streets\": \"<double>\",\n      \"use_ferry\": 0.5,\n      \"ignore_restrictions\": \"<boolean>\",\n      \"ignore_non_vehicular_restrictions\": \"<boolean>\",\n      \"ignore_oneways\": \"<boolean>\",\n      \"height\": 1.9,\n      \"width\": 1.6,\n      \"toll_booth_cost\": 15,\n      \"toll_booth_penalty\": 0,\n      \"ferry_cost\": 300,\n      \"use_highways\": 0.5,\n      \"use_tolls\": 0.5,\n      \"use_tracks\": \"<double>\",\n      \"top_speed\": 140,\n      \"shortest\": false,\n      \"ignore_closures\": false,\n      \"include_hov2\": false,\n      \"include_hov3\": false,\n      \"include_hot\": false,\n      \"alley_factor\": 1\n    },\n    \"taxi\": {\n      \"maneuver_penalty\": 5,\n      \"gate_cost\": 15,\n      \"gate_penalty\": 300,\n      \"country_crossing_cost\": 600,\n      \"country_crossing_penalty\": 0,\n      \"service_penalty\": \"<integer>\",\n      \"service_factor\": 1,\n      \"use_living_streets\": \"<double>\",\n      \"use_ferry\": 0.5,\n      \"ignore_restrictions\": \"<boolean>\",\n      \"ignore_non_vehicular_restrictions\": \"<boolean>\",\n      \"ignore_oneways\": \"<boolean>\",\n      \"height\": 1.9,\n      \"width\": 1.6,\n      \"toll_booth_cost\": 15,\n      \"toll_booth_penalty\": 0,\n      \"ferry_cost\": 300,\n      \"use_highways\": 0.5,\n      \"use_tolls\": 0.5,\n      \"use_tracks\": \"<double>\",\n      \"top_speed\": 140,\n      \"shortest\": false,\n      \"ignore_closures\": false,\n      \"include_hov2\": false,\n      \"include_hov3\": false,\n      \"include_hot\": false,\n      \"alley_factor\": 1\n    },\n    \"truck\": {\n      \"maneuver_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gate_cost\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gate_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"country_crossing_cost\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"country_crossing_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_factor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"use_living_streets\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"use_ferry\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_restrictions\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_non_vehicular_restrictions\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_oneways\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"height\": 1.9,\n      \"width\": 1.6,\n      \"toll_booth_cost\": 15,\n      \"toll_booth_penalty\": 0,\n      \"ferry_cost\": 300,\n      \"use_highways\": 0.5,\n      \"use_tolls\": 0.5,\n      \"use_tracks\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"top_speed\": 140,\n      \"shortest\": false,\n      \"ignore_closures\": false,\n      \"include_hov2\": false,\n      \"include_hov3\": false,\n      \"include_hot\": false,\n      \"alley_factor\": 1,\n      \"length\": 21.64,\n      \"weight\": 21.77,\n      \"axle_load\": 9.07,\n      \"hazmat\": false\n    },\n    \"bicycle\": {\n      \"maneuver_penalty\": 5,\n      \"gate_cost\": 15,\n      \"gate_penalty\": 300,\n      \"country_crossing_cost\": 600,\n      \"country_crossing_penalty\": 0,\n      \"service_penalty\": \"<integer>\",\n      \"service_factor\": 1,\n      \"use_living_streets\": \"<double>\",\n      \"use_ferry\": 0.5,\n      \"ignore_restrictions\": \"<boolean>\",\n      \"ignore_non_vehicular_restrictions\": \"<boolean>\",\n      \"ignore_oneways\": \"<boolean>\",\n      \"bicycle_type\": \"Hybrid\",\n      \"cycling_speed\": \"<integer>\",\n      \"use_roads\": 0.5,\n      \"use_hills\": 0.5,\n      \"avoid_bad_surfaces\": 0.25,\n      \"bss_return_cost\": 120,\n      \"bss_return_penalty\": 0\n    },\n    \"motor_scooter\": {\n      \"maneuver_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gate_cost\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gate_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"country_crossing_cost\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"country_crossing_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_factor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"use_living_streets\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"use_ferry\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_restrictions\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_non_vehicular_restrictions\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_oneways\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"height\": 1.9,\n      \"width\": 1.6,\n      \"toll_booth_cost\": 15,\n      \"toll_booth_penalty\": 0,\n      \"ferry_cost\": 300,\n      \"use_highways\": 0.5,\n      \"use_tolls\": 0.5,\n      \"use_tracks\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"top_speed\": 140,\n      \"shortest\": false,\n      \"ignore_closures\": false,\n      \"include_hov2\": false,\n      \"include_hov3\": false,\n      \"include_hot\": false,\n      \"alley_factor\": 1,\n      \"use_primary\": 0.5,\n      \"use_hills\": 0.5\n    },\n    \"motorcycle\": {\n      \"maneuver_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gate_cost\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"gate_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"country_crossing_cost\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"country_crossing_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_penalty\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_factor\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"use_living_streets\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"use_ferry\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_restrictions\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_non_vehicular_restrictions\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ignore_oneways\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"height\": 1.9,\n      \"width\": 1.6,\n      \"toll_booth_cost\": 15,\n      \"toll_booth_penalty\": 0,\n      \"ferry_cost\": 300,\n      \"use_highways\": 0.5,\n      \"use_tolls\": 0.5,\n      \"use_tracks\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"top_speed\": 140,\n      \"shortest\": false,\n      \"ignore_closures\": false,\n      \"include_hov2\": false,\n      \"include_hov3\": false,\n      \"include_hot\": false,\n      \"alley_factor\": 1,\n      \"use_trails\": 0\n    },\n    \"pedestrian\": {\n      \"walking_speed\": 5.1,\n      \"walkway_factor\": 1,\n      \"sidewalk_factor\": 1,\n      \"alley_factor\": 2,\n      \"driveway_factor\": 5,\n      \"step_penalty\": 30,\n      \"use_ferry\": 0.5,\n      \"use_living_streets\": \"<double>\",\n      \"use_tracks\": \"<double>\",\n      \"use_hills\": 0.5,\n      \"use_lit\": 0,\n      \"service_penalty\": \"<integer>\",\n      \"service_factor\": 1,\n      \"max_hiking_difficulty\": 1,\n      \"bss_rent_cost\": 120,\n      \"bss_rent_penalty\": 0\n    },\n    \"low_speed_vehicle\": {\n      \"maneuver_penalty\": 5,\n      \"gate_cost\": 15,\n      \"gate_penalty\": 300,\n      \"country_crossing_cost\": 600,\n      \"country_crossing_penalty\": 0,\n      \"service_penalty\": \"<integer>\",\n      \"service_factor\": 1,\n      \"use_living_streets\": \"<double>\",\n      \"use_ferry\": 0.5,\n      \"ignore_restrictions\": \"<boolean>\",\n      \"ignore_non_vehicular_restrictions\": \"<boolean>\",\n      \"ignore_oneways\": \"<boolean>\",\n      \"vehicle_type\": \"low_speed_vehicle\",\n      \"top_speed\": 35,\n      \"max_allowed_speed_limit\": 57\n    }\n  },\n  \"verbose\": false,\n  \"units\": \"km\",\n  \"language\": \"en-US\",\n  \"directions_type\": \"instructions\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74502686-7fbc-45d3-a17b-f49874eece69",
+              "name": "A list of streets and intersections that match the query.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearest_roads",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locations\": [\n    {\n      \"lat\": 59.436884,\n      \"lon\": 24.742595\n    }\n  ],\n  \"verbose\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"input_lon\": 24.742595,\n    \"input_lat\": 59.436884,\n    \"nodes\": [],\n    \"edges\": [\n      {\n        \"predicted_speeds\": [],\n        \"linear_reference\": \"KxGYOypEIXriAAAcABo6Uow=\",\n        \"edge_info\": {\n          \"speed_limit\": 0,\n          \"shape\": \"{zvjpBwtden@zG`H~EdG\",\n          \"names\": [\n            \"Rataskaevu\"\n          ],\n          \"bike_network\": {\n            \"mountain\": false,\n            \"local\": false,\n            \"regional\": false,\n            \"national\": false\n          },\n          \"mean_elevation\": 36,\n          \"way_id\": 4853850\n        },\n        \"edge_id\": {\n          \"id\": 1800,\n          \"value\": 60404861586,\n          \"tile_id\": 860498,\n          \"level\": 2\n        },\n        \"edge\": {\n          \"sidewalk_left\": false,\n          \"sidewalk_right\": false,\n          \"lane_count\": 1,\n          \"not_thru\": false,\n          \"forward\": false,\n          \"bike_network\": false,\n          \"round_about\": false,\n          \"access\": {\n            \"truck\": true,\n            \"pedestrian\": true,\n            \"wheelchair\": true,\n            \"taxi\": true,\n            \"HOV\": true,\n            \"emergency\": false,\n            \"motorcycle\": true,\n            \"car\": true,\n            \"moped\": true,\n            \"bus\": true,\n            \"bicycle\": true,\n            \"golf_cart\": true\n          },\n          \"bridge\": false,\n          \"tunnel\": false,\n          \"destination_only\": false,\n          \"seasonal\": false,\n          \"classification\": {\n            \"internal\": false,\n            \"link\": false,\n            \"surface\": \"paved\",\n            \"use\": \"living_street\",\n            \"classification\": \"service_other\"\n          },\n          \"toll\": false,\n          \"has_sign\": false,\n          \"country_crossing\": false,\n          \"part_of_complex_restriction\": false,\n          \"cycle_lane\": \"none\",\n          \"end_restriction\": {\n            \"truck\": false,\n            \"pedestrian\": false,\n            \"wheelchair\": false,\n            \"taxi\": false,\n            \"HOV\": false,\n            \"emergency\": false,\n            \"motorcycle\": false,\n            \"car\": false,\n            \"moped\": false,\n            \"bus\": false,\n            \"bicycle\": false\n          },\n          \"geo_attributes\": {\n            \"curvature\": 5,\n            \"max_down_slope\": -7,\n            \"max_up_slope\": 0,\n            \"weighted_grade\": -6.67,\n            \"length\": 32\n          },\n          \"start_restriction\": {\n            \"truck\": false,\n            \"pedestrian\": false,\n            \"wheelchair\": false,\n            \"taxi\": false,\n            \"HOV\": false,\n            \"emergency\": false,\n            \"motorcycle\": false,\n            \"car\": false,\n            \"moped\": false,\n            \"bus\": false,\n            \"bicycle\": false\n          },\n          \"traffic_signal\": false,\n          \"access_restriction\": false,\n          \"truck_route\": false,\n          \"speeds\": {\n            \"predicted\": false,\n            \"constrained_flow\": 0,\n            \"free_flow\": 0,\n            \"type\": \"classified\",\n            \"default\": 20\n          },\n          \"end_node\": {\n            \"id\": 2895,\n            \"value\": 97146964626,\n            \"tile_id\": 860498,\n            \"level\": 2\n          }\n        },\n        \"inbound_reach\": 50,\n        \"distance\": 2.2,\n        \"percent_along\": 0.54802,\n        \"side_of_street\": \"neither\",\n        \"outbound_reach\": 50,\n        \"correlated_lon\": 24.74263,\n        \"live_speed\": {},\n        \"correlated_lat\": 59.436875\n      },\n      {\n        \"predicted_speeds\": [],\n        \"linear_reference\": \"KxGYSCpELHryAP/l/+k6QnM=\",\n        \"edge_info\": {\n          \"speed_limit\": 0,\n          \"shape\": \"{zvjpBwtden@zG`H~EdG\",\n          \"names\": [\n            \"Rataskaevu\"\n          ],\n          \"bike_network\": {\n            \"mountain\": false,\n            \"local\": false,\n            \"regional\": false,\n            \"national\": false\n          },\n          \"mean_elevation\": 36,\n          \"way_id\": 4853850\n        },\n        \"edge_id\": {\n          \"id\": 7368,\n          \"value\": 247235938962,\n          \"tile_id\": 860498,\n          \"level\": 2\n        },\n        \"edge\": {\n          \"sidewalk_left\": false,\n          \"sidewalk_right\": false,\n          \"lane_count\": 1,\n          \"not_thru\": false,\n          \"forward\": true,\n          \"bike_network\": false,\n          \"round_about\": false,\n          \"access\": {\n            \"truck\": true,\n            \"pedestrian\": true,\n            \"wheelchair\": true,\n            \"taxi\": true,\n            \"HOV\": true,\n            \"emergency\": false,\n            \"motorcycle\": true,\n            \"car\": true,\n            \"moped\": true,\n            \"bus\": true,\n            \"bicycle\": true\n          },\n          \"bridge\": false,\n          \"tunnel\": false,\n          \"destination_only\": false,\n          \"seasonal\": false,\n          \"classification\": {\n            \"internal\": false,\n            \"link\": false,\n            \"surface\": \"paved\",\n            \"use\": \"living_street\",\n            \"classification\": \"service_other\"\n          },\n          \"toll\": false,\n          \"has_sign\": false,\n          \"country_crossing\": false,\n          \"part_of_complex_restriction\": false,\n          \"cycle_lane\": \"none\",\n          \"end_restriction\": {\n            \"truck\": false,\n            \"pedestrian\": false,\n            \"wheelchair\": false,\n            \"taxi\": false,\n            \"HOV\": false,\n            \"emergency\": false,\n            \"motorcycle\": false,\n            \"car\": false,\n            \"moped\": false,\n            \"bus\": false,\n            \"bicycle\": false\n          },\n          \"geo_attributes\": {\n            \"curvature\": 5,\n            \"max_down_slope\": 0,\n            \"max_up_slope\": 7,\n            \"weighted_grade\": 6.67,\n            \"length\": 32\n          },\n          \"start_restriction\": {\n            \"truck\": false,\n            \"pedestrian\": false,\n            \"wheelchair\": false,\n            \"taxi\": false,\n            \"HOV\": false,\n            \"emergency\": false,\n            \"motorcycle\": false,\n            \"car\": false,\n            \"moped\": false,\n            \"bus\": false,\n            \"bicycle\": false\n          },\n          \"traffic_signal\": false,\n          \"access_restriction\": false,\n          \"truck_route\": false,\n          \"speeds\": {\n            \"predicted\": false,\n            \"constrained_flow\": 0,\n            \"free_flow\": 0,\n            \"type\": \"classified\",\n            \"default\": 20\n          },\n          \"end_node\": {\n            \"id\": 819,\n            \"value\": 27487963794,\n            \"tile_id\": 860498,\n            \"level\": 2\n          }\n        },\n        \"inbound_reach\": 50,\n        \"distance\": 2.2,\n        \"percent_along\": 0.45198,\n        \"side_of_street\": \"neither\",\n        \"outbound_reach\": 50,\n        \"correlated_lon\": 24.74263,\n        \"live_speed\": {},\n        \"correlated_lat\": 59.436875\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c51fca5b-3028-4898-a0b5-c30a492bc364",
+              "name": "Bad request; more details will be included",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "nearest_roads",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locations\": [\n    {\n      \"lat\": 59.436884,\n      \"lon\": 24.742595\n    }\n  ],\n  \"verbose\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stadiamaps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2ba57d19-6dc4-45fd-a13a-c16a4ae7bf84",
+    "name": "Stadia Maps Roads API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. \n\nContact Support:\n Name: Stadia Maps Support\n Email: support@stadiamaps.com",
+      "type": "text/plain"
+    }
+  }
+}

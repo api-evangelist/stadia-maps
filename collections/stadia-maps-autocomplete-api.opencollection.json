@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stadia Maps Autocomplete API",
+    "version": "7.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Autocomplete",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search and geocode quickly based on partial input.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stadiamaps.com/geocoding/v1/autocomplete",
+            "params": [
+              {
+                "name": "text",
+                "value": "",
+                "type": "query",
+                "description": "The place name (address, venue name, etc.) to search for."
+              },
+              {
+                "name": "focus.point.lat",
+                "value": "",
+                "type": "query",
+                "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`."
+              },
+              {
+                "name": "focus.point.lon",
+                "value": "",
+                "type": "query",
+                "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`."
+              },
+              {
+                "name": "boundary.rect.min_lat",
+                "value": "",
+                "type": "query",
+                "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.max_lat",
+                "value": "",
+                "type": "query",
+                "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.min_lon",
+                "value": "",
+                "type": "query",
+                "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.max_lon",
+                "value": "",
+                "type": "query",
+                "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.circle.lat",
+                "value": "",
+                "type": "query",
+                "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`."
+              },
+              {
+                "name": "boundary.circle.lon",
+                "value": "",
+                "type": "query",
+                "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`."
+              },
+              {
+                "name": "boundary.circle.radius",
+                "value": "",
+                "type": "query",
+                "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified."
+              },
+              {
+                "name": "boundary.country",
+                "value": "",
+                "type": "query",
+                "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible."
+              },
+              {
+                "name": "boundary.gid",
+                "value": "",
+                "type": "query",
+                "description": "The Pelias GID of an area to limit the search to."
+              },
+              {
+                "name": "layers",
+                "value": "",
+                "type": "query",
+                "description": "A list of layers to limit the search to."
+              },
+              {
+                "name": "sources",
+                "value": "",
+                "type": "query",
+                "description": "A list of sources to limit the search to."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to return."
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query",
+                "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Autocomplete enables interactive search-as-you-type user experiences, suggesting places as you type, along with information that will help your users find the correct place quickly."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

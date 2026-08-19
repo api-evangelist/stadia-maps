@@ -1,0 +1,290 @@
+{
+  "item": [
+    {
+      "id": "e968ec10-6dba-4a2c-8383-3d263ae50ae9",
+      "name": "Reverse",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6db3ea85-6843-4262-9e8f-81a2e89664d6",
+          "name": "Find places and addresses near geographic coordinates (reverse geocoding).",
+          "request": {
+            "name": "Find places and addresses near geographic coordinates (reverse geocoding).",
+            "description": {
+              "content": "Reverse geocoding and search finds places and addresses near any geographic coordinates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "geocoding",
+                "v1",
+                "reverse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "point.lat",
+                  "value": "<double>",
+                  "description": "(Required) The latitude of the point at which to perform the search."
+                },
+                {
+                  "disabled": false,
+                  "key": "point.lon",
+                  "value": "<double>",
+                  "description": "(Required) The longitude of the point at which to perform the search."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.circle.radius",
+                  "value": "<double>",
+                  "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified."
+                },
+                {
+                  "disabled": false,
+                  "key": "layers",
+                  "value": "<string>,<string>",
+                  "description": "A list of layers to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "sources",
+                  "value": "<string>,<string>",
+                  "description": "A list of sources to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.country",
+                  "value": "<string>,<string>",
+                  "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.gid",
+                  "value": "<string>",
+                  "description": "The Pelias GID of an area to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "The maximum number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "<string>",
+                  "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8810b31a-6643-4ad1-b6b7-8aae52c6808e",
+              "name": "A GeoJSON collection of search results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocoding",
+                    "v1",
+                    "reverse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "point.lat",
+                      "value": "48.848268"
+                    },
+                    {
+                      "key": "point.lon",
+                      "value": "2.294471"
+                    },
+                    {
+                      "key": "boundary.circle.radius",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "layers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "boundary.country",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "boundary.gid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"geocoding\": {\n    \"version\": \"0.2\",\n    \"attribution\": \"https://stadiamaps.com/attribution\",\n    \"query\": {\n      \"text\": \"1600 Pennsylvania Ave NW\",\n      \"size\": 10,\n      \"private\": false,\n      \"lang\": {\n        \"name\": \"English\",\n        \"iso6391\": \"en\",\n        \"iso6393\": \"eng\",\n        \"via\": \"default\",\n        \"defaulted\": true\n      },\n      \"querySize\": 20,\n      \"parser\": \"libpostal\",\n      \"parsed_text\": {\n        \"housenumber\": \"1600\",\n        \"street\": \"pennsylvania ave nw\"\n      }\n    },\n    \"engine\": {\n      \"name\": \"Pelias\",\n      \"author\": \"Mapzen\",\n      \"version\": \"1.0\"\n    },\n    \"timestamp\": 1679043782383\n  },\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          -77.036547,\n          38.897675\n        ]\n      },\n      \"properties\": {\n        \"gid\": \"openaddresses:address:us/dc/statewide:aa53d4bd0fe295be\",\n        \"layer\": \"address\",\n        \"source\": \"openaddresses\",\n        \"source_id\": \"us/dc/statewide:aa53d4bd0fe295be\",\n        \"country_code\": \"US\",\n        \"name\": \"1600 Pennsylvania Avenue NW\",\n        \"housenumber\": \"1600\",\n        \"street\": \"Pennsylvania Avenue NW\",\n        \"postalcode\": \"20500\",\n        \"confidence\": 1,\n        \"match_type\": \"exact\",\n        \"accuracy\": \"point\",\n        \"country\": \"United States\",\n        \"country_gid\": \"whosonfirst:country:85633793\",\n        \"country_a\": \"USA\",\n        \"region\": \"District of Columbia\",\n        \"region_gid\": \"whosonfirst:region:85688741\",\n        \"region_a\": \"DC\",\n        \"county\": \"District of Columbia\",\n        \"county_gid\": \"whosonfirst:county:1377370667\",\n        \"county_a\": \"DI\",\n        \"locality\": \"Washington\",\n        \"locality_gid\": \"whosonfirst:locality:85931779\",\n        \"neighbourhood\": \"White House Grounds\",\n        \"neighbourhood_gid\": \"whosonfirst:neighbourhood:1108724059\",\n        \"continent\": \"North America\",\n        \"continent_gid\": \"whosonfirst:continent:102191575\",\n        \"label\": \"1600 Pennsylvania Avenue NW, Washington, DC, USA\"\n      }\n    }\n  ],\n  \"bbox\": [\n    -77.036547,\n    38.897675,\n    -77.036547,\n    38.897675\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2538b92-1fef-4e2c-9ae3-7ad77dfc7e4e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocoding",
+                    "v1",
+                    "reverse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "point.lat",
+                      "value": "48.848268"
+                    },
+                    {
+                      "key": "point.lon",
+                      "value": "2.294471"
+                    },
+                    {
+                      "key": "boundary.circle.radius",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "layers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "boundary.country",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "boundary.gid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stadiamaps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b5aabb5c-2bd2-4382-a8a1-217acfd272c1",
+    "name": "Stadia Maps Reverse API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. \n\nContact Support:\n Name: Stadia Maps Support\n Email: support@stadiamaps.com",
+      "type": "text/plain"
+    }
+  }
+}

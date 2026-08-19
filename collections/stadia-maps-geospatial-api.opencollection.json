@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stadia Maps Geospatial API",
+    "version": "7.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Geospatial",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the elevation profile along a polyline or at a point.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stadiamaps.com/elevation/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "The Stadia elevation API allows you to get the elevation of any point on earth. You can pass either a simple set of points or a Google encoded polyline string. This pairs well with our routing APIs, so you can generate an elevation profile for your next bike or run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

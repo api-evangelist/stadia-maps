@@ -1,0 +1,113 @@
+# Stadia Maps Documentation
+
+Stadia Maps APIs provide a variety of geospatial functionality including routing, forward and reverse geocoding, place search, and time (zone and current) information. SDKs are available for many popular programming languages to make the data APIs easier to use. Stadia Maps also offers map solutions in the form of vector tiles (for smoother client-side rendering), raster tiles (easier on the client, but scale-dependent), and static map images which show an area and optional overlays. Most APIs are available via a free tier, but some require a paid subscription. Refer to https://stadiamaps.com/pricing for current prices. This file contains links to the most popular sections of the Stadia Maps developer documentation.
+
+## General Info
+
+- [Authentication](https://docs.stadiamaps.com/authentication/index.md)
+- [Ensure GDPR Compliance with EU Endpoints](https://docs.stadiamaps.com/eu-gdpr-endpoints/index.md)
+- [Service Limits](https://docs.stadiamaps.com/limits/index.md)
+- [Upgrading Your Subscription](https://docs.stadiamaps.com/upgrading-subscription/index.md)
+
+## Map Styling
+
+- [Custom Map Styling](https://docs.stadiamaps.com/custom-styles/index.md)
+- [Style Library](https://docs.stadiamaps.com/themes/index.md)
+- [Add 3D Buildings to your Maps](https://docs.stadiamaps.com/tutorials/adding-3d-buildings-to-your-maps-with-maplibre/index.md)
+- [Changing Specific Place Labels on the Map](https://docs.stadiamaps.com/tutorials/changing-place-labels/index.md)
+- [Changing Place Labels to Another Language](https://docs.stadiamaps.com/tutorials/changing-the-map-label-language/index.md)
+
+## Map Tiles and Static Images
+
+- [Raster Map Tiles](https://docs.stadiamaps.com/raster/index.md)
+- [Static Maps](https://docs.stadiamaps.com/static-maps/index.md)
+- [Vector Map Tiles](https://docs.stadiamaps.com/vector/index.md)
+- [Switching to Vector Tiles](https://docs.stadiamaps.com/guides/switching-your-maps-from-raster-to-vector-tiles/index.md)
+
+## Maps for the Web
+
+- [Interactive Web Maps](https://docs.stadiamaps.com/maps-for-web/index.md)
+- [Turn your Maps into a 3D Globe](https://docs.stadiamaps.com/tutorials/3d-globe-view-with-maplibre-gl-js/index.md)
+- [Clustering with MapLibre GL JS](https://docs.stadiamaps.com/tutorials/clustering-styling-points-with-maplibre/index.md)
+- [Quickstart: MapLibre React Components](https://docs.stadiamaps.com/tutorials/getting-started-with-maplibre-react-components/index.md)
+- [Quickstart: React Leaflet](https://docs.stadiamaps.com/tutorials/getting-started-with-react-leaflet/index.md)
+- [Quickstart: Vue Leaflet](https://docs.stadiamaps.com/tutorials/getting-started-with-vue-leaflet/index.md)
+- [Quickstart: Leaflet JS](https://docs.stadiamaps.com/tutorials/raster-maps-with-leaflet/index.md)
+- [Quickstart: OpenLayers](https://docs.stadiamaps.com/tutorials/raster-maps-with-openlayers/index.md)
+- [Quickstart: MapLibre GL JS](https://docs.stadiamaps.com/tutorials/vector-maps-with-maplibre-gl-js/index.md)
+- [Vector Tiles with React Leaflet](https://docs.stadiamaps.com/tutorials/vector-tiles-with-react-leaflet/index.md)
+
+## Maps for Mobile and Multi-platform Frameworks
+
+- [Quickstart: flutter_map](https://docs.stadiamaps.com/native-multiplatform/flutter-map/index.md)
+- [Quickstart: Flutter MapLibre GL](https://docs.stadiamaps.com/native-multiplatform/flutter-maplibre-gl/index.md)
+- [Quickstart: MapLibre Native](https://docs.stadiamaps.com/native-multiplatform/maplibre-gl-native/index.md)
+- [Quickstart: MapLibre React Native](https://docs.stadiamaps.com/native-multiplatform/maplibre-react-native/index.md)
+- [Native & Multi-platform](https://docs.stadiamaps.com/native-multiplatform/overview/index.md)
+- [Markers, Gestures, and Clustering in SwiftUI](https://docs.stadiamaps.com/tutorials/interactive-markers-gestures-and-clustering-in-swiftui/index.md)
+- [Offline Maps with Flutter MapLibre GL](https://docs.stadiamaps.com/tutorials/offline-maps-with-flutter-maplibre-gl/index.md)
+- [Using Stadia Maps Tiles in MapKit](https://docs.stadiamaps.com/tutorials/using-stadia-maps-tile-layers-in-mapkit/index.md)
+
+## Maps for Data Visualization
+
+- [Quickstart: ggmap](https://docs.stadiamaps.com/tutorials/getting-started-in-r-with-ggmap/index.md)
+- [Quickstart: geopandas and contextily](https://docs.stadiamaps.com/tutorials/getting-started-with-geopandas-contextily/index.md)
+- [Raster Base Layers in QGIS](https://docs.stadiamaps.com/tutorials/how-to-use-stadia-maps-as-a-raster-base-layer-in-qgis/index.md)
+
+## Geocoding & Search APIs
+
+- [Common Response Format](https://docs.stadiamaps.com/geocoding-search-autocomplete/api-response-format/index.md)
+- [Autocomplete Search](https://docs.stadiamaps.com/geocoding-search-autocomplete/autocomplete/index.md)
+- [Bulk Geocoding](https://docs.stadiamaps.com/geocoding-search-autocomplete/bulk-geocoding-search/index.md)
+- [Determining Result Quality](https://docs.stadiamaps.com/geocoding-search-autocomplete/determining-result-quality/index.md)
+- [Layers](https://docs.stadiamaps.com/geocoding-search-autocomplete/layers/index.md)
+- [Geocoding & Search Overview](https://docs.stadiamaps.com/geocoding-search-autocomplete/overview/index.md)
+- [Place Details](https://docs.stadiamaps.com/geocoding-search-autocomplete/place-details/index.md)
+- [Reverse Geocoding](https://docs.stadiamaps.com/geocoding-search-autocomplete/reverse-search/index.md)
+- [Forward Geocoding](https://docs.stadiamaps.com/geocoding-search-autocomplete/search/index.md)
+- [Sources](https://docs.stadiamaps.com/geocoding-search-autocomplete/sources/index.md)
+- [Structured Geocoding](https://docs.stadiamaps.com/geocoding-search-autocomplete/structured-search/index.md)
+- [Migrating to v2](https://docs.stadiamaps.com/geocoding-search-autocomplete/v2-api-migration-guide/index.md)
+- [Getting Accurate Results at Scale with Bulk Geocoding](https://docs.stadiamaps.com/guides/getting-accurate-results-at-scale-with-bulk-geocoding/index.md)
+
+## Routing APIs
+
+- [Routing Overview](https://docs.stadiamaps.com/routing/index.md)
+- [Getting the Best Routes for Your Use Case](https://docs.stadiamaps.com/guides/getting-the-best-routes-with-valhalla-turn-by-turn-directions-apis/index.md)
+- [Isochrones (Reachable Range)](https://docs.stadiamaps.com/routing/isochrones/index.md)
+- [Map Matching](https://docs.stadiamaps.com/routing/map-matching/index.md)
+- [Nearest Roads](https://docs.stadiamaps.com/routing/nearest-roads/index.md)
+- [Optimized Routing](https://docs.stadiamaps.com/routing/optimized-routing/index.md)
+- [Standard Routing](https://docs.stadiamaps.com/routing/standard-routing/index.md)
+- [Time/Distance Matrix](https://docs.stadiamaps.com/routing/time-distance-matrix/index.md)
+- [Trace Attributes](https://docs.stadiamaps.com/routing/trace-attributes/index.md)
+- [Visualize Travel Time with Isochrones in MapLibre GL JS](https://docs.stadiamaps.com/tutorials/display-isochrones-on-a-map/index.md)
+- [Getting an Elevation Profile With Your Route](https://docs.stadiamaps.com/tutorials/getting-an-elevation-profile-with-your-route/index.md)
+- [Getting and Visualizing Directions in JavaScript](https://docs.stadiamaps.com/tutorials/getting-directions-in-javascript-from-geospatial-apis-maplibre/index.md)
+
+## Other Geospatial APIs
+
+- [Elevation](https://docs.stadiamaps.com/elevation/index.md)
+- [Time Zones](https://docs.stadiamaps.com/tz/index.md)
+
+## SDK documentation (high level; API pages map have more specific examples of direct usage)
+
+- [Ferrostar Navigation SDK](https://docs.stadiamaps.com/sdks/ferrostar/index.md)
+- [JavaScript](https://docs.stadiamaps.com/sdks/javascript-typescript/index.md)
+- [Autocomplete Search for Jetpack Compose](https://docs.stadiamaps.com/sdks/jetpack-compose-autocomplete-search/index.md)
+- [Kotlin](https://docs.stadiamaps.com/sdks/kotlin-jvm/index.md)
+- [MapLibre GL JS Search Box](https://docs.stadiamaps.com/sdks/maplibre-gl-js-autocomplete-search-plugin/index.md)
+- [MCP Server](https://docs.stadiamaps.com/sdks/mcp-server/index.md)
+- [Overview](https://docs.stadiamaps.com/sdks/overview/index.md)
+- [PHP](https://docs.stadiamaps.com/sdks/php/index.md)
+- [Python](https://docs.stadiamaps.com/sdks/python/index.md)
+- [Swift](https://docs.stadiamaps.com/sdks/swift/index.md)
+- [Autocomplete Search for SwiftUI](https://docs.stadiamaps.com/sdks/swiftui-autocomplete-search/index.md)
+
+## No-Code, Low Code, and Other Scenarios
+
+- [Leafy Maps on Bubble.io](https://docs.stadiamaps.com/tutorials/bubbleio-with-leafymaps/index.md)
+- [Quickstart: GEOlayers 3](https://docs.stadiamaps.com/tutorials/getting-started-with-geolayers/index.md)
+- [LeafletJS Plugin](https://docs.stadiamaps.com/tutorials/wordpress-with-leaflet/index.md)
+- [Mapster WP Maps Plugin](https://docs.stadiamaps.com/tutorials/wordpress-with-mapster/index.md)
+

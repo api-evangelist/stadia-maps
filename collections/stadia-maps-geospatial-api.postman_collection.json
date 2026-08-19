@@ -1,0 +1,189 @@
+{
+  "item": [
+    {
+      "id": "3b668414-6868-472f-9c0c-eefe9098e45b",
+      "name": "Geospatial",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "499106c4-869e-4b40-8be3-58c2a7d871af",
+          "name": "Get the elevation profile along a polyline or at a point.",
+          "request": {
+            "name": "Get the elevation profile along a polyline or at a point.",
+            "description": {
+              "content": "The Stadia elevation API allows you to get the elevation of any point on earth. You can pass either a simple set of points or a Google encoded polyline string. This pairs well with our routing APIs, so you can generate an elevation profile for your next bike or run.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "elevation",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"shape\": [\n    {\n      \"lat\": \"<double>\",\n      \"lon\": \"<double>\"\n    },\n    {\n      \"lat\": \"<double>\",\n      \"lon\": \"<double>\"\n    }\n  ],\n  \"encoded_polyline\": \"<string>\",\n  \"shape_format\": \"polyline6\",\n  \"range\": false,\n  \"height_precision\": 0,\n  \"resample_distance\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "106032d6-6bb5-4992-8817-97c7a0736948",
+              "name": "A list of elevations along the polyline, in meters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "elevation",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"kesklinn\",\n  \"shape\": [\n    {\n      \"lat\": 59.436884,\n      \"lon\": 24.742595\n    },\n    {\n      \"lat\": 59.436884,\n      \"lon\": 24.742595\n    }\n  ],\n  \"encoded_polyline\": \"<string>\",\n  \"shape_format\": \"polyline6\",\n  \"range\": false,\n  \"height_precision\": 0,\n  \"resample_distance\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shape\": [\n    {\n      \"lat\": 59.436884,\n      \"lon\": 24.742595\n    }\n  ],\n  \"height\": [\n    37\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "062a82dc-45a4-42d3-ad3b-4048b6b98e5f",
+              "name": "Bad request; more details will be included",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "elevation",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"kesklinn\",\n  \"shape\": [\n    {\n      \"lat\": 59.436884,\n      \"lon\": 24.742595\n    },\n    {\n      \"lat\": 59.436884,\n      \"lon\": 24.742595\n    }\n  ],\n  \"encoded_polyline\": \"<string>\",\n  \"shape_format\": \"polyline6\",\n  \"range\": false,\n  \"height_precision\": 0,\n  \"resample_distance\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stadiamaps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6920c38c-9536-47ba-baf8-c95926032bf4",
+    "name": "Stadia Maps Geospatial API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. \n\nContact Support:\n Name: Stadia Maps Support\n Email: support@stadiamaps.com",
+      "type": "text/plain"
+    }
+  }
+}

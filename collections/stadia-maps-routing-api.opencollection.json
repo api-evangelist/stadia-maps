@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stadia Maps Routing API",
+    "version": "7.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Routing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get turn by turn routing instructions between two or more locations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stadiamaps.com/route/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "The route (turn-by-turn) API computes routes between two or more locations. It supports a variety of tunable costing methods, and supports routing through intermediate waypoints and discontinuous multi-leg routes."
+        },
+        {
+          "info": {
+            "name": "Calculate a time distance matrix for use in an optimizer.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stadiamaps.com/matrix/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "The time distance matrix API lets you compare travel times between a set of possible start and end points.\nSee https://docs.stadiamaps.com/limits/ for documentation of our latest limits."
+        },
+        {
+          "info": {
+            "name": "Calculate areas of equal travel time from a location.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stadiamaps.com/isochrone/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "The isochrone API computes reachable areas within a time or distance constraint. The resulting polygon can be rendered on a map and used for assessing urban mobility, planning, or as a search filter of places within a constrained range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

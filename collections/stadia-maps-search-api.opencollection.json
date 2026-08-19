@@ -1,0 +1,311 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stadia Maps Search API",
+    "version": "7.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for location and other info using a place name or address (forward geocoding).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stadiamaps.com/geocoding/v1/search",
+            "params": [
+              {
+                "name": "text",
+                "value": "",
+                "type": "query",
+                "description": "The place name (address, venue name, etc.) to search for."
+              },
+              {
+                "name": "focus.point.lat",
+                "value": "",
+                "type": "query",
+                "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`."
+              },
+              {
+                "name": "focus.point.lon",
+                "value": "",
+                "type": "query",
+                "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`."
+              },
+              {
+                "name": "boundary.rect.min_lat",
+                "value": "",
+                "type": "query",
+                "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.max_lat",
+                "value": "",
+                "type": "query",
+                "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.min_lon",
+                "value": "",
+                "type": "query",
+                "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.max_lon",
+                "value": "",
+                "type": "query",
+                "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.circle.lat",
+                "value": "",
+                "type": "query",
+                "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`."
+              },
+              {
+                "name": "boundary.circle.lon",
+                "value": "",
+                "type": "query",
+                "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`."
+              },
+              {
+                "name": "boundary.circle.radius",
+                "value": "",
+                "type": "query",
+                "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified."
+              },
+              {
+                "name": "boundary.country",
+                "value": "",
+                "type": "query",
+                "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible."
+              },
+              {
+                "name": "boundary.gid",
+                "value": "",
+                "type": "query",
+                "description": "The Pelias GID of an area to limit the search to."
+              },
+              {
+                "name": "layers",
+                "value": "",
+                "type": "query",
+                "description": "A list of layers to limit the search to."
+              },
+              {
+                "name": "sources",
+                "value": "",
+                "type": "query",
+                "description": "A list of sources to limit the search to."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to return."
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query",
+                "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "The search endpoint lets you search for addresses, points of interest, and administrative areas. This is most commonly used for forward geocoding applications where you need to find the geographic coordinates of an address."
+        },
+        {
+          "info": {
+            "name": "Find locations matching components (structured forward geocoding).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stadiamaps.com/geocoding/v1/search/structured",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "query",
+                "description": "A street name, optionally with a house number."
+              },
+              {
+                "name": "neighbourhood",
+                "value": "",
+                "type": "query",
+                "description": "Varies by area, but has a locally specific meaning (NOT always an official administrative unit)."
+              },
+              {
+                "name": "borough",
+                "value": "",
+                "type": "query",
+                "description": "A unit within a city (not widely used, but present in places like NYC and Mexico City)."
+              },
+              {
+                "name": "locality",
+                "value": "",
+                "type": "query",
+                "description": "The city, village, town, etc. that the place/address is part of."
+              },
+              {
+                "name": "county",
+                "value": "",
+                "type": "query",
+                "description": "Administrative divisions between localities and regions. Not commonly used as input to structured geocoding."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Typically the first administrative division within a country. For example, a US state or a Canadian province."
+              },
+              {
+                "name": "postalcode",
+                "value": "",
+                "type": "query",
+                "description": "A mail sorting code."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "A full name (ex: Canada), or a 2 or 3 character ISO code. Prefer ISO codes when possible."
+              },
+              {
+                "name": "focus.point.lat",
+                "value": "",
+                "type": "query",
+                "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`."
+              },
+              {
+                "name": "focus.point.lon",
+                "value": "",
+                "type": "query",
+                "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`."
+              },
+              {
+                "name": "boundary.rect.min_lat",
+                "value": "",
+                "type": "query",
+                "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.max_lat",
+                "value": "",
+                "type": "query",
+                "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.min_lon",
+                "value": "",
+                "type": "query",
+                "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.rect.max_lon",
+                "value": "",
+                "type": "query",
+                "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+              },
+              {
+                "name": "boundary.circle.lat",
+                "value": "",
+                "type": "query",
+                "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`."
+              },
+              {
+                "name": "boundary.circle.lon",
+                "value": "",
+                "type": "query",
+                "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`."
+              },
+              {
+                "name": "boundary.circle.radius",
+                "value": "",
+                "type": "query",
+                "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified."
+              },
+              {
+                "name": "boundary.country",
+                "value": "",
+                "type": "query",
+                "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible."
+              },
+              {
+                "name": "boundary.gid",
+                "value": "",
+                "type": "query",
+                "description": "The Pelias GID of an area to limit the search to."
+              },
+              {
+                "name": "layers",
+                "value": "",
+                "type": "query",
+                "description": "A list of layers to limit the search to."
+              },
+              {
+                "name": "sources",
+                "value": "",
+                "type": "query",
+                "description": "A list of sources to limit the search to."
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of results to return."
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query",
+                "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "The structured search endpoint lets you search for addresses, points of interest, and administrative areas. Rather than a single string which the API must infer meaning from, the structured search endpoint allows you to specify the known components upfront, which is useful in many forward geocoding workflows."
+        },
+        {
+          "info": {
+            "name": "Quickly run a batch of geocoding queries against the search or structured search endpoints.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stadiamaps.com/geocoding/v1/search/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "The batch endpoint lets you specify many search or structured search requests at once. Once received, all requests will be processed internally on our infrastructure, improving throughput when you need to do a lot of queries."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

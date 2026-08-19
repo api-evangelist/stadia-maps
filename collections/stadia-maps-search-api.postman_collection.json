@@ -1,0 +1,1008 @@
+{
+  "item": [
+    {
+      "id": "aed8004f-f8f4-417d-a34e-0e793fbbb20b",
+      "name": "Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dd5a13b5-2095-4757-b671-3ba9c4106a32",
+          "name": "Search for location and other info using a place name or address (forward geocoding).",
+          "request": {
+            "name": "Search for location and other info using a place name or address (forward geocoding).",
+            "description": {
+              "content": "The search endpoint lets you search for addresses, points of interest, and administrative areas. This is most commonly used for forward geocoding applications where you need to find the geographic coordinates of an address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "geocoding",
+                "v1",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "text",
+                  "value": "<string>",
+                  "description": "(Required) The place name (address, venue name, etc.) to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "focus.point.lat",
+                  "value": "<double>",
+                  "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`."
+                },
+                {
+                  "disabled": false,
+                  "key": "focus.point.lon",
+                  "value": "<double>",
+                  "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.rect.min_lat",
+                  "value": "<double>",
+                  "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.rect.max_lat",
+                  "value": "<double>",
+                  "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.rect.min_lon",
+                  "value": "<double>",
+                  "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.rect.max_lon",
+                  "value": "<double>",
+                  "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.circle.lat",
+                  "value": "<double>",
+                  "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.circle.lon",
+                  "value": "<double>",
+                  "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.circle.radius",
+                  "value": "<double>",
+                  "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.country",
+                  "value": "<string>,<string>",
+                  "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.gid",
+                  "value": "<string>",
+                  "description": "The Pelias GID of an area to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "layers",
+                  "value": "<string>,<string>",
+                  "description": "A list of layers to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "sources",
+                  "value": "<string>,<string>",
+                  "description": "A list of sources to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "The maximum number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "<string>",
+                  "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a5f5adb2-af4c-4527-b670-b9ed26f6cb9c",
+              "name": "A GeoJSON collection of search results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocoding",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "text",
+                      "value": "1600 Pennsylvania Ave NW"
+                    },
+                    {
+                      "key": "focus.point.lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "focus.point.lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.min_lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.max_lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.min_lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.max_lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.radius",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.country",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "boundary.gid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "layers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"geocoding\": {\n    \"version\": \"0.2\",\n    \"attribution\": \"https://stadiamaps.com/attribution\",\n    \"query\": {\n      \"text\": \"1600 Pennsylvania Ave NW\",\n      \"size\": 10,\n      \"private\": false,\n      \"lang\": {\n        \"name\": \"English\",\n        \"iso6391\": \"en\",\n        \"iso6393\": \"eng\",\n        \"via\": \"default\",\n        \"defaulted\": true\n      },\n      \"querySize\": 20,\n      \"parser\": \"libpostal\",\n      \"parsed_text\": {\n        \"housenumber\": \"1600\",\n        \"street\": \"pennsylvania ave nw\"\n      }\n    },\n    \"engine\": {\n      \"name\": \"Pelias\",\n      \"author\": \"Mapzen\",\n      \"version\": \"1.0\"\n    },\n    \"timestamp\": 1679043782383\n  },\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          -77.036547,\n          38.897675\n        ]\n      },\n      \"properties\": {\n        \"gid\": \"openaddresses:address:us/dc/statewide:aa53d4bd0fe295be\",\n        \"layer\": \"address\",\n        \"source\": \"openaddresses\",\n        \"source_id\": \"us/dc/statewide:aa53d4bd0fe295be\",\n        \"country_code\": \"US\",\n        \"name\": \"1600 Pennsylvania Avenue NW\",\n        \"housenumber\": \"1600\",\n        \"street\": \"Pennsylvania Avenue NW\",\n        \"postalcode\": \"20500\",\n        \"confidence\": 1,\n        \"match_type\": \"exact\",\n        \"accuracy\": \"point\",\n        \"country\": \"United States\",\n        \"country_gid\": \"whosonfirst:country:85633793\",\n        \"country_a\": \"USA\",\n        \"region\": \"District of Columbia\",\n        \"region_gid\": \"whosonfirst:region:85688741\",\n        \"region_a\": \"DC\",\n        \"county\": \"District of Columbia\",\n        \"county_gid\": \"whosonfirst:county:1377370667\",\n        \"county_a\": \"DI\",\n        \"locality\": \"Washington\",\n        \"locality_gid\": \"whosonfirst:locality:85931779\",\n        \"neighbourhood\": \"White House Grounds\",\n        \"neighbourhood_gid\": \"whosonfirst:neighbourhood:1108724059\",\n        \"continent\": \"North America\",\n        \"continent_gid\": \"whosonfirst:continent:102191575\",\n        \"label\": \"1600 Pennsylvania Avenue NW, Washington, DC, USA\"\n      }\n    }\n  ],\n  \"bbox\": [\n    -77.036547,\n    38.897675,\n    -77.036547,\n    38.897675\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f4fc9d5-fa16-403a-ace3-a0a46e90aa9e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocoding",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "text",
+                      "value": "1600 Pennsylvania Ave NW"
+                    },
+                    {
+                      "key": "focus.point.lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "focus.point.lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.min_lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.max_lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.min_lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.max_lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.radius",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.country",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "boundary.gid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "layers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0c00806-4c6e-4e85-9f05-61b8d593b09e",
+          "name": "Find locations matching components (structured forward geocoding).",
+          "request": {
+            "name": "Find locations matching components (structured forward geocoding).",
+            "description": {
+              "content": "The structured search endpoint lets you search for addresses, points of interest, and administrative areas. Rather than a single string which the API must infer meaning from, the structured search endpoint allows you to specify the known components upfront, which is useful in many forward geocoding workflows.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "geocoding",
+                "v1",
+                "search",
+                "structured"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>",
+                  "description": "A street name, optionally with a house number."
+                },
+                {
+                  "disabled": false,
+                  "key": "neighbourhood",
+                  "value": "<string>",
+                  "description": "Varies by area, but has a locally specific meaning (NOT always an official administrative unit)."
+                },
+                {
+                  "disabled": false,
+                  "key": "borough",
+                  "value": "<string>",
+                  "description": "A unit within a city (not widely used, but present in places like NYC and Mexico City)."
+                },
+                {
+                  "disabled": false,
+                  "key": "locality",
+                  "value": "<string>",
+                  "description": "The city, village, town, etc. that the place/address is part of."
+                },
+                {
+                  "disabled": false,
+                  "key": "county",
+                  "value": "<string>",
+                  "description": "Administrative divisions between localities and regions. Not commonly used as input to structured geocoding."
+                },
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "Typically the first administrative division within a country. For example, a US state or a Canadian province."
+                },
+                {
+                  "disabled": false,
+                  "key": "postalcode",
+                  "value": "<string>",
+                  "description": "A mail sorting code."
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>",
+                  "description": "A full name (ex: Canada), or a 2 or 3 character ISO code. Prefer ISO codes when possible."
+                },
+                {
+                  "disabled": false,
+                  "key": "focus.point.lat",
+                  "value": "<double>",
+                  "description": "The latitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lon`."
+                },
+                {
+                  "disabled": false,
+                  "key": "focus.point.lon",
+                  "value": "<double>",
+                  "description": "The longitude of the point to focus the search on. This will bias results toward the focus point. Requires `focus.point.lat`."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.rect.min_lat",
+                  "value": "<double>",
+                  "description": "Defines the min latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.rect.max_lat",
+                  "value": "<double>",
+                  "description": "Defines the max latitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.rect.min_lon",
+                  "value": "<double>",
+                  "description": "Defines the min longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.rect.max_lon",
+                  "value": "<double>",
+                  "description": "Defines the max longitude component of a bounding box to limit the search to. Requires all other `boundary.rect` parameters to be specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.circle.lat",
+                  "value": "<double>",
+                  "description": "The latitude of the center of a circle to limit the search to. Requires `boundary.circle.lon`."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.circle.lon",
+                  "value": "<double>",
+                  "description": "The longitude of the center of a circle to limit the search to. Requires `boundary.circle.lat`."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.circle.radius",
+                  "value": "<double>",
+                  "description": "The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.country",
+                  "value": "<string>,<string>",
+                  "description": "A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible."
+                },
+                {
+                  "disabled": false,
+                  "key": "boundary.gid",
+                  "value": "<string>",
+                  "description": "The Pelias GID of an area to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "layers",
+                  "value": "<string>,<string>",
+                  "description": "A list of layers to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "sources",
+                  "value": "<string>,<string>",
+                  "description": "A list of sources to limit the search to."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<integer>",
+                  "description": "The maximum number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "<string>",
+                  "description": "A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "452cee6e-0c3a-4bdb-9e84-0d61c5ee56b4",
+              "name": "A GeoJSON collection of search results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocoding",
+                    "v1",
+                    "search",
+                    "structured"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "address",
+                      "value": "11 Wall Street"
+                    },
+                    {
+                      "key": "neighbourhood",
+                      "value": "Financial District"
+                    },
+                    {
+                      "key": "borough",
+                      "value": "Manhattan"
+                    },
+                    {
+                      "key": "locality",
+                      "value": "New York"
+                    },
+                    {
+                      "key": "county",
+                      "value": "New York County"
+                    },
+                    {
+                      "key": "region",
+                      "value": "New York"
+                    },
+                    {
+                      "key": "postalcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "USA"
+                    },
+                    {
+                      "key": "focus.point.lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "focus.point.lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.min_lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.max_lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.min_lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.max_lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.radius",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.country",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "boundary.gid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "layers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"geocoding\": {\n    \"attribution\": \"https://RglHWxLgEGZwbSMsWcveh.qxzbfMtshTJ.gJ,e0MPSIs6ca\",\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": 615.4447434493183\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ],\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          3317.3520472817963,\n          9414.283697358058\n        ],\n        \"type\": \"MultiPoint\"\n      },\n      \"properties\": {\n        \"gid\": \"string\",\n        \"source_id\": \"string\",\n        \"label\": \"string\",\n        \"layer\": \"<string>\",\n        \"name\": \"string\",\n        \"accuracy\": \"centroid\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"https://xwAXZiRgcrqzVqyfduEHJRbufI.jejwBUjtPV3JEqFKJHAJfI+N\",\n            \"wikipedia\": \"string\",\n            \"wikidata\": \"string\",\n            \"phone\": \"string\",\n            \"key_0\": false,\n            \"key_1\": \"string\",\n            \"key_2\": 2392,\n            \"key_3\": false,\n            \"key_4\": 9238.767060684699\n          },\n          \"key_0\": 3302\n        },\n        \"continent\": \"string\",\n        \"continent_gid\": \"string\",\n        \"country\": \"string\",\n        \"country_gid\": \"string\",\n        \"neighbourhood\": \"string\",\n        \"neighbourhood_gid\": \"string\",\n        \"borough\": \"string\",\n        \"borough_gid\": \"string\",\n        \"postalcode\": \"string\",\n        \"street\": \"string\",\n        \"housenumber\": \"string\",\n        \"locality\": \"string\",\n        \"locality_gid\": \"string\",\n        \"county\": \"string\",\n        \"region\": \"string\",\n        \"region_a\": \"string\"\n      },\n      \"bbox\": [\n        9321.111863700278,\n        5582.759492541863,\n        1127.7160715759505,\n        7934.935117846729\n      ]\n    },\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"coordinates\": [\n          6902.8016426729955,\n          6449.647175394192\n        ],\n        \"type\": \"MultiPoint\"\n      },\n      \"properties\": {\n        \"gid\": \"string\",\n        \"source_id\": \"string\",\n        \"label\": \"string\",\n        \"layer\": \"<string>\",\n        \"name\": \"string\",\n        \"accuracy\": \"centroid\",\n        \"addendum\": {\n          \"osm\": {\n            \"website\": \"http://EhyNgQVsBGkBIJcrYQhUVevWLtdJkwln.iwbqJVGhUFJ4MxYkKVAXdYJlJI.JsmPT5ZH8hE9tUSIHB1T5\",\n            \"wikipedia\": \"string\",\n            \"wikidata\": \"string\",\n            \"phone\": \"string\"\n          },\n          \"key_0\": \"string\",\n          \"key_1\": false,\n          \"key_2\": 8403.770417835829,\n          \"key_3\": 1062.8630271105155\n        },\n        \"continent\": \"string\",\n        \"continent_gid\": \"string\",\n        \"country\": \"string\",\n        \"country_gid\": \"string\",\n        \"neighbourhood\": \"string\",\n        \"neighbourhood_gid\": \"string\",\n        \"borough\": \"string\",\n        \"borough_gid\": \"string\",\n        \"postalcode\": \"string\",\n        \"street\": \"string\",\n        \"housenumber\": \"string\",\n        \"locality\": \"string\",\n        \"locality_gid\": \"string\",\n        \"county\": \"string\",\n        \"region\": \"string\",\n        \"region_a\": \"string\"\n      },\n      \"bbox\": [\n        7689.495119136849,\n        4828.165216764663,\n        6287.5534666738085,\n        1909.4636607646653\n      ]\n    }\n  ],\n  \"bbox\": [\n    434.8877774013593,\n    5240.524875263995,\n    1723.6149725578598,\n    1492.5337230380508\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ff4720c-27ec-4792-9567-b55fb77d2611",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocoding",
+                    "v1",
+                    "search",
+                    "structured"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "address",
+                      "value": "11 Wall Street"
+                    },
+                    {
+                      "key": "neighbourhood",
+                      "value": "Financial District"
+                    },
+                    {
+                      "key": "borough",
+                      "value": "Manhattan"
+                    },
+                    {
+                      "key": "locality",
+                      "value": "New York"
+                    },
+                    {
+                      "key": "county",
+                      "value": "New York County"
+                    },
+                    {
+                      "key": "region",
+                      "value": "New York"
+                    },
+                    {
+                      "key": "postalcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "USA"
+                    },
+                    {
+                      "key": "focus.point.lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "focus.point.lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.min_lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.max_lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.min_lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.rect.max_lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.lat",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.lon",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.circle.radius",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "boundary.country",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "boundary.gid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "layers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce9e3802-aede-478f-bb6f-df1a797b9cba",
+          "name": "Quickly run a batch of geocoding queries against the search or structured search endpoints.",
+          "request": {
+            "name": "Quickly run a batch of geocoding queries against the search or structured search endpoints.",
+            "description": {
+              "content": "The batch endpoint lets you specify many search or structured search requests at once. Once received, all requests will be processed internally on our infrastructure, improving throughput when you need to do a lot of queries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "geocoding",
+                "v1",
+                "search",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"endpoint\": \"<string>\",\n    \"query\": {\n      \"text\": \"<string>\",\n      \"focus.point.lat\": \"<double>\",\n      \"focus.point.lon\": \"<double>\",\n      \"boundary.rect.min_lat\": \"<double>\",\n      \"boundary.rect.max_lat\": \"<double>\",\n      \"boundary.rect.min_lon\": \"<double>\",\n      \"boundary.rect.max_lon\": \"<double>\",\n      \"boundary.circle.lat\": \"<double>\",\n      \"boundary.circle.lon\": \"<double>\",\n      \"boundary.circle.radius\": \"<double>\",\n      \"boundary.country\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"boundary.gid\": \"<string>\",\n      \"layers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"sources\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"size\": \"<integer>\",\n      \"lang\": \"<string>\"\n    }\n  },\n  {\n    \"endpoint\": \"<string>\",\n    \"query\": {\n      \"text\": \"<string>\",\n      \"focus.point.lat\": \"<double>\",\n      \"focus.point.lon\": \"<double>\",\n      \"boundary.rect.min_lat\": \"<double>\",\n      \"boundary.rect.max_lat\": \"<double>\",\n      \"boundary.rect.min_lon\": \"<double>\",\n      \"boundary.rect.max_lon\": \"<double>\",\n      \"boundary.circle.lat\": \"<double>\",\n      \"boundary.circle.lon\": \"<double>\",\n      \"boundary.circle.radius\": \"<double>\",\n      \"boundary.country\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"boundary.gid\": \"<string>\",\n      \"layers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"sources\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"size\": \"<integer>\",\n      \"lang\": \"<string>\"\n    }\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a2735527-7a1d-41a2-89b8-bf15f7403ed3",
+              "name": "A JSON array of the individual query responses, each annotated with a status code. Individual requests may fail but this endpoint will still return all results. Responses will be in the same order as the input.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocoding",
+                    "v1",
+                    "search",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"endpoint\": \"/v1/search\",\n    \"query\": {\n      \"text\": \"P�hja pst 27\"\n    }\n  },\n  {\n    \"endpoint\": \"/v1/search/structured\",\n    \"query\": {\n      \"address\": \"P�hja pst 27\",\n      \"country\": \"EE\",\n      \"locality\": \"Tallinn\",\n      \"layers\": [\n        \"coarse\",\n        \"address\"\n      ]\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"status\": 6353,\n    \"response\": {\n      \"geocoding\": {\n        \"attribution\": \"http://cGmmEpR.sroIG4JToKbFNbD\",\n        \"query\": {\n          \"key_0\": \"string\",\n          \"key_1\": 1768.5460510414875\n        },\n        \"warnings\": [\n          \"string\",\n          \"string\"\n        ],\n        \"errors\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"features\": [\n        {\n          \"type\": \"Feature\",\n          \"geometry\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"properties\": {\n            \"gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"source_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"layer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"accuracy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addendum\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"continent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"continent_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neighbourhood\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neighbourhood_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"borough\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"borough_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postalcode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"housenumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"county\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region_a\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"bbox\": [\n            2410.689573481758,\n            5391.073112201539,\n            7520.121391428296,\n            801.9477625307825\n          ]\n        },\n        {\n          \"type\": \"Feature\",\n          \"geometry\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"properties\": {\n            \"gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"source_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"layer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"accuracy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addendum\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"continent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"continent_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neighbourhood\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neighbourhood_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"borough\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"borough_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postalcode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"housenumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"county\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region_a\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"bbox\": [\n            8675.005225671279,\n            6705.511108463682,\n            5352.871067832384,\n            1240.4730611535108\n          ]\n        }\n      ],\n      \"bbox\": [\n        706.2859506258878,\n        2803.972160839058,\n        5845.35583769968,\n        2017.7555629068333\n      ]\n    },\n    \"msg\": \"string\"\n  },\n  {\n    \"status\": 1896,\n    \"response\": {\n      \"geocoding\": {\n        \"attribution\": \"https://c.snD0-RcE7\",\n        \"query\": {\n          \"key_0\": 3195.3594041047463,\n          \"key_1\": \"string\"\n        },\n        \"warnings\": [\n          \"string\",\n          \"string\"\n        ],\n        \"errors\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"features\": [\n        {\n          \"type\": \"Feature\",\n          \"geometry\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"properties\": {\n            \"gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"source_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"layer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"accuracy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addendum\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"continent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"continent_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neighbourhood\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neighbourhood_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"borough\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"borough_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postalcode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"housenumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"county\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region_a\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"bbox\": [\n            7391.017893884484,\n            2254.1143304965562,\n            1401.429898395683,\n            3082.084603788898\n          ]\n        },\n        {\n          \"type\": \"Feature\",\n          \"geometry\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"properties\": {\n            \"gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"source_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"layer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"accuracy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addendum\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"continent\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"continent_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neighbourhood\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neighbourhood_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"borough\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"borough_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postalcode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"housenumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality_gid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"county\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region_a\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"bbox\": [\n            4959.142904542434,\n            2324.501545567176,\n            14.978596716310744,\n            3406.399224560687\n          ]\n        }\n      ],\n      \"bbox\": [\n        7643.943189356937,\n        6853.238615731585,\n        6581.146959177827,\n        9264.624110080638\n      ]\n    },\n    \"msg\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "276dc164-467e-47c6-af85-4983952f6ab0",
+              "name": "Bad request; more details will be included",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocoding",
+                    "v1",
+                    "search",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"endpoint\": \"/v1/search\",\n    \"query\": {\n      \"text\": \"P�hja pst 27\"\n    }\n  },\n  {\n    \"endpoint\": \"/v1/search/structured\",\n    \"query\": {\n      \"address\": \"P�hja pst 27\",\n      \"country\": \"EE\",\n      \"locality\": \"Tallinn\",\n      \"layers\": [\n        \"coarse\",\n        \"address\"\n      ]\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stadiamaps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "971a2a38-2e7f-4a90-ab43-0020125c3cf3",
+    "name": "Stadia Maps Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. \n\nContact Support:\n Name: Stadia Maps Support\n Email: support@stadiamaps.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stadia Maps Roads API",
+    "version": "7.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Roads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find the nearest roads to the set of input locations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stadiamaps.com/nearest_roads/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "The nearest roads API allows you query for detailed information about streets and intersections near the input locations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
