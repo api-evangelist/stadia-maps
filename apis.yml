@@ -46,6 +46,8 @@ created: '2024-12-16'
 modified: '2026-05-19'
 position: Consuming
 common:
+  - type: Website
+    url: https://www.stadiamaps.com/
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/stadia-maps/overview
   - type: DomainSecurity
