@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  description: 'Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. '
+  description: Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home.
   version: 7.1.0
   title: Stadia Maps Place API
   contact:
@@ -18,8 +18,8 @@ paths:
       tags:
       - Place
       operationId: place
-      summary: Retrieve details of a place using its GID.
-      description: Many search result components include an associated GID field (for example, an address may have a `localadmin_gid`). The place endpoint lets you look up these places directly by ID. Note that these IDs are not stable for all sources. See the [online documentation](https://docs.stadiamaps.com/geocoding-search-autocomplete/place-lookup/) for details.
+      summary: Retrieve details of a place using its GID
+      description: Many search result components include an associated GID field (for example, an address may have a `localadmin_gid`). The place endpoint lets you look up these places directly by ID. Note that these IDs are not stable for all sources. See the online documentation for details.
       security:
       - ApiKeyAuth: []
       parameters:
@@ -36,6 +36,74 @@ paths:
           description: Bad request
 components:
   schemas:
+    peliasLayer:
+      type: string
+      enum:
+      - venue
+      - address
+      - street
+      - country
+      - macroregion
+      - region
+      - macrocounty
+      - county
+      - locality
+      - localadmin
+      - borough
+      - neighbourhood
+      - postalcode
+      - coarse
+      - dependency
+      - macrohood
+      - marinearea
+      - disputed
+      - empire
+      - continent
+      - ocean
+      description: 'Our database is organized into several layers (in the GIS sense of the term) as follows:
+
+
+        - `venue`: Points of interest, businesses, and things with walls
+
+        - `address`: Places with a street address
+
+        - `street`: Streets, roads, highways
+
+        - `county`: Places that issue passports, nations, nation-states
+
+        - `macroregion`: A related group of regions (mostly in Europe)
+
+        - `region`: The first administrative division within a country (usually states and provinces)
+
+        - `macrocounty`: A related group of counties (mostly in Europe)
+
+        - `county`: Official governmental areas; usually bigger than a locality, but almost always smaller than a region
+
+        - `locality`: Towns, hamlets, cities, etc.
+
+        - `localadmin`: Local administrative boundaries
+
+        - `borough`: Local administrative boundaries within cities (not widely used, but present in places such as NYC and Mexico City)
+
+        - `neighbourhood`: Social communities and neighborhoods (note the British spelling in the API!)
+
+        - `postalcode`: Postal codes used by mail services (note: not used for reverse geocoding)
+
+        - `coarse`: An alias for simultaneously using all administrative layers (everything except `venue` and `address`)
+
+        - `marinearea`: Places with fishes and boats.
+
+        - `ocean`: A really big marine area.
+
+        '
+    peliasLang:
+      type: string
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+    placeIDs:
+      type: array
+      description: A list of Pelias GIDs to search for.
+      items:
+        type: string
     peliasResponse:
       type: object
       properties:
@@ -138,104 +206,6 @@ components:
             items:
               type: number
               format: double
-    geocodingObject:
-      type: object
-      properties:
-        attribution:
-          type: string
-          format: uri
-          description: A URL containing attribution information. If you are not using Stadia Maps and our standard attribution already for your basemaps, you must include this attribution link somewhere in your website/app.
-        query:
-          type: object
-          additionalProperties: true
-          description: Technical details of the query. This is most useful for debugging during development. See the full example for the list of properties; these should be self-explanatory, so we don't enumerate them in the spec.
-        warnings:
-          type: array
-          items:
-            type: string
-          description: An array of non-critical warnings. This is normally for informational/debugging purposes and not a serious problem.
-        errors:
-          type: array
-          items:
-            type: string
-          description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
-    peliasLang:
-      type: string
-      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
-    geoJSONGeometryBase:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          enum:
-          - Point
-          - MultiPoint
-          - LineString
-          - MultiLineString
-          - Polygon
-          - MultiPolygon
-    peliasLayer:
-      type: string
-      enum:
-      - venue
-      - address
-      - street
-      - country
-      - macroregion
-      - region
-      - macrocounty
-      - county
-      - locality
-      - localadmin
-      - borough
-      - neighbourhood
-      - postalcode
-      - coarse
-      - dependency
-      - macrohood
-      - marinearea
-      - disputed
-      - empire
-      - continent
-      - ocean
-      description: 'Our database is organized into several layers (in the GIS sense of the term) as follows:
-
-
-        - `venue`: Points of interest, businesses, and things with walls
-
-        - `address`: Places with a street address
-
-        - `street`: Streets, roads, highways
-
-        - `county`: Places that issue passports, nations, nation-states
-
-        - `macroregion`: A related group of regions (mostly in Europe)
-
-        - `region`: The first administrative division within a country (usually states and provinces)
-
-        - `macrocounty`: A related group of counties (mostly in Europe)
-
-        - `county`: Official governmental areas; usually bigger than a locality, but almost always smaller than a region
-
-        - `locality`: Towns, hamlets, cities, etc.
-
-        - `localadmin`: Local administrative boundaries
-
-        - `borough`: Local administrative boundaries within cities (not widely used, but present in places such as NYC and Mexico City)
-
-        - `neighbourhood`: Social communities and neighborhoods (note the British spelling in the API!)
-
-        - `postalcode`: Postal codes used by mail services (note: not used for reverse geocoding)
-
-        - `coarse`: An alias for simultaneously using all administrative layers (everything except `venue` and `address`)
-
-        - `marinearea`: Places with fishes and boats.
-
-        - `ocean`: A really big marine area.
-
-        '
     peliasGeoJSONFeature:
       type: object
       required:
@@ -258,6 +228,41 @@ components:
             type: number
             format: double
           description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
+    geocodingObject:
+      type: object
+      properties:
+        attribution:
+          type: string
+          format: uri
+          description: A URL containing attribution information. If you are not using Stadia Maps and our standard attribution already for your basemaps, you must include this attribution link somewhere in your website/app.
+        query:
+          type: object
+          additionalProperties: true
+          description: Technical details of the query. This is most useful for debugging during development. See the full example for the list of properties; these should be self-explanatory, so we don't enumerate them in the spec.
+        warnings:
+          type: array
+          items:
+            type: string
+          description: An array of non-critical warnings. This is normally for informational/debugging purposes and not a serious problem.
+        errors:
+          type: array
+          items:
+            type: string
+          description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
+    geoJSONGeometryBase:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - Point
+          - MultiPoint
+          - LineString
+          - MultiLineString
+          - Polygon
+          - MultiPolygon
     peliasGeoJSONProperties:
       type: object
       additionalProperties: true
@@ -340,11 +345,6 @@ components:
         region_a:
           type: string
           description: The abbreviation for the region.
-    placeIDs:
-      type: array
-      description: A list of Pelias GIDs to search for.
-      items:
-        type: string
   parameters:
     placeIDs:
       name: ids

@@ -1,7 +1,7 @@
 {
   "provider": "stadia-maps",
   "sources": [
-    "stadia-maps-openapi.yml"
+    "_original/stadia-maps-openapi.yml"
   ],
   "outputs": [
     "stadia-maps-attributes-api-openapi.yml",
@@ -16,12 +16,12 @@
     "stadia-maps-routing-api-openapi.yml",
     "stadia-maps-search-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/stadia-maps-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "stadia-maps-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "stadia-maps-openapi.yml: declared missing tag: Attributes",
     "stadia-maps-openapi.yml: declared missing tag: Autocomplete",
     "stadia-maps-openapi.yml: declared missing tag: Geospatial",
@@ -32,7 +32,20 @@
     "stadia-maps-openapi.yml: declared missing tag: Roads",
     "stadia-maps-openapi.yml: declared missing tag: Routes",
     "stadia-maps-openapi.yml: declared missing tag: Routing",
-    "stadia-maps-openapi.yml: declared missing tag: Search"
+    "stadia-maps-openapi.yml: declared missing tag: Search",
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "stadia-maps-attributes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-autocomplete-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-geospatial-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-lookups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-match-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-place-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-reverse-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-roads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-routes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-routing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stadia-maps-search-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

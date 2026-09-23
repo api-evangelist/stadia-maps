@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  description: 'Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home. '
+  description: Confidently create beautiful maps for all your users with our tools. Choose your style from our library or build your own. With a rich palette of choices to fit any context and support for dozens of languages and scripts, you can deliver a quality experience for your customers no matter what part of the globe they call home.
   version: 7.1.0
   title: Stadia Maps Lookups API
   contact:
@@ -18,7 +18,7 @@ paths:
       tags:
       - Lookups
       operationId: tz-lookup
-      summary: Get the current time zone information for any point on earth.
+      summary: Get the current time zone information for any point on earth
       description: The Stadia TZ API provides time zone information, as well as information about any special offset (such as DST) in effect based on the latest IANA TZDB. Note that this API may not be accurate for timestamps in the past and does not claim to report precise nautical times in the open ocean beyond territorial waters.
       security:
       - ApiKeyAuth: []
