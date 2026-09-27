@@ -38,30 +38,6 @@ paths:
           description: Bad request; more details will be included
 components:
   schemas:
-    requestId:
-      type: string
-      description: An identifier to disambiguate requests (echoed by the server).
-      example: kesklinn
-    coordinate:
-      type: object
-      properties:
-        lat:
-          type: number
-          format: double
-          description: The latitude of a point in the shape.
-          example: 59.436884
-          minimum: -90
-          maximum: 90
-        lon:
-          type: number
-          format: double
-          description: The longitude of a point in the shape.
-          example: 24.742595
-          minimum: -180
-          maximum: 180
-      required:
-      - lat
-      - lon
     heightRequest:
       type: object
       properties:
@@ -104,6 +80,30 @@ components:
         shape_format: polyline6
         range: false
         height_precision: 0
+    requestId:
+      type: string
+      description: An identifier to disambiguate requests (echoed by the server).
+      example: kesklinn
+    coordinate:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+          description: The latitude of a point in the shape.
+          example: 59.436884
+          minimum: -90
+          maximum: 90
+        lon:
+          type: number
+          format: double
+          description: The longitude of a point in the shape.
+          example: 24.742595
+          minimum: -180
+          maximum: 180
+      required:
+      - lat
+      - lon
     heightResponse:
       type: object
       properties:

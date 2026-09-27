@@ -35,70 +35,23 @@ paths:
         '400':
           description: Bad request
 components:
-  schemas:
-    peliasLayer:
-      type: string
-      enum:
-      - venue
-      - address
-      - street
-      - country
-      - macroregion
-      - region
-      - macrocounty
-      - county
-      - locality
-      - localadmin
-      - borough
-      - neighbourhood
-      - postalcode
-      - coarse
-      - dependency
-      - macrohood
-      - marinearea
-      - disputed
-      - empire
-      - continent
-      - ocean
-      description: 'Our database is organized into several layers (in the GIS sense of the term) as follows:
-
-
-        - `venue`: Points of interest, businesses, and things with walls
-
-        - `address`: Places with a street address
-
-        - `street`: Streets, roads, highways
-
-        - `county`: Places that issue passports, nations, nation-states
-
-        - `macroregion`: A related group of regions (mostly in Europe)
-
-        - `region`: The first administrative division within a country (usually states and provinces)
-
-        - `macrocounty`: A related group of counties (mostly in Europe)
-
-        - `county`: Official governmental areas; usually bigger than a locality, but almost always smaller than a region
-
-        - `locality`: Towns, hamlets, cities, etc.
-
-        - `localadmin`: Local administrative boundaries
-
-        - `borough`: Local administrative boundaries within cities (not widely used, but present in places such as NYC and Mexico City)
-
-        - `neighbourhood`: Social communities and neighborhoods (note the British spelling in the API!)
-
-        - `postalcode`: Postal codes used by mail services (note: not used for reverse geocoding)
-
-        - `coarse`: An alias for simultaneously using all administrative layers (everything except `venue` and `address`)
-
-        - `marinearea`: Places with fishes and boats.
-
-        - `ocean`: A really big marine area.
-
-        '
+  parameters:
+    placeIDs:
+      name: ids
+      in: query
+      schema:
+        $ref: '#/components/schemas/placeIDs'
+      description: A list of Pelias GIDs to search for.
+      required: true
+      style: form
+      explode: false
     peliasLang:
-      type: string
+      name: lang
+      in: query
+      schema:
+        $ref: '#/components/schemas/peliasLang'
       description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+  schemas:
     placeIDs:
       type: array
       description: A list of Pelias GIDs to search for.
@@ -192,20 +145,6 @@ components:
         - 38.897675
         - -77.036547
         - 38.897675
-    geoJSONPoint:
-      allOf:
-      - $ref: '#/components/schemas/geoJSONGeometryBase'
-      - type: object
-        required:
-        - coordinates
-        properties:
-          coordinates:
-            type: array
-            minItems: 2
-            maxItems: 3
-            items:
-              type: number
-              format: double
     peliasGeoJSONFeature:
       type: object
       required:
@@ -228,6 +167,94 @@ components:
             type: number
             format: double
           description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
+    geoJSONGeometryBase:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - Point
+          - MultiPoint
+          - LineString
+          - MultiLineString
+          - Polygon
+          - MultiPolygon
+    geoJSONPoint:
+      allOf:
+      - $ref: '#/components/schemas/geoJSONGeometryBase'
+      - type: object
+        required:
+        - coordinates
+        properties:
+          coordinates:
+            type: array
+            minItems: 2
+            maxItems: 3
+            items:
+              type: number
+              format: double
+    peliasLayer:
+      type: string
+      enum:
+      - venue
+      - address
+      - street
+      - country
+      - macroregion
+      - region
+      - macrocounty
+      - county
+      - locality
+      - localadmin
+      - borough
+      - neighbourhood
+      - postalcode
+      - coarse
+      - dependency
+      - macrohood
+      - marinearea
+      - disputed
+      - empire
+      - continent
+      - ocean
+      description: 'Our database is organized into several layers (in the GIS sense of the term) as follows:
+
+
+        - `venue`: Points of interest, businesses, and things with walls
+
+        - `address`: Places with a street address
+
+        - `street`: Streets, roads, highways
+
+        - `county`: Places that issue passports, nations, nation-states
+
+        - `macroregion`: A related group of regions (mostly in Europe)
+
+        - `region`: The first administrative division within a country (usually states and provinces)
+
+        - `macrocounty`: A related group of counties (mostly in Europe)
+
+        - `county`: Official governmental areas; usually bigger than a locality, but almost always smaller than a region
+
+        - `locality`: Towns, hamlets, cities, etc.
+
+        - `localadmin`: Local administrative boundaries
+
+        - `borough`: Local administrative boundaries within cities (not widely used, but present in places such as NYC and Mexico City)
+
+        - `neighbourhood`: Social communities and neighborhoods (note the British spelling in the API!)
+
+        - `postalcode`: Postal codes used by mail services (note: not used for reverse geocoding)
+
+        - `coarse`: An alias for simultaneously using all administrative layers (everything except `venue` and `address`)
+
+        - `marinearea`: Places with fishes and boats.
+
+        - `ocean`: A really big marine area.
+
+        '
     geocodingObject:
       type: object
       properties:
@@ -249,20 +276,9 @@ components:
           items:
             type: string
           description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
-    geoJSONGeometryBase:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          enum:
-          - Point
-          - MultiPoint
-          - LineString
-          - MultiLineString
-          - Polygon
-          - MultiPolygon
+    peliasLang:
+      type: string
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
     peliasGeoJSONProperties:
       type: object
       additionalProperties: true
@@ -345,22 +361,6 @@ components:
         region_a:
           type: string
           description: The abbreviation for the region.
-  parameters:
-    placeIDs:
-      name: ids
-      in: query
-      schema:
-        $ref: '#/components/schemas/placeIDs'
-      description: A list of Pelias GIDs to search for.
-      required: true
-      style: form
-      explode: false
-    peliasLang:
-      name: lang
-      in: query
-      schema:
-        $ref: '#/components/schemas/peliasLang'
-      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
