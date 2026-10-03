@@ -35,28 +35,7 @@ paths:
         '400':
           description: Bad request
 components:
-  parameters:
-    placeIDs:
-      name: ids
-      in: query
-      schema:
-        $ref: '#/components/schemas/placeIDs'
-      description: A list of Pelias GIDs to search for.
-      required: true
-      style: form
-      explode: false
-    peliasLang:
-      name: lang
-      in: query
-      schema:
-        $ref: '#/components/schemas/peliasLang'
-      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
   schemas:
-    placeIDs:
-      type: array
-      description: A list of Pelias GIDs to search for.
-      items:
-        type: string
     peliasResponse:
       type: object
       properties:
@@ -145,56 +124,6 @@ components:
         - 38.897675
         - -77.036547
         - 38.897675
-    peliasGeoJSONFeature:
-      type: object
-      required:
-      - type
-      - geometry
-      properties:
-        type:
-          type: string
-          enum:
-          - Feature
-        geometry:
-          $ref: '#/components/schemas/geoJSONPoint'
-        properties:
-          $ref: '#/components/schemas/peliasGeoJSONProperties'
-        bbox:
-          type: array
-          minItems: 4
-          maxItems: 4
-          items:
-            type: number
-            format: double
-          description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
-    geoJSONGeometryBase:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          enum:
-          - Point
-          - MultiPoint
-          - LineString
-          - MultiLineString
-          - Polygon
-          - MultiPolygon
-    geoJSONPoint:
-      allOf:
-      - $ref: '#/components/schemas/geoJSONGeometryBase'
-      - type: object
-        required:
-        - coordinates
-        properties:
-          coordinates:
-            type: array
-            minItems: 2
-            maxItems: 3
-            items:
-              type: number
-              format: double
     peliasLayer:
       type: string
       enum:
@@ -255,30 +184,28 @@ components:
         - `ocean`: A really big marine area.
 
         '
-    geocodingObject:
+    peliasGeoJSONFeature:
       type: object
+      required:
+      - type
+      - geometry
       properties:
-        attribution:
+        type:
           type: string
-          format: uri
-          description: A URL containing attribution information. If you are not using Stadia Maps and our standard attribution already for your basemaps, you must include this attribution link somewhere in your website/app.
-        query:
-          type: object
-          additionalProperties: true
-          description: Technical details of the query. This is most useful for debugging during development. See the full example for the list of properties; these should be self-explanatory, so we don't enumerate them in the spec.
-        warnings:
+          enum:
+          - Feature
+        geometry:
+          $ref: '#/components/schemas/geoJSONPoint'
+        properties:
+          $ref: '#/components/schemas/peliasGeoJSONProperties'
+        bbox:
           type: array
+          minItems: 4
+          maxItems: 4
           items:
-            type: string
-          description: An array of non-critical warnings. This is normally for informational/debugging purposes and not a serious problem.
-        errors:
-          type: array
-          items:
-            type: string
-          description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
-    peliasLang:
-      type: string
-      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+            type: number
+            format: double
+          description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
     peliasGeoJSONProperties:
       type: object
       additionalProperties: true
@@ -361,6 +288,79 @@ components:
         region_a:
           type: string
           description: The abbreviation for the region.
+    peliasLang:
+      type: string
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+    placeIDs:
+      type: array
+      description: A list of Pelias GIDs to search for.
+      items:
+        type: string
+    geoJSONGeometryBase:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - Point
+          - MultiPoint
+          - LineString
+          - MultiLineString
+          - Polygon
+          - MultiPolygon
+    geoJSONPoint:
+      allOf:
+      - $ref: '#/components/schemas/geoJSONGeometryBase'
+      - type: object
+        required:
+        - coordinates
+        properties:
+          coordinates:
+            type: array
+            minItems: 2
+            maxItems: 3
+            items:
+              type: number
+              format: double
+    geocodingObject:
+      type: object
+      properties:
+        attribution:
+          type: string
+          format: uri
+          description: A URL containing attribution information. If you are not using Stadia Maps and our standard attribution already for your basemaps, you must include this attribution link somewhere in your website/app.
+        query:
+          type: object
+          additionalProperties: true
+          description: Technical details of the query. This is most useful for debugging during development. See the full example for the list of properties; these should be self-explanatory, so we don't enumerate them in the spec.
+        warnings:
+          type: array
+          items:
+            type: string
+          description: An array of non-critical warnings. This is normally for informational/debugging purposes and not a serious problem.
+        errors:
+          type: array
+          items:
+            type: string
+          description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
+  parameters:
+    peliasLang:
+      name: lang
+      in: query
+      schema:
+        $ref: '#/components/schemas/peliasLang'
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+    placeIDs:
+      name: ids
+      in: query
+      schema:
+        $ref: '#/components/schemas/placeIDs'
+      description: A list of Pelias GIDs to search for.
+      required: true
+      style: form
+      explode: false
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

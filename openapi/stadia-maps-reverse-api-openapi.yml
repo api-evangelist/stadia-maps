@@ -42,195 +42,7 @@ paths:
         '400':
           description: Bad request
 components:
-  parameters:
-    searchSources:
-      name: sources
-      in: query
-      schema:
-        $ref: '#/components/schemas/searchSources'
-      description: A list of sources to limit the search to.
-      style: form
-      explode: false
-    searchBoundaryCircleRadius:
-      name: boundary.circle.radius
-      in: query
-      schema:
-        $ref: '#/components/schemas/searchBoundaryCircleRadius'
-      description: The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.
-    reverseLon:
-      name: point.lon
-      in: query
-      schema:
-        $ref: '#/components/schemas/reverseLon'
-      description: The longitude of the point at which to perform the search.
-      required: true
-    size:
-      name: size
-      in: query
-      schema:
-        $ref: '#/components/schemas/limit'
-      description: The maximum number of results to return.
-    searchLayers:
-      name: layers
-      in: query
-      schema:
-        $ref: '#/components/schemas/searchLayers'
-      description: A list of layers to limit the search to.
-      style: form
-      explode: false
-    searchBoundaryCountry:
-      name: boundary.country
-      in: query
-      schema:
-        $ref: '#/components/schemas/searchBoundaryCountry'
-      description: 'A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.'
-      style: form
-      explode: false
-    searchBoundaryGID:
-      name: boundary.gid
-      in: query
-      schema:
-        $ref: '#/components/schemas/searchBoundaryGID'
-      description: The Pelias GID of an area to limit the search to.
-    reverseLat:
-      name: point.lat
-      in: query
-      schema:
-        $ref: '#/components/schemas/reverseLat'
-      description: The latitude of the point at which to perform the search.
-      required: true
-    peliasLang:
-      name: lang
-      in: query
-      schema:
-        $ref: '#/components/schemas/peliasLang'
-      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
   schemas:
-    geoJSONPoint:
-      allOf:
-      - $ref: '#/components/schemas/geoJSONGeometryBase'
-      - type: object
-        required:
-        - coordinates
-        properties:
-          coordinates:
-            type: array
-            minItems: 2
-            maxItems: 3
-            items:
-              type: number
-              format: double
-    peliasLayer:
-      type: string
-      enum:
-      - venue
-      - address
-      - street
-      - country
-      - macroregion
-      - region
-      - macrocounty
-      - county
-      - locality
-      - localadmin
-      - borough
-      - neighbourhood
-      - postalcode
-      - coarse
-      - dependency
-      - macrohood
-      - marinearea
-      - disputed
-      - empire
-      - continent
-      - ocean
-      description: 'Our database is organized into several layers (in the GIS sense of the term) as follows:
-
-
-        - `venue`: Points of interest, businesses, and things with walls
-
-        - `address`: Places with a street address
-
-        - `street`: Streets, roads, highways
-
-        - `county`: Places that issue passports, nations, nation-states
-
-        - `macroregion`: A related group of regions (mostly in Europe)
-
-        - `region`: The first administrative division within a country (usually states and provinces)
-
-        - `macrocounty`: A related group of counties (mostly in Europe)
-
-        - `county`: Official governmental areas; usually bigger than a locality, but almost always smaller than a region
-
-        - `locality`: Towns, hamlets, cities, etc.
-
-        - `localadmin`: Local administrative boundaries
-
-        - `borough`: Local administrative boundaries within cities (not widely used, but present in places such as NYC and Mexico City)
-
-        - `neighbourhood`: Social communities and neighborhoods (note the British spelling in the API!)
-
-        - `postalcode`: Postal codes used by mail services (note: not used for reverse geocoding)
-
-        - `coarse`: An alias for simultaneously using all administrative layers (everything except `venue` and `address`)
-
-        - `marinearea`: Places with fishes and boats.
-
-        - `ocean`: A really big marine area.
-
-        '
-    geocodingObject:
-      type: object
-      properties:
-        attribution:
-          type: string
-          format: uri
-          description: A URL containing attribution information. If you are not using Stadia Maps and our standard attribution already for your basemaps, you must include this attribution link somewhere in your website/app.
-        query:
-          type: object
-          additionalProperties: true
-          description: Technical details of the query. This is most useful for debugging during development. See the full example for the list of properties; these should be self-explanatory, so we don't enumerate them in the spec.
-        warnings:
-          type: array
-          items:
-            type: string
-          description: An array of non-critical warnings. This is normally for informational/debugging purposes and not a serious problem.
-        errors:
-          type: array
-          items:
-            type: string
-          description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
-    peliasGeoJSONFeature:
-      type: object
-      required:
-      - type
-      - geometry
-      properties:
-        type:
-          type: string
-          enum:
-          - Feature
-        geometry:
-          $ref: '#/components/schemas/geoJSONPoint'
-        properties:
-          $ref: '#/components/schemas/peliasGeoJSONProperties'
-        bbox:
-          type: array
-          minItems: 4
-          maxItems: 4
-          items:
-            type: number
-            format: double
-          description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
-    peliasLang:
-      type: string
-      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
-    searchBoundaryCountry:
-      type: array
-      items:
-        type: string
-      description: 'A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.'
     peliasResponse:
       type: object
       properties:
@@ -319,9 +131,159 @@ components:
         - 38.897675
         - -77.036547
         - 38.897675
+    searchBoundaryCountry:
+      type: array
+      items:
+        type: string
+      description: 'A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.'
+    reverseLat:
+      type: number
+      description: The latitude of the point at which to perform the search.
+      example: 48.848268
+      format: double
+      minimum: -90
+      maximum: 90
+    geocodingObject:
+      type: object
+      properties:
+        attribution:
+          type: string
+          format: uri
+          description: A URL containing attribution information. If you are not using Stadia Maps and our standard attribution already for your basemaps, you must include this attribution link somewhere in your website/app.
+        query:
+          type: object
+          additionalProperties: true
+          description: Technical details of the query. This is most useful for debugging during development. See the full example for the list of properties; these should be self-explanatory, so we don't enumerate them in the spec.
+        warnings:
+          type: array
+          items:
+            type: string
+          description: An array of non-critical warnings. This is normally for informational/debugging purposes and not a serious problem.
+        errors:
+          type: array
+          items:
+            type: string
+          description: An array of more serious errors (for example, omitting a required parameter). Dont ignore these.
+    peliasLayer:
+      type: string
+      enum:
+      - venue
+      - address
+      - street
+      - country
+      - macroregion
+      - region
+      - macrocounty
+      - county
+      - locality
+      - localadmin
+      - borough
+      - neighbourhood
+      - postalcode
+      - coarse
+      - dependency
+      - macrohood
+      - marinearea
+      - disputed
+      - empire
+      - continent
+      - ocean
+      description: 'Our database is organized into several layers (in the GIS sense of the term) as follows:
+
+
+        - `venue`: Points of interest, businesses, and things with walls
+
+        - `address`: Places with a street address
+
+        - `street`: Streets, roads, highways
+
+        - `county`: Places that issue passports, nations, nation-states
+
+        - `macroregion`: A related group of regions (mostly in Europe)
+
+        - `region`: The first administrative division within a country (usually states and provinces)
+
+        - `macrocounty`: A related group of counties (mostly in Europe)
+
+        - `county`: Official governmental areas; usually bigger than a locality, but almost always smaller than a region
+
+        - `locality`: Towns, hamlets, cities, etc.
+
+        - `localadmin`: Local administrative boundaries
+
+        - `borough`: Local administrative boundaries within cities (not widely used, but present in places such as NYC and Mexico City)
+
+        - `neighbourhood`: Social communities and neighborhoods (note the British spelling in the API!)
+
+        - `postalcode`: Postal codes used by mail services (note: not used for reverse geocoding)
+
+        - `coarse`: An alias for simultaneously using all administrative layers (everything except `venue` and `address`)
+
+        - `marinearea`: Places with fishes and boats.
+
+        - `ocean`: A really big marine area.
+
+        '
     searchBoundaryGID:
       type: string
       description: The Pelias GID of an area to limit the search to.
+    peliasLang:
+      type: string
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+    geoJSONPoint:
+      allOf:
+      - $ref: '#/components/schemas/geoJSONGeometryBase'
+      - type: object
+        required:
+        - coordinates
+        properties:
+          coordinates:
+            type: array
+            minItems: 2
+            maxItems: 3
+            items:
+              type: number
+              format: double
+    peliasSource:
+      type: string
+      enum:
+      - openstreetmap
+      - openaddresses
+      - whosonfirst
+      - geonames
+      description: Our database contains info from multiple sources. These identifiers can be used to either limit search results or to determine the relevance of a result.
+    searchLayers:
+      type: array
+      description: A list of layers to limit the search to.
+      items:
+        $ref: '#/components/schemas/peliasLayer'
+    peliasGeoJSONFeature:
+      type: object
+      required:
+      - type
+      - geometry
+      properties:
+        type:
+          type: string
+          enum:
+          - Feature
+        geometry:
+          $ref: '#/components/schemas/geoJSONPoint'
+        properties:
+          $ref: '#/components/schemas/peliasGeoJSONProperties'
+        bbox:
+          type: array
+          minItems: 4
+          maxItems: 4
+          items:
+            type: number
+            format: double
+          description: An array of 4 floating point numbers representing the (W, S, E, N) extremes of the features found.
+    searchSources:
+      type: array
+      description: A list of sources to limit the search to.
+      items:
+        $ref: '#/components/schemas/peliasSource'
     peliasGeoJSONProperties:
       type: object
       additionalProperties: true
@@ -429,34 +391,72 @@ components:
           - MultiLineString
           - Polygon
           - MultiPolygon
-    searchSources:
-      type: array
-      description: A list of sources to limit the search to.
-      items:
-        $ref: '#/components/schemas/peliasSource'
     limit:
       type: integer
       description: The maximum number of results to return.
+  parameters:
+    size:
+      name: size
+      in: query
+      schema:
+        $ref: '#/components/schemas/limit'
+      description: The maximum number of results to return.
     reverseLat:
-      type: number
+      name: point.lat
+      in: query
+      schema:
+        $ref: '#/components/schemas/reverseLat'
       description: The latitude of the point at which to perform the search.
-      example: 48.848268
-      format: double
-      minimum: -90
-      maximum: 90
-    peliasSource:
-      type: string
-      enum:
-      - openstreetmap
-      - openaddresses
-      - whosonfirst
-      - geonames
-      description: Our database contains info from multiple sources. These identifiers can be used to either limit search results or to determine the relevance of a result.
+      required: true
+    searchBoundaryGID:
+      name: boundary.gid
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryGID'
+      description: The Pelias GID of an area to limit the search to.
+    searchBoundaryCountry:
+      name: boundary.country
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryCountry'
+      description: 'A list of countries to limit the search to. These may be either full names (ex: Canada), or an ISO 3116-1 alpha-2 or alpha-3 code. Prefer ISO codes when possible.'
+      style: form
+      explode: false
+    peliasLang:
+      name: lang
+      in: query
+      schema:
+        $ref: '#/components/schemas/peliasLang'
+      description: A BCP47 language tag which specifies a preference for localization of results. By default, results are in the default locale of the source data, but specifying a language will attempt to localize the results. Note that while a `langtag` (in RFC 5646 terms) can contain script, region, etc., only the `language` portion, an ISO 639 code, will be considered. So `en-US` and `en-GB` will both be treated as English.
+    searchBoundaryCircleRadius:
+      name: boundary.circle.radius
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchBoundaryCircleRadius'
+      description: The radius of the circle (in kilometers) to limit the search to. Defaults to 50km if unspecified.
+    searchSources:
+      name: sources
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchSources'
+      description: A list of sources to limit the search to.
+      style: form
+      explode: false
     searchLayers:
-      type: array
+      name: layers
+      in: query
+      schema:
+        $ref: '#/components/schemas/searchLayers'
       description: A list of layers to limit the search to.
-      items:
-        $ref: '#/components/schemas/peliasLayer'
+      style: form
+      explode: false
+    reverseLon:
+      name: point.lon
+      in: query
+      schema:
+        $ref: '#/components/schemas/reverseLon'
+      description: The longitude of the point at which to perform the search.
+      required: true
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
