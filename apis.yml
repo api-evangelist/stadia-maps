@@ -46,6 +46,12 @@ created: '2024-12-16'
 modified: '2026-05-19'
 position: Consuming
 common:
+  - type: Plans
+    url: plans/stadia-maps-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/stadia-maps-rate-limits.yml
+  - type: FinOps
+    url: finops/stadia-maps-finops.yml
   - type: Website
     url: https://www.stadiamaps.com/
   - type: PostmanWorkspace
