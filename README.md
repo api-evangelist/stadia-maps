@@ -1,4 +1,4 @@
-# Stadia Maps (stadia-maps)
+# Stadia Maps
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,105 +66,189 @@
 
 Stadia Maps is a cutting-edge mapping platform providing high-quality, detailed maps and location APIs for developers. The platform offers routing and navigation, geocoding and search, elevation data, time zone lookups, isochrone analysis, and account management. Stadia Maps delivers GDPR-compliant EU endpoints, rich map styling options, and official SDKs for TypeScript, Python, Swift, Kotlin, and PHP. Trusted by developers building web, mobile, and data visualization applications worldwide.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/stadia-maps/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/stadia-maps/refs/heads/main/apis.yml)
+**Areas:** Mapping · Maps · Geocoding · Routing · Navigation · Geospatial · Location
 
-## Scope
+## Stadia Maps on APIs.io
 
-- **Type:** Index
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Stadia Maps is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/stadia-maps/](https://apis.io/providers/stadia-maps/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (11)
 
-- Mapping
-- Maps
-- Geocoding
-- Routing
-- Navigation
-- Geospatial
-- Location
+- [Stadia Maps Attributes API](https://apis.io/apis/stadia-maps/stadia-maps-attributes-api/) — The Attributes API from Stadia Maps — 1 operation(s) for attributes.
+- [Stadia Maps Autocomplete API](https://apis.io/apis/stadia-maps/stadia-maps-autocomplete-api/) — The Autocomplete API from Stadia Maps — 1 operation(s) for autocomplete.
+- [Stadia Maps Geospatial API](https://apis.io/apis/stadia-maps/stadia-maps-geospatial-api/) — The Geospatial API from Stadia Maps — 1 operation(s) for geospatial.
+- [Stadia Maps Lookups API](https://apis.io/apis/stadia-maps/stadia-maps-lookups-api/) — The Lookups API from Stadia Maps — 1 operation(s) for lookups.
+- [Stadia Maps Match API](https://apis.io/apis/stadia-maps/stadia-maps-match-api/) — The Match API from Stadia Maps — 1 operation(s) for match.
+- [Stadia Maps Place API](https://apis.io/apis/stadia-maps/stadia-maps-place-api/) — The Place API from Stadia Maps — 1 operation(s) for place.
+- [Stadia Maps Reverse API](https://apis.io/apis/stadia-maps/stadia-maps-reverse-api/) — The Reverse API from Stadia Maps — 1 operation(s) for reverse.
+- [Stadia Maps Roads API](https://apis.io/apis/stadia-maps/stadia-maps-roads-api/) — The Roads API from Stadia Maps — 1 operation(s) for roads.
+- [Stadia Maps Routes API](https://apis.io/apis/stadia-maps/stadia-maps-routes-api/) — The Routes API from Stadia Maps — 1 operation(s) for routes.
+- [Stadia Maps Routing API](https://apis.io/apis/stadia-maps/stadia-maps-routing-api/) — The Routing API from Stadia Maps — 3 operation(s) for routing.
+- [Stadia Maps Search API](https://apis.io/apis/stadia-maps/stadia-maps-search-api/) — The Search API from Stadia Maps — 3 operation(s) for search.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-12-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Stadia Maps Geospatial API
+Model Context Protocol servers that expose the API to agents.
 
-The Stadia Maps Geospatial API provides routing and turn-by-turn navigation, geocoding and autocomplete search, reverse geocoding, place lookups, elevation profiles, time zone information, road attributes, isochrones, map matching, time-distance matrices, and optimized routing. Secured with API key authentication. EU-region endpoint available for GDPR compliance.
+- [MCP Server](https://apis.io/servers/stadia-maps/mcp-server/)
 
-- **Human URL:** [https://docs.stadiamaps.com/](https://docs.stadiamaps.com/)
-- **Base URL:** `https://api.stadiamaps.com`
+#### JSON Schema (2)
 
-#### Tags
+The data models the API reads and writes.
 
-- Attributes
-- Autocomplete
-- Elevation
-- Geospatial
-- Geocoding
-- Isochrone
-- Lookups
-- Mapping
-- Match
-- Navigation
-- Place
-- Reverse
-- Roads
-- Routes
-- Routing
-- Search
-- Time Zone
+- [Stadia Maps Location](https://apis.io/schemas/stadia-maps/stadia-maps-location/)
+- [Stadia Maps Route](https://apis.io/schemas/stadia-maps/stadia-maps-route/)
 
-#### Properties
+#### JSON Structure (1)
 
+Data models expressed in JSON Structure.
+
+- [Stadia Maps Location Structure](https://apis.io/json-structure/stadia-maps/stadia-maps-location-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Stadia Maps Context](https://apis.io/jsonld/stadia-maps/stadia-maps-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Stadia Maps Vocabulary](https://apis.io/vocabularies/stadia-maps/stadia-maps-vocabulary/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Stadia Maps Autocomplete Example](https://apis.io/examples/stadia-maps/stadia-maps-autocomplete-example/)
+- [Stadia Maps Route Example](https://apis.io/examples/stadia-maps/stadia-maps-route-example/)
+- [Stadia Maps Tz Lookup Example](https://apis.io/examples/stadia-maps/stadia-maps-tz-lookup-example/)
+
+#### Collections (22)
+
+Postman and Open Collection request collections.
+
+- [Stadia Maps Attributes API](https://apis.io/collections/stadia-maps/open-stadia-maps-attributes-api/)
+- [Stadia Maps Autocomplete API](https://apis.io/collections/stadia-maps/open-stadia-maps-autocomplete-api/)
+- [Stadia Maps Geospatial API](https://apis.io/collections/stadia-maps/open-stadia-maps-geospatial-api/)
+- [Stadia Maps Lookups API](https://apis.io/collections/stadia-maps/open-stadia-maps-lookups-api/)
+- [Stadia Maps Match API](https://apis.io/collections/stadia-maps/open-stadia-maps-match-api/)
+- [Stadia Maps Place API](https://apis.io/collections/stadia-maps/open-stadia-maps-place-api/)
+- [Stadia Maps Reverse API](https://apis.io/collections/stadia-maps/open-stadia-maps-reverse-api/)
+- [Stadia Maps Roads API](https://apis.io/collections/stadia-maps/open-stadia-maps-roads-api/)
+- [Stadia Maps Routes API](https://apis.io/collections/stadia-maps/open-stadia-maps-routes-api/)
+- [Stadia Maps Routing API](https://apis.io/collections/stadia-maps/open-stadia-maps-routing-api/)
+- [Stadia Maps Search API](https://apis.io/collections/stadia-maps/open-stadia-maps-search-api/)
+- [Stadia Maps Attributes API](https://apis.io/collections/stadia-maps/postman-stadia-maps-attributes-api/)
+- [Stadia Maps Autocomplete API](https://apis.io/collections/stadia-maps/postman-stadia-maps-autocomplete-api/)
+- [Stadia Maps Geospatial API](https://apis.io/collections/stadia-maps/postman-stadia-maps-geospatial-api/)
+- [Stadia Maps Lookups API](https://apis.io/collections/stadia-maps/postman-stadia-maps-lookups-api/)
+- [Stadia Maps Match API](https://apis.io/collections/stadia-maps/postman-stadia-maps-match-api/)
+- [Stadia Maps Place API](https://apis.io/collections/stadia-maps/postman-stadia-maps-place-api/)
+- [Stadia Maps Reverse API](https://apis.io/collections/stadia-maps/postman-stadia-maps-reverse-api/)
+- [Stadia Maps Roads API](https://apis.io/collections/stadia-maps/postman-stadia-maps-roads-api/)
+- [Stadia Maps Routes API](https://apis.io/collections/stadia-maps/postman-stadia-maps-routes-api/)
+- [Stadia Maps Routing API](https://apis.io/collections/stadia-maps/postman-stadia-maps-routing-api/)
+- [Stadia Maps Search API](https://apis.io/collections/stadia-maps/postman-stadia-maps-search-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Stadia Maps — jsonschema rules](https://apis.io/rules/stadia-maps/stadia-maps-jsonschema-spectral-rules/)
+- [Stadia Maps API Rules](https://apis.io/rules/stadia-maps/stadia-maps-rules/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Stadia Maps Domain Security](https://apis.io/security/stadia-maps/stadia-maps-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Stadia Maps Plans Pricing](https://apis.io/plans/stadia-maps/stadia-maps-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Stadia Maps Rate Limits](https://apis.io/rate-limits/stadia-maps/stadia-maps-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Stadia Maps Finops](https://apis.io/finops/stadia-maps/stadia-maps-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.stadiamaps.com/)
 - [Documentation](https://docs.stadiamaps.com/)
-- [OpenAPI](openapi/stadia-maps-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://docs.stadiamaps.com/authentication/)
-- [Documentation](https://docs.stadiamaps.com/routing/)
-- [Documentation](https://docs.stadiamaps.com/geocoding-search-autocomplete/)
-- [Spectral Ruleset](rules/stadia-maps-rules.yml)
-- [JSON Schema](json-schema/stadia-maps-location-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [J S O N L D Context](json-ld/stadia-maps-context.jsonld)
-- [Vocabulary](vocabulary/stadia-maps-vocabulary.yml)
-
-### Stadia Maps Account Management API
-
-The Stadia Maps Account Management API enables programmatic management of properties, domains, and API keys. Useful for managing large numbers of properties, automating domain allowlisting, and programmatically rotating API keys. Access is available on request.
-
-- **Human URL:** [https://docs.stadiamaps.com/client-api/](https://docs.stadiamaps.com/client-api/)
-- **Base URL:** `https://client.stadiamaps.com/api/v1`
-
-#### Tags
-
-- Account Management
-- API Keys
-- Domains
-- Properties
-
-#### Properties
-
-- [Documentation](https://docs.stadiamaps.com/client-api/)
-- [OpenAPI](https://client.stadiamaps.com/api/v1/openapi/) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/stadia-maps)
-- [Portal](https://stadiamaps.com/)
-- [Documentation](https://docs.stadiamaps.com/)
-- [API Reference](https://docs.stadiamaps.com/api-reference/)
+- [API reference](https://docs.stadiamaps.com/api-reference/)
 - [Pricing](https://stadiamaps.com/pricing/)
-- [Contact](https://stadiamaps.com/contact/)
-- [Authentication](https://docs.stadiamaps.com/authentication/)
-- [GitHub Organization](https://github.com/stadiamaps)
-- [SDK](https://www.npmjs.com/package/@stadiamaps/api)
-- [SDK](https://pypi.org/project/stadiamaps-api/)
-- [M C P Server](https://github.com/stadiamaps/stadiamaps-mcp-server-ts)
-- [L L Ms Txt](https://docs.stadiamaps.com/llms.txt)
+- [Blog](https://stadiamaps.com/blog/rss.xml)
+- [GitHub](https://github.com/stadiamaps)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 39.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 59.0 |
+| Contract governance | 27.3 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 48.8 |
+| Access clarity | 18.4 |
+
+**Agent readiness 22.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/stadia-maps/](https://apis.io/providers/stadia-maps/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Stadia Maps: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/stadia-maps/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
